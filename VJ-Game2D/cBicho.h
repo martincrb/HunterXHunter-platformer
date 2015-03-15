@@ -2,6 +2,7 @@
 
 #include "cTexture.h"
 #include "Globals.h"
+#include "Animation.h"
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -45,13 +46,16 @@ public:
 	void Jump(int *map);
 	void Stop();
 	void Logic(int *map);
-
 	int  GetState();
 	void SetState(int s);
 
 	void NextFrame(int max);
 	int  GetFrame();
 	
+protected:
+	Animation *currentAnimation;
+	std::vector<Animation> animations;
+	AnimationFrame currentFrame;
 private:
 	int x,y;
 	int w,h;

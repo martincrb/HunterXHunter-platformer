@@ -10,6 +10,6 @@ class cPlayer: public cBicho
 public:
 	cPlayer();
 	~cPlayer();
-
+	cPlayer(int state);
 	void Draw(int tex_id);
 };

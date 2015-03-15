@@ -91,14 +91,14 @@ bool cBicho::CollidesMapFloor(int *map)
 	width_tiles = w / cScene::TILE_SIZE;
 	height_tiles = h / cScene::TILE_SIZE;
 
-	std::cout << "tile_x " << tile_x << "tile_y " << tile_y << std::endl;
+	//std::cout << "tile_x " << tile_x << "tile_y " << tile_y << std::endl;
 	for (j = 0; j < width_tiles; j++)
 	{
 		int tileID = map[abs(tile_x+j + ((-tile_y + 1)*cScene::SCENE_WIDTH))];
 
 		if (tileID != 0) { //no tile, empty
 			if (cScene::tiles[tileID - 1].isSolid())	{
-				std::cout << "YES SOLID FLOOR TILE " << tileID << std::endl;
+				//std::cout << "YES SOLID FLOOR TILE " << tileID << std::endl;
 
 				return true;
 			}
@@ -117,12 +117,12 @@ void cBicho::GetArea(cRect *rc)
 void cBicho::DrawRect(int tex_id,float xo,float yo,float xf,float yf)
 {
 	int screen_x,screen_y;
-
 	screen_x = x + cScene::SCENE_Xo;
 	screen_y = y + cScene::SCENE_Yo + (cScene::BLOCK_SIZE - cScene::TILE_SIZE);
 
 	glEnable(GL_TEXTURE_2D);
-	
+	//std::cout << "QUAD SIZE: " << std::endl;
+	//std::cout << w << " " << h << std::endl;
 	glBindTexture(GL_TEXTURE_2D,tex_id);
 	glBegin(GL_QUADS);	
 		glTexCoord2f(xo,yo);	glVertex2i(screen_x  ,screen_y);
@@ -251,6 +251,9 @@ void cBicho::NextFrame(int max)
 		seq++;
 		seq%=max;
 		delay = 0;
+		std::cout << "SEQ " << seq << " " << currentAnimation->frames.size() << std::endl;
+		currentFrame = currentAnimation->frames[seq];
+		std::cout << currentFrame.tile_px << std::endl;
 	}
 }
 int cBicho::GetFrame()

@@ -36,8 +36,9 @@ bool cGame::Init()
 	if(!res) return false;
 
 	//Player initialization
-	res = Data.LoadImage(IMG_PLAYER,"bub.png",GL_RGBA);
+	res = Data.LoadImage(IMG_PLAYER,"Gon/sprite_sheet.png",GL_RGBA);
 	if(!res) return false;
+
 	Player.SetWidthHeight(32,32);
 	Player.SetTile(0,0);
 	Player.SetWidthHeight(32,32);

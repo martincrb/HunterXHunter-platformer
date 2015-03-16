@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="212" height="30" tilewidth="16" tileheight="16" nextobjectid="2">
  <tileset firstgid="1" name="level_1" tilewidth="16" tileheight="16">
-  <image source="../../../../Desktop/p02 (Tile Based Engine)/level_1.png" width="96" height="96"/>
+  <image source="res/sprites/level_1.png" width="96" height="96"/>
   <terraintypes>
    <terrain name="Rocks" tile="7"/>
   </terraintypes>

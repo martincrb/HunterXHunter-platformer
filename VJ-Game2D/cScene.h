@@ -16,7 +16,7 @@ public:
 	cScene(void);
 	virtual ~cScene(void);
 
-	std::string LoadLevel(int level);
+	std::string LoadLevel(const char* level);
 	void Draw(int tex_id);
 	int *GetMap();
 	bool isSolid(int tileID);

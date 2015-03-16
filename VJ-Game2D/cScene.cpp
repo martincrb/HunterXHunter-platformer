@@ -34,7 +34,7 @@ void split(const std::string& s, char c,
 	}
 }
 
-std::string cScene::LoadLevel(int level)
+std::string cScene::LoadLevel(const char* level)
 {
 	bool res;
 	FILE *fd;
@@ -49,7 +49,7 @@ std::string cScene::LoadLevel(int level)
 
 	TMX::Parser tmx;
 	
-	tmx.load("level_01.tmx");
+	tmx.load(level);
 	std::cout << "Map Version: " << tmx.mapInfo.version << std::endl;
 	std::cout << "Map Orientation: " << tmx.mapInfo.orientation << std::endl;
 	std::cout << "Map Width: " << tmx.mapInfo.width << std::endl;

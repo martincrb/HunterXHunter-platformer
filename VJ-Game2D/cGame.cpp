@@ -1,5 +1,6 @@
 #include "cGame.h"
 #include "Globals.h"
+#include "Resources.h"
 
 int posx = 0;
 int posy = 0;
@@ -28,7 +29,7 @@ bool cGame::Init()
 
 	//Scene initialization
 
-	std::string tileset_source = Scene.LoadLevel(1);
+	std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
 	if(strcmp(tileset_source.c_str(), "") == 0) {
 		return false;
 	}
@@ -36,7 +37,7 @@ bool cGame::Init()
 	if(!res) return false;
 
 	//Player initialization
-	res = Data.LoadImage(IMG_PLAYER,"Gon/sprite_sheet.png",GL_RGBA);
+	res = Data.LoadImage(IMG_PLAYER,Resources::SPRITESHEET_GON,GL_RGBA);
 	if(!res) return false;
 
 	Player.SetWidthHeight(32,32);

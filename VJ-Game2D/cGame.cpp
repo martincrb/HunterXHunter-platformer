@@ -2,8 +2,8 @@
 #include "Globals.h"
 #include "Resources.h"
 
-int posx = 0;
-int posy = 0;
+int posx ;
+int posy;
 
 cGame::cGame(void)
 {
@@ -107,7 +107,7 @@ void cGame::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	glTranslated(posx, posy-200, 0);
+	glTranslated(posx, posy, 0);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 	Player.Draw(Data.GetID(IMG_PLAYER));
 

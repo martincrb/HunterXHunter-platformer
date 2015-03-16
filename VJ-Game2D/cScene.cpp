@@ -75,8 +75,8 @@ std::string cScene::LoadLevel(const char* level)
 	map = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
 	TILE_SIZE = tmx.mapInfo.tileWidth;
 	BLOCK_SIZE = tmx.mapInfo.tileWidth;
-	SCENE_Xo = (2 * TILE_SIZE);
-	SCENE_Yo = SCENE_HEIGHT*TILE_SIZE-TILE_SIZE;
+	SCENE_Xo = 0;
+	SCENE_Yo = 0;
 
 	//fd=fopen(file,"r");
 	//if(fd==NULL) return false;

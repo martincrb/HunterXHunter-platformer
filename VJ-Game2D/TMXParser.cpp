@@ -126,8 +126,8 @@ namespace TMX {
     for( rapidxml::xml_node<>* oGroup_node = root_node->first_node( "objectgroup" ); oGroup_node; oGroup_node = oGroup_node->next_sibling( "objectgroup" ) ) {
       ObjectGroup oGroup;
       std::cout << std::endl;
-      oGroup.color = oGroup_node->first_attribute( "color" )->value();
-      std::cout << "Object Group Color: " << oGroup.color << std::endl;
+      //oGroup.color = oGroup_node->first_attribute( "color" )->value();
+      //std::cout << "Object Group Color: " << oGroup.color << std::endl;
       oGroup.name = oGroup_node->first_attribute( "name" )->value();
       std::cout << "Object Group Name: " << oGroup.name << std::endl;
      // oGroup.opacity = std::atof( oGroup_node->first_attribute( "opacity" )->value() );

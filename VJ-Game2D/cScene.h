@@ -3,7 +3,7 @@
 #include "cTexture.h"
 #include "Tile.h"
 #include <vector>
-
+#include "Boundary.h"
 #define FILENAME		"level"
 #define FILENAME_EXT	".txt"
 
@@ -29,7 +29,9 @@ public:
 	static int SCENE_HEIGHT;
 	std::vector<int> map;	//scene
 	static std::vector<Tile> tiles; //Tiles and properties
+	Boundary* getBoundaries();
 
 private:
 	int id_DL;								//actual level display list
+	Boundary camera_limits;
 };

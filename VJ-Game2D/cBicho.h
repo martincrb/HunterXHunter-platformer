@@ -3,6 +3,7 @@
 #include "cTexture.h"
 #include "Globals.h"
 #include "Animation.h"
+#include "cRect.h"
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -14,12 +15,7 @@
 #define STATE_WALKLEFT		2
 #define STATE_WALKRIGHT		3
 
-class cRect
-{
-public:
-	int left,top,
-		right,bottom;
-};
+
 
 class cBicho
 {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="212" height="30" tilewidth="16" tileheight="16" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="212" height="30" tilewidth="16" tileheight="16" nextobjectid="2">
  <tileset firstgid="1" name="level_1" tilewidth="16" tileheight="16">
-  <image source="level_1.png" width="96" height="96"/>
+  <image source="../../../../Desktop/p02 (Tile Based Engine)/level_1.png" width="96" height="96"/>
   <terraintypes>
    <terrain name="Rocks" tile="7"/>
   </terraintypes>
@@ -263,4 +263,7 @@
 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,13,13,13,13,13,13,11,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
 </data>
  </layer>
+ <objectgroup name="Camera_limits">
+  <object id="1" x="0" y="0" width="3392" height="480"/>
+ </objectgroup>
 </map>

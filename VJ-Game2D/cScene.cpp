@@ -1,6 +1,8 @@
 #include "cScene.h"
 #include "Globals.h"
 #include "TMXParser.h"
+#include "cBicho.h"
+#include "cPlayer.h"
 #include <iostream>
 #include <functional>
 //TMXParser git: https://github.com/solar-storm-studios/TMXParser
@@ -145,6 +147,9 @@ std::string cScene::LoadLevel(const char* level)
 	glEndList();
 
 	//Fill OBJECTS DATA from TMX:
+
+
+	//Fill ENTITIES DATA from TMX:
 	for (std::map<std::string, TMX::Parser::ObjectGroup>::iterator it = tmx.objectGroup.begin(); it != tmx.objectGroup.end(); ++it) {
 		std::cout << std::endl;
 		std::cout << "Object Group Name: " << it->first << std::endl;
@@ -157,32 +162,55 @@ std::string cScene::LoadLevel(const char* level)
 		//		std::cout << "-> " << it2->first << " : " << it2->second << std::endl;
 		//	}
 		//}
-		if (it->first == "Camera_limits") {
+		std::string name = it->first;
+
+		if (strcmp(name.c_str(), "Camera_limits") == 0) {
 			//Read Camera Boundaries
-			for (std::map<std::string, TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
+			std::cout << "LOADING BOUNDARY " << std::endl;
+			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
 				std::cout << std::endl;
+				std::cout << "AAAAAA " << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
 				//if (it2->second.type != "") { std::cout << "Object Type: " << tmx.objectGroup[it->first].object[it2->first].type << std::endl; }
-				std::cout << "Object Position X: " << tmx.objectGroup[it->first].object[it2->first].x << std::endl;
-				std::cout << "Object Position Y: " << tmx.objectGroup[it->first].object[it2->first].y << std::endl;
-				std::cout << "Object Width: " << tmx.objectGroup[it->first].object[it2->first].width << std::endl;
-				std::cout << "Object Height: " << tmx.objectGroup[it->first].object[it2->first].height << std::endl;
+				std::cout << "Object Position X: " << it2->x << std::endl;
+				std::cout << "Object Position Y: " << it2->y << std::endl;
+				std::cout << "Object Width: " << it2->width << std::endl;
+				std::cout << "Object Height: " << it2->height << std::endl;
 				//if (it2->second.gid != 0) { std::cout << "Object Tile GID: " << tmx.objectGroup[it->first].object[it2->first].gid << std::endl; }
 				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
 				cRect boundary;
-				boundary.left = tmx.objectGroup[it->first].object[it2->first].x;
-				boundary.right = boundary.left + tmx.objectGroup[it->first].object[it2->first].width;
-				boundary.top = tmx.objectGroup[it->first].object[it2->first].y;
-				boundary.bottom = boundary.top + tmx.objectGroup[it->first].object[it2->first].height;
+				boundary.left = it2->x;
+				boundary.right = boundary.left + it2->width;
+				boundary.top = it2->y;
+				boundary.bottom = boundary.top + it2->height;
 				camera_limits.addBoundary(boundary);
 			}
 		}
-		
+
+		if (strcmp(name.c_str(), "Entities") == 0) {
+			//Read Entity data
+			std::cout << "LOADING ENTITY " << std::endl;
+			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
+				std::cout << std::endl;
+				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
+				if (it2->type != "") { std::cout << "Object Type: " << it2->type << std::endl; }
+				std::cout << "Object Position X: " << it2->x << std::endl;
+				std::cout << "Object Position Y: " << it2->y << std::endl;
+				//std::cout << "Object Width: " << it2->width << std::endl;
+				//std::cout << "Object Height: " << it2->height << std::endl;
+				//SAVE ENTITIES INFORMATION TO THE VECTOR OF ENTITIES
+				
+				Entity entity;
+				entity.alive = true;
+				entity.spawn_x = it2->x;
+				entity.spawn_y = it2->y;
+				entity.type = it2->type.c_str();
+				entity.bicho = new cPlayer();
+				Entities.push_back(entity);
+			}
+		}
+
 	}
-
-
-	//Fill ENTITIES DATA from TMX:
-
 	return source;
 }
 
@@ -190,6 +218,11 @@ Boundary* cScene::getBoundaries() {
 	return &camera_limits;
 
 }
+
+std::vector<Entity>* cScene::getEntities() {
+	return &Entities;
+}
+
 
 void cScene::Draw(int tex_id)
 {

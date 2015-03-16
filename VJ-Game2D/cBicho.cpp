@@ -251,9 +251,9 @@ void cBicho::NextFrame(int max)
 		seq++;
 		seq%=max;
 		delay = 0;
-		std::cout << "SEQ " << seq << " " << currentAnimation->frames.size() << std::endl;
+		//std::cout << "SEQ " << seq << " " << currentAnimation->frames.size() << std::endl;
 		currentFrame = currentAnimation->frames[seq];
-		std::cout << currentFrame.tile_px << std::endl;
+		//std::cout << currentFrame.tile_px << std::endl;
 	}
 }
 int cBicho::GetFrame()
@@ -267,4 +267,8 @@ int cBicho::GetState()
 void cBicho::SetState(int s)
 {
 	state = s;
+}
+
+void cBicho::Draw(int tex_id){
+
 }

@@ -33,6 +33,18 @@ bool cGame::Init()
 	if(strcmp(tileset_source.c_str(), "") == 0) {
 		return false;
 	}
+
+	//Point to the entity vector
+	Entities = Scene.getEntities();
+
+	//Entities init
+	for (int i = 0; i < Entities->size(); i++) {
+		if ((*Entities)[i].alive) {
+			(*Entities)[i].bicho->SetPosition((*Entities)[i].spawn_x, -(*Entities)[i].spawn_y);
+			(*Entities)[i].bicho->SetWidthHeight(32, 32);
+		}
+	}
+
 	res = Data.LoadImage(IMG_BLOCKS,tileset_source.c_str(),GL_RGBA);
 	if(!res) return false;
 
@@ -50,6 +62,7 @@ bool cGame::Init()
 	posy = -posy;
 	//Camera centered at PLAYER
 
+	
 	return res;
 }
 
@@ -98,6 +111,13 @@ bool cGame::Process()
 	//...
 	Player.Logic(Scene.GetMap());
 
+
+	//Process all entities in the map
+	for (int i = 0; i < Entities->size(); i++) {
+		if ((*Entities)[i].alive) {
+			(*Entities)[i].bicho->Logic(Scene.GetMap());
+		}
+	}
 	return res;
 }
 
@@ -107,9 +127,22 @@ void cGame::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	glTranslated(posx, posy, 0);
+	glTranslated(posx+10, posy+90, 0);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 	Player.Draw(Data.GetID(IMG_PLAYER));
-
+	//Render all entities in the map
+	for (int i = 0; i < Entities->size(); i++) {
+		if ((*Entities)[i].alive) {
+			const char* type = (*Entities)[i].type;
+			//if (type == "jumping_frog") {
+			//	(*Entities)[i].bicho->Draw(IMG_PLAYER); //Select texture using entity type
+			//}
+			//else if...
+			// ...
+			
+			(*Entities)[i].bicho->Draw(Data.GetID(IMG_PLAYER)); //Select texture using entity type
+			
+		}
+	}
 	glutSwapBuffers();
 }

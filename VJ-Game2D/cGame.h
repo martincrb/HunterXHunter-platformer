@@ -29,5 +29,7 @@ private:
 	unsigned char keys[256];
 	cScene Scene;
 	cData Data;
+	std::vector<Entity>* Entities;
 	cPlayer Player;
+	cPlayer Enemy;
 };

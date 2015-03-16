@@ -100,6 +100,7 @@
     <ClCompile Include="cRect.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="cTexture.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GLUTMain.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="cRect.h" />
     <ClInclude Include="cScene.h" />
     <ClInclude Include="cTexture.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="stdafx.h" />

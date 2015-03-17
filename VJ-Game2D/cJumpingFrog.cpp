@@ -4,6 +4,8 @@
 cJumpingFrog::cJumpingFrog()
 {
 	cBicho::SetState(0);
+	jumpDelay = 0;
+	jump_freq = rand()%240+60; //default random
 	Animation idle;
 	AnimationFrame frame(200, float(2) / float(20), float(28) / float(47), 16, 16);
 	idle.frames.push_back(frame);
@@ -23,18 +25,28 @@ cJumpingFrog::cJumpingFrog()
 cJumpingFrog::~cJumpingFrog()
 {
 }
+
+void cJumpingFrog::setJumpFreq(int x) {
+	jump_freq = x;
+}
 void cJumpingFrog::Logic(int *map) {
-	if (!inAir()) {
-		Jump(map);
+	jumpDelay++;
+	if (jumpDelay == jump_freq)
+	{
+		jumpDelay = 0;
+		if (!inAir()) {
+			Jump(map);
+		}
 	}
+	
 	cBicho::Logic(map);
 }
 void cJumpingFrog::Draw(int tex_id) {
 	if (inAir()) {
-		currentAnimation = &animations[0];
+		currentAnimation = &animations[1];
 	}
 	else {
-		currentAnimation = &animations[1];
+		currentAnimation = &animations[0];
 	}
 
 	float xo, yo, xf, yf;

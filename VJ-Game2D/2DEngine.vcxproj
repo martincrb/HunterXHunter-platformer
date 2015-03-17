@@ -60,7 +60,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)2DEngine.exe</OutputFile>
@@ -68,7 +68,7 @@
       <ProgramDatabaseFile>$(OutDir)2DEngine.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\TMXParser\src;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\TMXParser\src;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,6 +93,7 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="base64.cpp" />
     <ClCompile Include="Boundary.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="cBicho.cpp" />
     <ClCompile Include="cData.cpp" />
     <ClCompile Include="cGame.cpp" />
@@ -113,6 +114,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="base64.h" />
     <ClInclude Include="Boundary.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="cBicho.h" />
     <ClInclude Include="cData.h" />
     <ClInclude Include="cGame.h" />

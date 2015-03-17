@@ -99,14 +99,18 @@ bool cBicho::CollidesMapFloor(int *map)
 		if (tileID != 0) { //no tile, empty
 			if (cScene::tiles[tileID - 1].isSolid())	{
 				//std::cout << "YES SOLID FLOOR TILE " << tileID << std::endl;
-
+				in_air = false;
 				return true;
 			}
 		}
 	}
+	in_air = true;
 	return false;
 }
 
+bool cBicho::inAir() {
+	return in_air;
+}
 void cBicho::GetArea(cRect *rc)
 {
 	rc->left   = x;
@@ -205,6 +209,7 @@ void cBicho::Jump(int *map)
 	{
 		if(CollidesMapFloor(map))
 		{
+			in_air = true;
 			jumping = true;
 			jump_alfa = 0;
 			jump_y = y;

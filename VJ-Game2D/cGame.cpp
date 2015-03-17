@@ -52,6 +52,9 @@ bool cGame::Init()
 	res = Data.LoadImage(IMG_PLAYER,Resources::SPRITESHEET_GON,GL_RGBA);
 	if(!res) return false;
 
+	res = Data.LoadImage(IMG_JUMPING_FROG, Resources::SPRITESHEET_JUMPING_FROG, GL_RGBA);
+	if (!res) return false;
+
 	Player.SetWidthHeight(32,32);
 	Player.SetTile(0,0);
 	Player.SetWidthHeight(32,32);
@@ -133,14 +136,10 @@ void cGame::Render()
 	//Render all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {
 		if ((*Entities)[i].alive) {
-			const char* type = (*Entities)[i].type;
-			//if (type == "jumping_frog") {
-			//	(*Entities)[i].bicho->Draw(IMG_PLAYER); //Select texture using entity type
-			//}
-			//else if...
-			// ...
-			
-			(*Entities)[i].bicho->Draw(Data.GetID(IMG_PLAYER)); //Select texture using entity type
+			if ((*Entities)[i].type == "jfrog") {
+				(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
+			}
+			 //Select texture using entity type
 			
 		}
 	}

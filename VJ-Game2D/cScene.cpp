@@ -3,6 +3,7 @@
 #include "TMXParser.h"
 #include "cBicho.h"
 #include "cPlayer.h"
+#include "cJumpingFrog.h"
 #include <iostream>
 #include <functional>
 //TMXParser git: https://github.com/solar-storm-studios/TMXParser
@@ -204,8 +205,13 @@ std::string cScene::LoadLevel(const char* level)
 				entity.alive = true;
 				entity.spawn_x = it2->x;
 				entity.spawn_y = it2->y;
-				entity.type = it2->type.c_str();
-				entity.bicho = new cPlayer();
+				entity.type = it2->type;
+				if (entity.type == "jfrog") {
+					std::cout << "Loading a hell of a frog" << std::endl;
+					entity.bicho = new cJumpingFrog();
+				}
+				//FILL WITH OTHER ENTITY TYPES
+
 				Entities.push_back(entity);
 			}
 		}

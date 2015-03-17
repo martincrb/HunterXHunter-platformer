@@ -41,10 +41,10 @@ public:
 	void MoveLeft(int *map);
 	void Jump(int *map);
 	void Stop();
-	void Logic(int *map);
+	virtual void Logic(int *map);
 	int  GetState();
 	void SetState(int s);
-
+	bool inAir();
 	void NextFrame(int max);
 	int  GetFrame();
 	
@@ -56,7 +56,7 @@ private:
 	int x,y;
 	int w,h;
 	int state;
-
+	bool in_air;
 	bool jumping;
 	int jump_alfa;
 	int jump_y;

@@ -29,6 +29,10 @@ cPlayer::cPlayer() {
 	walk.frames.push_back(frame10);
 	animations.push_back(walk);
 
+	Animation jump;
+	AnimationFrame frame11(200, float(2) / float(128), float(135) / float(256), 45, 38);
+	jump.frames.push_back(frame11);
+	animations.push_back(jump);
 
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
@@ -43,39 +47,65 @@ cPlayer::cPlayer(int state) {
 void cPlayer::Draw(int tex_id)
 {	
 	float xo,yo,xf,yf;
-
-	switch(GetState())
-	{
-		//1
-		case STATE_LOOKLEFT:	currentAnimation = &animations[0];
-								xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-								xf = currentFrame.tile_px;
-								yf = yo - float(currentFrame.tile_heigth) / float(256);
-								NextFrame(currentAnimation->frames.size());
-								break;
-		//4
-		case STATE_LOOKRIGHT:	currentAnimation = &animations[0];
-								xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-								xf = xo + float(currentFrame.tile_width) / float(128);
-								yf = yo - float(currentFrame.tile_heigth) / float(256);
-								NextFrame(currentAnimation->frames.size());
-								break;
-		//1..3
-		case STATE_WALKLEFT:	currentAnimation = &animations[1];
-								xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-								xf = currentFrame.tile_px;
-								yf = yo - float(currentFrame.tile_heigth) / float(256);
-								NextFrame(currentAnimation->frames.size());
-								break;
-		//4..6
-		case STATE_WALKRIGHT:	currentAnimation = &animations[1];
-								xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-								xf = xo + float(currentFrame.tile_width) / float(128);
-								yf = yo - float(currentFrame.tile_heigth) / float(256);
-								NextFrame(currentAnimation->frames.size());
-								break;
-	}
-	
+		switch (GetState())
+		{
+			//1
+		case STATE_LOOKLEFT:	
+			if (inAir()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else {
+				currentAnimation = &animations[0];
+			}
+			xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+			xf = currentFrame.tile_px;
+			yf = yo - float(currentFrame.tile_heigth) / float(256);
+			NextFrame(currentAnimation->frames.size());
+			break;
+			//4
+		case STATE_LOOKRIGHT:	
+			if (inAir()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else {
+				currentAnimation = &animations[0];
+			}
+			xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+			xf = xo + float(currentFrame.tile_width) / float(128);
+			yf = yo - float(currentFrame.tile_heigth) / float(256);
+			NextFrame(currentAnimation->frames.size());
+			break;
+			//1..3
+		case STATE_WALKLEFT:	
+			if (inAir()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else {
+				currentAnimation = &animations[1];
+			}
+			xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+			xf = currentFrame.tile_px;
+			yf = yo - float(currentFrame.tile_heigth) / float(256);
+			NextFrame(currentAnimation->frames.size());
+			break;
+			//4..6
+		case STATE_WALKRIGHT:	
+			if (inAir()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else {
+				currentAnimation = &animations[1];
+			}
+			xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+			xf = xo + float(currentFrame.tile_width) / float(128);
+			yf = yo - float(currentFrame.tile_heigth) / float(256);
+			NextFrame(currentAnimation->frames.size());
+			break;
+		}
 	//std::cout << "FRAME: " << std::endl;
 	//std::cout << "Xo: " << xo << " Yo: " << yo << std::endl;
 	//std::cout << "Xf: " << xf << " Yf: " << yf << std::endl;

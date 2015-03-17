@@ -34,8 +34,16 @@ cPlayer::cPlayer() {
 	jump.frames.push_back(frame11);
 	animations.push_back(jump);
 
+	Animation punch;
+	AnimationFrame frame12(200, float(42) / float(128), float(135) / float(256), 42, 52);
+	punch.frames.push_back(frame12);
+	animations.push_back(punch);
+
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
+
+	punchDelay = 0;
+	punching = false;
 }
 
 cPlayer::~cPlayer(){}
@@ -44,8 +52,20 @@ cPlayer::cPlayer(int state) {
 	
 }
 
+void cPlayer::Punch(int *map){
+	punching = true;
+}
 void cPlayer::Draw(int tex_id)
 {	
+
+	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
+	if (punching) punchDelay++;
+	if (punchDelay == PUNCH_DURATION)
+	{
+		punchDelay = 0;
+		punching = false;
+	}
+
 	float xo,yo,xf,yf;
 		switch (GetState())
 		{
@@ -53,6 +73,10 @@ void cPlayer::Draw(int tex_id)
 		case STATE_LOOKLEFT:	
 			if (inAir()) {
 				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else if (punching) {
+				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
 			}
 			else {
@@ -69,6 +93,10 @@ void cPlayer::Draw(int tex_id)
 				currentAnimation = &animations[2];
 				currentFrame = currentAnimation->frames[0];
 			}
+			else if (punching) {
+				currentAnimation = &animations[3];
+				currentFrame = currentAnimation->frames[0];
+			}
 			else {
 				currentAnimation = &animations[0];
 			}
@@ -83,6 +111,10 @@ void cPlayer::Draw(int tex_id)
 				currentAnimation = &animations[2];
 				currentFrame = currentAnimation->frames[0];
 			}
+			else if (punching) {
+				currentAnimation = &animations[3];
+				currentFrame = currentAnimation->frames[0];
+			}
 			else {
 				currentAnimation = &animations[1];
 			}
@@ -95,6 +127,10 @@ void cPlayer::Draw(int tex_id)
 		case STATE_WALKRIGHT:	
 			if (inAir()) {
 				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+			}
+			else if (punching) {
+				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
 			}
 			else {

@@ -60,7 +60,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Programs\OpenAL 1.1 SDK\include;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)2DEngine.exe</OutputFile>
@@ -68,7 +68,8 @@
       <ProgramDatabaseFile>$(OutDir)2DEngine.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\TMXParser\src;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Programs\OpenAL 1.1 SDK\libs\Win32;E:\Programs\OpenAL 1.1 SDK\libs;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\TMXParser\src;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenAL32.lib;ALut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

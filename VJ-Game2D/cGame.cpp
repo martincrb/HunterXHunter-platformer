@@ -101,6 +101,7 @@ bool cGame::Process()
 	//Process Input
 	if(keys[27])	res=false;	
 
+	if (keys[GLUT_KEY_DOWN])		Player.Punch(Scene.GetMap());
 	if(keys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
 	if(keys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
 	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());

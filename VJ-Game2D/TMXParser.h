@@ -73,7 +73,7 @@ namespace TMX
         std::string name;
         float opacity;
         bool visible;
-        std::map<std::string, Object> object;
+        std::vector<Object> object;
         std::map<std::string, std::string> property;
       };
 

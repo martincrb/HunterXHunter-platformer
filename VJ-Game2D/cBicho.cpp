@@ -70,7 +70,7 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
-				//std::cout << "YES SOLID WALL TILE " << tileID << std::endl;
+				std::cout << "YES SOLID WALL TILE " << tileID << std::endl;
 
 				return true;
 			}
@@ -267,4 +267,8 @@ int cBicho::GetState()
 void cBicho::SetState(int s)
 {
 	state = s;
+}
+
+void cBicho::Draw(int tex_id){
+
 }

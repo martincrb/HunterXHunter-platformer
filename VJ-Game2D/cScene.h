@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include <vector>
 #include "Boundary.h"
+#include "Entity.h"
 #define FILENAME		"level"
 #define FILENAME_EXT	".txt"
 
@@ -30,8 +31,10 @@ public:
 	std::vector<int> map;	//scene
 	static std::vector<Tile> tiles; //Tiles and properties
 	Boundary* getBoundaries();
+	std::vector<Entity>* getEntities();
 
 private:
 	int id_DL;								//actual level display list
+	std::vector<Entity> Entities;
 	Boundary camera_limits;
 };

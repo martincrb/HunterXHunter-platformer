@@ -135,6 +135,19 @@ namespace TMX {
      // oGroup.visible = std::atoi( oGroup_node->first_attribute( "visible" )->value() );
      // std::cout << "Object Group Visible: " << oGroup.visible << std::endl;
 
+	  //Read objects
+	  for (rapidxml::xml_node<>* object_node = oGroup_node->first_node("object"); object_node; object_node = object_node->next_sibling("object")) {
+		  Object obj;
+		  if (object_node->first_attribute("type") > 0) {
+			  obj.type = object_node->first_attribute("type")->value();
+		  }
+		  obj.x = atoi(object_node->first_attribute("x")->value());
+		  obj.y = atoi(object_node->first_attribute("y")->value());
+		  oGroup.object.push_back(obj);
+
+	  }
+
+
       if( oGroup_node->first_node( "properties" ) != 0 ) {
         for( rapidxml::xml_node<>* properties_node = oGroup_node->first_node( "properties" )->first_node( "property" ); properties_node; properties_node = properties_node->next_sibling() ) {
           oGroup.property[properties_node->first_attribute( "name" )->value()] = properties_node->first_attribute( "value" )->value();

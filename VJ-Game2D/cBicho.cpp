@@ -70,7 +70,7 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
-				std::cout << "YES SOLID WALL TILE " << tileID << std::endl;
+				//std::cout << "YES SOLID WALL TILE " << tileID << std::endl;
 
 				return true;
 			}
@@ -251,9 +251,9 @@ void cBicho::NextFrame(int max)
 		seq++;
 		seq%=max;
 		delay = 0;
-		std::cout << "SEQ " << seq << " " << currentAnimation->frames.size() << std::endl;
+		//std::cout << "SEQ " << seq << " " << currentAnimation->frames.size() << std::endl;
 		currentFrame = currentAnimation->frames[seq];
-		std::cout << currentFrame.tile_px << std::endl;
+		//std::cout << currentFrame.tile_px << std::endl;
 	}
 }
 int cBicho::GetFrame()

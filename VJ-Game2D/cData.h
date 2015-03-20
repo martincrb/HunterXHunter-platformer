@@ -31,10 +31,7 @@ public:
 	int  GetID(int img);
 	void GetSize(int img,int *w,int *h);
 	bool LoadImage(int img,const char *filename,int type = GL_RGBA);
-	bool LoadSound(ALbyte *filename);
-	ALuint* getSoundBuffer();
 
 private:
 	cTexture texture[NUM_IMG];
-	ALuint soundBuffer[NUM_SND];
 };

@@ -51,16 +51,27 @@ bool cGame::Init()
 	//Player initialization
 	res = Data.LoadImage(IMG_PLAYER,Resources::SPRITESHEET_GON,GL_RGBA);
 	if(!res) return false;
-
+	res = Data.LoadImage(IMG_PLAYER2, Resources::SPRITESHEET_KILLUA, GL_RGBA);
+	if (!res) return false;
 	res = Data.LoadImage(IMG_JUMPING_FROG, Resources::SPRITESHEET_JUMPING_FROG, GL_RGBA);
 	if (!res) return false;
 
-	Player.SetWidthHeight(32,32);
-	Player.SetTile(5,-5);
-	Player.SetWidthHeight(32,32);
-	Player.SetState(STATE_LOOKRIGHT);
+	Player = new Gon();
+	Player2 = new Killua();
 
-	Player.GetPosition(&posx, &posy);
+	Player->SetWidthHeight(32,32);
+	Player->SetTile(5, -5);
+	Player->SetWidthHeight(32, 32);
+	Player->SetState(STATE_LOOKRIGHT);
+
+	Player2->SetWidthHeight(32, 32);
+	Player2->SetTile(3, -5);
+	Player2->SetWidthHeight(32, 32);
+	Player2->SetState(STATE_LOOKRIGHT);
+
+	pController.setPlayers(Player, Player2);
+
+	pController.getCurrentPlayer()->GetPosition(&posx, &posy);
 	posx = -posx;
 	posy = -posy;
 	//Camera centered at PLAYER
@@ -101,20 +112,21 @@ bool cGame::Process()
 	//Process Input
 	if(keys[27])	res=false;	
 
-	if (keys[GLUT_KEY_DOWN])		Player.Punch(Scene.GetMap());
-	if(keys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
-	if(keys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
-	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
-	else Player.Stop();
+	if (keys[99])		pController.changeCurrentPlayer();
+	if (keys[GLUT_KEY_DOWN])		pController.Punch(&Scene);
+	if (keys[GLUT_KEY_UP])			pController.Jump(&Scene);
+	if (keys[GLUT_KEY_LEFT])			pController.MoveLeft(&Scene);
+	else if (keys[GLUT_KEY_RIGHT])	pController.MoveRight(&Scene);
+	else pController.getCurrentPlayer()->Stop();
 	
 	//Camera follows player
-	Player.GetPosition(&posx, &posy);
+	pController.getCurrentPlayer()->GetPosition(&posx, &posy);
 	posx = -posx;
 	posy = -posy;
 	//Game Logic
 	//...
-	Player.Logic(Scene.GetMap());
-
+	Player->Logic(Scene.GetMap());
+	Player2->Logic(Scene.GetMap());
 
 	//Process all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {
@@ -131,9 +143,20 @@ void cGame::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	glTranslated(posx+10, posy+90, 0);
+	glTranslated(posx+50, posy+90, 0);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
-	Player.Draw(Data.GetID(IMG_PLAYER));
+
+	//Current player must be rendered on top of IA player
+	if (pController.getCurrentPlayer() == Player) {
+		Player2->Draw(Data.GetID(IMG_PLAYER2));
+		Player->Draw(Data.GetID(IMG_PLAYER));
+	}
+	else {
+		Player->Draw(Data.GetID(IMG_PLAYER));
+		Player2->Draw(Data.GetID(IMG_PLAYER2));
+	}
+	
+
 	//Render all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {
 		if ((*Entities)[i].alive) {

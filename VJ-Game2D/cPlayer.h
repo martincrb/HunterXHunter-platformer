@@ -12,9 +12,9 @@ public:
 	cPlayer();
 	~cPlayer();
 	cPlayer(int state);
-	void Punch(int *map);
-	void Draw(int tex_id);
-private:
+	virtual void Punch(int *map);
+	virtual void Draw(int tex_id);
+protected:
 	int punchDelay;
 	bool punching;
 

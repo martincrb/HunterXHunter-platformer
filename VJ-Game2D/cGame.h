@@ -3,6 +3,9 @@
 #include "cScene.h"
 #include "cData.h"
 #include "cPlayer.h"
+#include "Gon.h"
+#include "Killua.h"
+#include "PlayerController.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -30,6 +33,7 @@ private:
 	cScene Scene;
 	cData Data;
 	std::vector<Entity>* Entities;
-	cPlayer Player;
-	cPlayer Enemy;
+	cPlayer* Player;
+	cPlayer* Player2;
+	PlayerController pController;
 };

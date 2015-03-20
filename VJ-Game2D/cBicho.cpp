@@ -6,7 +6,6 @@ cBicho::cBicho(void)
 {
 	seq=0;
 	delay=0;
-
 	jumping = false;
 }
 cBicho::~cBicho(void){}

@@ -3,6 +3,7 @@
 #include "TMXParser.h"
 #include "cBicho.h"
 #include "cPlayer.h"
+#include "cEvilBird.h"
 #include "cJumpingFrog.h"
 #include <iostream>
 #include <functional>
@@ -69,7 +70,7 @@ std::string cScene::LoadLevel(const char* level)
 	//Save Tile properties in a data structure
 	std::vector<std::map<std::string, std::string> > tileVector = tmx.tilesetList[0].property;
 	for (int tileID = 0; tileID < tileVector.size(); ++tileID) {
-		Tile tile(tmx.tilesetList[0].property[tileID]["solid"] == "true", tmx.tilesetList[0].property[tileID]["type"]);
+		Tile tile(tmx.tilesetList[0].property[tileID]["solid"] == "true", tmx.tilesetList[0].property[tileID]["destructable"] == "true", tmx.tilesetList[0].property[tileID]["type"]);
 		std::cout << "TILEID: " << tileID << std::endl;
 		tile.printinfo();
 		tiles.push_back(tile);
@@ -170,7 +171,6 @@ std::string cScene::LoadLevel(const char* level)
 			std::cout << "LOADING BOUNDARY " << std::endl;
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
 				std::cout << std::endl;
-				std::cout << "AAAAAA " << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
 				//if (it2->second.type != "") { std::cout << "Object Type: " << tmx.objectGroup[it->first].object[it2->first].type << std::endl; }
 				std::cout << "Object Position X: " << it2->x << std::endl;
@@ -209,6 +209,10 @@ std::string cScene::LoadLevel(const char* level)
 				if (entity.type == "jfrog") {
 					std::cout << "Loading a hell of a frog" << std::endl;
 					entity.bicho = new cJumpingFrog();
+				}
+				else if (entity.type == "evilBird") {
+					std::cout << "An awesome pterodactyle comes to play" << std::endl;
+					entity.bicho = new cEvilBird();
 				}
 				//FILL WITH OTHER ENTITY TYPES
 

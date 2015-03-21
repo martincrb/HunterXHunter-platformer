@@ -55,6 +55,8 @@ bool cGame::Init()
 	if (!res) return false;
 	res = Data.LoadImage(IMG_JUMPING_FROG, Resources::SPRITESHEET_JUMPING_FROG, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_EVIL_BIRD, Resources::SPRITESHEET_EVIL_PTERO, GL_RGBA);
+	if (!res) return false;
 
 	Player = new Gon();
 	Player2 = new Killua();
@@ -144,6 +146,7 @@ void cGame::Render()
 	
 	glLoadIdentity();
 	glTranslated(posx+50, posy+90, 0);
+	//glScaled(2.0, 2.0, 2.0);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
 	//Current player must be rendered on top of IA player
@@ -162,6 +165,9 @@ void cGame::Render()
 		if ((*Entities)[i].alive) {
 			if ((*Entities)[i].type == "jfrog") {
 				(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
+			}
+			else if ((*Entities)[i].type == "evilBird") {
+				(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_BIRD));
 			}
 			 //Select texture using entity type
 			

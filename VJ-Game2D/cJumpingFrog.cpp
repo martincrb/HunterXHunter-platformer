@@ -6,14 +6,13 @@ cJumpingFrog::cJumpingFrog()
 	cBicho::SetState(0);
 	jumpDelay = 0;
 	jump_freq = rand()%240+60; //default random
+
 	Animation idle;
-	AnimationFrame frame(200, float(2) / float(20), float(28) / float(47), 16, 16);
-	idle.frames.push_back(frame);
+	idle.addFrame(200, 2, 28, 16, 16, 20, 47,0,0);
 	animations.push_back(idle);
 
 	Animation jump;
-	AnimationFrame frame5(200, float(2) / float(20), float(2) / float(47), 24, 16);
-	jump.frames.push_back(frame5);
+	jump.addFrame(200, 2, 2, 24, 16, 20, 47,0,0);
 	animations.push_back(jump);
 
 

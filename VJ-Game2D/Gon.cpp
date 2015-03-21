@@ -5,39 +5,27 @@ Gon::Gon()
 {
 	cBicho::SetState(0);
 	Animation idle;
-	AnimationFrame frame(200, float(2) / float(128), float(2) / float(256), 44, 30);
-	idle.frames.push_back(frame);
-	AnimationFrame frame2(200, float(34) / float(128), float(2) / float(256), 45, 31);
-	idle.frames.push_back(frame2);
-	AnimationFrame frame3(200, float(2) / float(128), float(2) / float(256), 44, 30);
-	idle.frames.push_back(frame3);
-	AnimationFrame frame4(200, float(67) / float(128), float(2) / float(256), 45, 30);
-	idle.frames.push_back(frame4);
+	idle.addFrame(200, 2, 2, 44, 30, 128, 256, 0, 0);
+	idle.addFrame(200, 34, 2, 45, 31, 128, 256,0,0);
+	idle.addFrame(200, 2, 2, 44, 30, 128, 256,0,0);
+	idle.addFrame(200, 67, 2, 45, 30, 128, 256, 0, 0);
 	animations.push_back(idle);
 
 	Animation walk;
-	AnimationFrame frame5(200, float(2) / float(128), float(49) / float(256), 40, 31);
-	walk.frames.push_back(frame5);
-	AnimationFrame frame6(200, float(35) / float(128), float(49) / float(256), 41, 36);
-	walk.frames.push_back(frame6);
-	AnimationFrame frame7(200, float(73) / float(128), float(49) / float(256), 40, 23);
-	walk.frames.push_back(frame7);
-	AnimationFrame frame8(200, float(2) / float(128), float(92) / float(256), 40, 31);
-	walk.frames.push_back(frame8);
-	AnimationFrame frame9(200, float(35) / float(128), float(92) / float(256), 41, 36);
-	walk.frames.push_back(frame9);
-	AnimationFrame frame10(200, float(73) / float(128), float(92) / float(256), 39, 23);
-	walk.frames.push_back(frame10);
+	walk.addFrame(200, 2, 49, 40, 31, 128, 256,0,0);
+	walk.addFrame(200, 35, 49, 41, 36, 128, 256, 0, 0);
+	walk.addFrame(200, 73, 49, 40, 23, 128, 256, 0, 0);
+	walk.addFrame(200, 2, 92, 40, 31, 128, 256, 0, 0);
+	walk.addFrame(200, 35, 92, 41, 36, 128, 256, 0, 0);
+	walk.addFrame(200, 73, 92, 39, 23, 128, 256, 0, 0);
 	animations.push_back(walk);
 
 	Animation jump;
-	AnimationFrame frame11(200, float(2) / float(128), float(135) / float(256), 45, 38);
-	jump.frames.push_back(frame11);
+	jump.addFrame(200, 2, 135, 45, 38, 128, 256, 0, 0);
 	animations.push_back(jump);
 
 	Animation punch;
-	AnimationFrame frame12(200, float(42) / float(128), float(135) / float(256), 42, 52);
-	punch.frames.push_back(frame12);
+	punch.addFrame(200, 42, 135, 42, 52, 128, 256, 0, 0);
 	animations.push_back(punch);
 
 	currentAnimation = &animations[0];
@@ -51,6 +39,7 @@ Gon::Gon()
 Gon::~Gon()
 {
 }
+
 
 void Gon::Punch(int *map){
 	punching = true;
@@ -145,5 +134,8 @@ void Gon::Draw(int tex_id){
 	//std::cout << "Xo: " << xo << " Yo: " << yo << std::endl;
 	//std::cout << "Xf: " << xf << " Yf: " << yf << std::endl;
 	cBicho::SetWidthHeight(currentFrame.tile_width, currentFrame.tile_heigth);
+	int xd, yd = 0;
+	cBicho::GetPosition(&xd, &yd);
+	cBicho::SetPosition(xd+currentFrame.px_disp, yd-currentFrame.py_disp);
 	DrawRect(tex_id, xo, yo, xf, yf);
 }

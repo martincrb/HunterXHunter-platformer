@@ -59,28 +59,27 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 
 	tile_x = x / cScene::TILE_SIZE;
 	tile_y = y / cScene::TILE_SIZE;
-	width_tiles  = w / cScene::TILE_SIZE;
+	width_tiles  = floor ((float(w) / float(cScene::TILE_SIZE))+0.5);
 	height_tiles = h / cScene::TILE_SIZE;
+	if (right)	tile_x += width_tiles;
 
-	if(right)	tile_x += width_tiles;
-	
 	for(j=0;j<height_tiles;j++)
 	{
 		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
-				std::cout << "YES SOLID WALL TILE " << tileID << std::endl;
-
+				std::cout << "COLLIDING" << std::endl;
 				return true;
 			}
 		}
 	}
-	
+	std::cout << "NOT COLLIDING" << std::endl;
 	return false;
 }
 
 bool cBicho::CollidesMapFloor(int *map)
 {
+	/*
 	int tile_x, tile_y;
 	int j;
 	int width_tiles, height_tiles;
@@ -105,6 +104,48 @@ bool cBicho::CollidesMapFloor(int *map)
 	}
 	in_air = true;
 	return false;
+	*/
+	int tile_x, tile_y;
+	int width_tiles;
+	bool on_base;
+	int i;
+
+	tile_x = x / cScene::TILE_SIZE;
+	tile_y = y / cScene::TILE_SIZE;
+
+	width_tiles = w / cScene::TILE_SIZE;
+	if ((x % cScene::TILE_SIZE) != 0) width_tiles++;
+
+	on_base = false;
+	i = 0;
+	while ((i<width_tiles) && !on_base)
+	{
+
+		if ((y % cScene::TILE_SIZE) == 0)
+		{
+
+			int tileID = map[abs(tile_x + i + ((-tile_y + 1)*cScene::SCENE_WIDTH))];
+			if (tileID != 0) {
+				if (cScene::tiles[tileID - 1].isSolid())
+					in_air = false;
+					on_base = true;
+			}
+		}
+		else
+		{
+			int tileID = map[abs(tile_x + i + ((-tile_y)*cScene::SCENE_WIDTH))];
+			if (tileID != 0) {
+				if (cScene::tiles[tileID - 1].isSolid())
+				{
+					y = (tile_y + 1) * cScene::TILE_SIZE;
+					in_air = false;
+					on_base = true;
+				}
+			}
+		}
+		i++;
+	}
+	return on_base;
 }
 
 bool cBicho::inAir() {
@@ -121,7 +162,8 @@ void cBicho::DrawRect(int tex_id,float xo,float yo,float xf,float yf)
 {
 	int screen_x,screen_y;
 	screen_x = x + cScene::SCENE_Xo;
-	screen_y = y + cScene::SCENE_Yo + (cScene::BLOCK_SIZE - cScene::TILE_SIZE);
+	screen_y = y + cScene::SCENE_Yo;
+
 
 	glEnable(GL_TEXTURE_2D);
 	//std::cout << "QUAD SIZE: " << std::endl;
@@ -130,12 +172,13 @@ void cBicho::DrawRect(int tex_id,float xo,float yo,float xf,float yf)
 	glBegin(GL_QUADS);	
 		glTexCoord2f(xo,yo);	glVertex2i(screen_x  ,screen_y);
 		glTexCoord2f(xf,yo);	glVertex2i(screen_x+w,screen_y);
-		glTexCoord2f(xf,yf);	glVertex2i(screen_x+w,screen_y+h);
-		glTexCoord2f(xo,yf);	glVertex2i(screen_x  ,screen_y+h);
+		glTexCoord2f(xf, yf);	glVertex2i(screen_x + w, screen_y + h);
+		glTexCoord2f(xo, yf);	glVertex2i(screen_x, screen_y + h);
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
 }
+
 
 void cBicho::MoveLeft(int *map)
 {

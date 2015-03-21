@@ -9,6 +9,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{49f5bdd3-c6c6-4617-97fb-832842e2aa97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{fb01f16e-bf68-402c-9ce5-66d925714c55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cData.cpp">
@@ -35,12 +41,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cBicho.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="cPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,20 +62,29 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cJumpingFrog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Killua.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="cBicho.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="cEvilBird.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="cJumpingFrog.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayer.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Gon.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Killua.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +115,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cBicho.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -133,20 +136,29 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cJumpingFrog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Killua.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="cEvilBird.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="cBicho.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="cJumpingFrog.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayer.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Gon.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Killua.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

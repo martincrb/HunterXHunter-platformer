@@ -36,6 +36,7 @@ public:
 	bool Collides(cRect *rc);
 	virtual bool CollidesMapWall(int *map,bool right);
 	virtual bool CollidesMapFloor(int *map);
+	virtual bool HurtsDestructible(int *map, cRect hitBox);
 
 	void GetArea(cRect *rc);
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);

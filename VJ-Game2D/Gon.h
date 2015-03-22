@@ -8,5 +8,6 @@ public:
 	~Gon();
 	void Punch(int *map);
 	void Draw(int tex_id);
+	bool HurtsDestructible(int *map, cRect hitBox);
 };
 

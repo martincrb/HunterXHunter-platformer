@@ -4,7 +4,7 @@
 cEvilBird::cEvilBird()
 {
 	cBicho::SetState(0);
-	actualDirection = RIGHT; //random initial dir
+	actualDirection = LEFT; //random initial dir
 	Animation walk;
 	walk.addFrame(200, 2, 2, 42, 32, 64, 128,0,0);
 	walk.addFrame(200, 2, 46, 43, 29, 64, 128, 0, 0);
@@ -36,32 +36,21 @@ bool cEvilBird::CollidesMapWall(int *map, bool right)
 	height_tiles = h / cScene::TILE_SIZE;
 	if (right)	{
 		tile_x = tile_x + width_tiles;
+	}
 		for (j = 0; j<height_tiles; j++)
 		{
 
-			cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
-			int tileID = map[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))];
+			int altura;
+			if (cScene::BLOCK_SIZE == 32) altura = -tile_y;
+			else if (cScene::BLOCK_SIZE == 16) altura = -tile_y - 1;
+			cScene::debugmap[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))] = 1;
+			int tileID = map[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))];
 			if (tileID != 0) {
 				if (cScene::tiles[tileID - 1].isSolid())	{
 					collides = true;
 				}
 			}
 		}
-	}
-	else {
-		for (j = 0; j<height_tiles; j++)
-		{
-
-			cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
-			int tileID = map[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))];
-			if (tileID != 0) {
-				if (cScene::tiles[tileID - 1].isSolid())	{
-					collides = true;
-				}
-			}
-		}
-
-	}
 	
 	//std::cout << "NOT COLLIDING" << std::endl;
 	return collides;

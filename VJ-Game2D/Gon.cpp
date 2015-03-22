@@ -1,5 +1,5 @@
 #include "Gon.h"
-
+#include "cScene.h"
 
 Gon::Gon()
 {
@@ -46,6 +46,63 @@ Gon::~Gon()
 }
 
 
+bool Gon::HurtsDestructible(int *map, cRect hitBox) {
+	int tile_x, tile_y;
+	int j;
+	int width_tiles, height_tiles;
+
+
+	//Compute WORLD position of hitbox
+	int xb, yb, wb, hb;
+	/*
+	GetPosition(&xb, &yb);
+	xb += hitBox.left;
+	yb += hitBox.bottom;
+	wb = hitBox.right - hitBox.left;
+	hb = hitBox.top - hitBox.bottom;
+
+	hitBox.left = xb;
+	hitBox.bottom = yb + hb;
+	hitBox.top = yb;
+	hitBox.right = xb + wb;
+	*/
+	//Set tile from these coords
+
+	tile_x = hitBox.left / cScene::TILE_SIZE;
+	tile_y = hitBox.top / cScene::TILE_SIZE;
+	//width_tiles = floor((float(wb) / float(cScene::TILE_SIZE)) + 0.5);
+	//height_tiles = hb / cScene::TILE_SIZE;
+
+	int tileID = map[abs(tile_x + ((-tile_y+1)*cScene::SCENE_WIDTH))];
+	if (tileID != 0) {
+		if (cScene::tiles[tileID - 1].isDestructable())	{
+			std::cout << "DESTROY" << std::endl;
+			map[abs(tile_x + ((-tile_y + 1)*cScene::SCENE_WIDTH))] = 0;
+			return true;
+		}
+	}
+	return false;
+	/*
+	for (j = 0; j<height_tiles; j++)
+	{
+		int altura;
+		if (cScene::BLOCK_SIZE == 32) altura = -tile_y;
+		else if (cScene::BLOCK_SIZE == 16) altura = -tile_y - 1;
+		cScene::debugmap[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))] = 1;
+		int tileID = map[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))];
+		if (tileID != 0) {
+			if (cScene::tiles[tileID - 1].isSolid())	{
+				//std::cout << "COLLIDING" << std::endl;
+
+				return true;
+			}
+		}
+	}
+	//std::cout << "NOT COLLIDING" << std::endl;
+	return false;
+	*/
+
+}
 void Gon::Punch(int *map){
 	punching = true;
 }

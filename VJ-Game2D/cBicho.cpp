@@ -87,8 +87,11 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 	
 	for(j=0;j<height_tiles;j++)
 	{
-		cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
-		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
+		int altura;
+		if (cScene::BLOCK_SIZE == 32) altura = -tile_y;
+		else if (cScene::BLOCK_SIZE == 16) altura = -tile_y - 1;
+		cScene::debugmap[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))] = 1;
+		int tileID = map[abs(tile_x + ((altura + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
 				//std::cout << "COLLIDING" << std::endl;
@@ -101,6 +104,10 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 	return false;
 }
 
+bool cBicho::HurtsDestructible(int *map, cRect hitBox) {
+
+	return false;
+}
 bool cBicho::CollidesMapFloor(int *map)
 {
 	/*

@@ -20,3 +20,7 @@ void cPlayer::Draw(int tex_id)
 bool cPlayer::isPunching() {
 	return punching;
 }
+
+bool cPlayer::HurtsDestructible(int *map, cRect hitBox) {
+	return false;
+}

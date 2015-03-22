@@ -175,6 +175,7 @@ bool cGame::Process()
 					}
 					(*Entities)[i].Kill();
 				}
+				Player->HurtsDestructible(Scene.GetMap(), hitBox);
 
 			}
 			
@@ -197,8 +198,8 @@ void cGame::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	glTranslated(posx+50, posy+90, 0);
-	//glScaled(2.0, 2.0, 2.0);
+	glTranslated(1.5*posx+50, 1.5*posy+90, 0);
+	glScaled(1.5, 1.5, 1.5);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
 	//Current player must be rendered on top of IA player

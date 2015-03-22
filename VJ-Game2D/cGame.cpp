@@ -110,11 +110,14 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 bool cGame::Process()
 {
 	bool res=true;
-	
+	for (int k = 0; k < cScene::debugmap.size(); ++k) {
+		cScene::debugmap[k] = 0;
+	}
 	//Process Input
 	if(keys[27])	res=false;	
 
 	if (keys[99])		pController.changeCurrentPlayer();
+	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
 	if (keys[GLUT_KEY_DOWN])		pController.Punch(&Scene);
 	if (keys[GLUT_KEY_UP])			pController.Jump(&Scene);
 	if (keys[GLUT_KEY_LEFT])			pController.MoveLeft(&Scene);

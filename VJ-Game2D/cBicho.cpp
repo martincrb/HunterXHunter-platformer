@@ -84,13 +84,15 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 	width_tiles  = floor ((float(w) / float(cScene::TILE_SIZE))+0.5);
 	height_tiles = h / cScene::TILE_SIZE;
 	if (right)	tile_x += width_tiles;
-
+	
 	for(j=0;j<height_tiles;j++)
 	{
+		cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
 		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
 				//std::cout << "COLLIDING" << std::endl;
+				
 				return true;
 			}
 		}
@@ -142,7 +144,9 @@ bool cBicho::CollidesMapFloor(int *map)
 	i = 0;
 	while ((i<width_tiles) && !on_base)
 	{
-
+		
+		cScene::debugmap[abs(tile_x + i + ((-tile_y + 1)*cScene::SCENE_WIDTH))] = 1;
+		
 		if ((y % cScene::TILE_SIZE) == 0)
 		{
 

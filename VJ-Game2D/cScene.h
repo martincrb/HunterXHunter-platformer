@@ -28,7 +28,9 @@ public:
 	static int SCENE_Yo;
 	static int SCENE_WIDTH;
 	static int SCENE_HEIGHT;
+	static int DEBUG_ON;
 	std::vector<int> map;	//scene
+	static std::vector<int> debugmap;	//scene
 	static std::vector<Tile> tiles; //Tiles and properties
 	Boundary* getBoundaries();
 	std::vector<Entity>* getEntities();

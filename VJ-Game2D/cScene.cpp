@@ -15,10 +15,13 @@ int cScene::SCENE_Xo;
 int cScene::SCENE_Yo;
 int cScene::SCENE_WIDTH;
 int cScene::SCENE_HEIGHT;
+int cScene::DEBUG_ON;
 std::vector<Tile> cScene::tiles;
+std::vector<int> cScene::debugmap;
 
 cScene::cScene(void)
 {
+	DEBUG_ON = 0;
 }
 
 cScene::~cScene(void)
@@ -77,6 +80,7 @@ std::string cScene::LoadLevel(const char* level)
 	}
 
 	map = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
+	debugmap = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
 	TILE_SIZE = tmx.mapInfo.tileWidth;
 	BLOCK_SIZE = tmx.mapInfo.tileWidth;
 	SCENE_Xo = 0;
@@ -240,6 +244,30 @@ void cScene::Draw(int tex_id)
 	glBindTexture(GL_TEXTURE_2D,tex_id);
 	glCallList(id_DL);
 	glDisable(GL_TEXTURE_2D);
+
+	
+
+	if (DEBUG_ON) {
+		glBegin(GL_QUADS);
+		//DEBUG DRAW COLLISIONS
+		for (int j = SCENE_HEIGHT - 1; j >= 0; j--)
+		{
+			int px = SCENE_Xo;
+			int py = SCENE_Yo - (j*TILE_SIZE);
+			//std::cout << px << " " << py << std::endl;
+			for (int i = 0; i < SCENE_WIDTH; i++)
+			{
+				if (debugmap[(j*SCENE_WIDTH) + i] == 1) {
+					glVertex2i(px, py);;
+					glVertex2i(px + BLOCK_SIZE, py);
+					glVertex2i(px + BLOCK_SIZE, py + BLOCK_SIZE);
+					glVertex2i(px, py + BLOCK_SIZE);
+				}
+				px += TILE_SIZE;
+			}
+		}
+		glEnd();
+	}
 }
 int* cScene::GetMap()
 {

@@ -19,6 +19,11 @@ AnimationFrame::~AnimationFrame()
 {
 }
 
+void AnimationFrame::invertHitBoxX() { //Inverts hitbox for mirrored animations 
+	hitBox.right = hitBox.right - (tile_width-(hitBox.right-tile_width));
+	hitBox.left = hitBox.left - (hitBox.left -  (hitBox.left - tile_width));
+}
+
 void AnimationFrame::addHitBox(int x, int y, int w, int h) {
 	hitBox.left = x;
 	hitBox.right = x + w;

@@ -114,15 +114,28 @@ bool cGame::Process()
 		cScene::debugmap[k] = 0;
 	}
 	//Process Input
+	bool something_done = false;
 	if(keys[27])	res=false;	
 
 	if (keys[99])		pController.changeCurrentPlayer();
 	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
-	if (keys[GLUT_KEY_DOWN])		pController.Punch(&Scene);
-	if (keys[GLUT_KEY_UP])			pController.Jump(&Scene);
-	if (keys[GLUT_KEY_LEFT])			pController.MoveLeft(&Scene);
-	else if (keys[GLUT_KEY_RIGHT])	pController.MoveRight(&Scene);
-	else pController.getCurrentPlayer()->Stop();
+	if (keys[GLUT_KEY_DOWN])		{
+		pController.Punch(&Scene);
+		something_done = true;
+	}
+	if (keys[GLUT_KEY_UP])			{
+		pController.Jump(&Scene);
+		something_done = true;
+	}
+	if (keys[GLUT_KEY_LEFT])			{
+		pController.MoveLeft(&Scene);
+		something_done = true;
+	}
+	else if (keys[GLUT_KEY_RIGHT])	{
+		pController.MoveRight(&Scene);
+		something_done = true;
+	}
+	else pController.Stop();
 	
 	pController.moveCompanion(&Scene);
 	//Camera follows player

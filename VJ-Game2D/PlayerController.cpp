@@ -3,14 +3,16 @@
 
 PlayerController::PlayerController()
 {
-	command_queue.push(0);
+	for (int i = 0; i < PLAYERS_DELAY; ++i)
+		command_queue.push(0);
 }
 PlayerController::PlayerController(cPlayer* playerOne, cPlayer* playerTwo)
 {
 	Gon = playerOne;
 	Killua = playerTwo;
 	currentPlayer = Gon;
-	command_queue.push(0);
+	for (int i = 0; i < PLAYERS_DELAY; ++i)
+		command_queue.push(0);
 }
 
 PlayerController::~PlayerController()
@@ -23,6 +25,10 @@ cPlayer* PlayerController::getNotCurrentPlayer() {
 	if (currentPlayer == Gon) return Killua;
 	else return Gon;
 }
+void PlayerController::Stop() {
+	currentPlayer->Stop();
+	command_queue.push(0);
+}
 void PlayerController::setPlayers(cPlayer* playerOne, cPlayer* playerTwo)
 {
 	Gon = playerOne;
@@ -31,28 +37,28 @@ void PlayerController::setPlayers(cPlayer* playerOne, cPlayer* playerTwo)
 }
 void PlayerController::Punch(cScene* scene) {
 	command_queue.push(0);
-	if (command_queue.size() > 20) {
+	if (command_queue.size() > PLAYERS_DELAY) {
 		command_queue.pop();
 	}
 	currentPlayer->Punch(scene->GetMap());
 }
 void PlayerController::Jump(cScene* scene){
 	command_queue.push(1);
-	if (command_queue.size() > 20) {
+	if (command_queue.size() > PLAYERS_DELAY) {
 		command_queue.pop();
 	}
 	currentPlayer->Jump(scene->GetMap());
 }
 void PlayerController::MoveLeft(cScene* scene){
 	command_queue.push(2);
-	if (command_queue.size() > 20) {
+	if (command_queue.size() > PLAYERS_DELAY) {
 		command_queue.pop();
 	}
 	currentPlayer->MoveLeft(scene->GetMap());
 }
 void PlayerController::MoveRight(cScene* scene){
 	command_queue.push(3);
-	if (command_queue.size() > 20) {
+	if (command_queue.size() > PLAYERS_DELAY) {
 		command_queue.pop();
 	}
 	currentPlayer->MoveRight(scene->GetMap());
@@ -60,19 +66,15 @@ void PlayerController::MoveRight(cScene* scene){
 
 void PlayerController::moveCompanion(cScene* scene) {
 	int command = 0;
-	if (!command_queue.empty()) {
-		command = command_queue.front();
-		command_queue.pop();
-	}
-	else {
+	command = command_queue.front();
+	command_queue.pop();
+
+	switch (command) {
+	case 0:
 		if (currentPlayer == Gon) {
 			Killua->Stop();
 		}
 		else Gon->Stop();
-
-	}
-	switch (command) {
-	case 0:
 		break;
 	case 1:
 		if (currentPlayer == Gon) {
@@ -94,6 +96,7 @@ void PlayerController::moveCompanion(cScene* scene) {
 		break;
 	}
 }
+
 void PlayerController::changeCurrentPlayer(){
 	if (currentPlayer == Gon) {
 		Gon->Stop();

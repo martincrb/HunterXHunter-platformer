@@ -117,6 +117,7 @@ void Gon::Draw(int tex_id){
 	}
 
 	float xo, yo, xf, yf;
+
 	switch (GetState())
 	{
 		//1
@@ -128,6 +129,7 @@ void Gon::Draw(int tex_id){
 		else if (punching) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
+			currentFrame.invertHitBoxX();
 		}
 		else {
 			currentAnimation = &animations[0];
@@ -164,6 +166,8 @@ void Gon::Draw(int tex_id){
 		else if (punching) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
+			currentFrame.invertHitBoxX();
+			
 		}
 		else {
 			currentAnimation = &animations[1];

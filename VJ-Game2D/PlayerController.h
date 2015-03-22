@@ -2,6 +2,7 @@
 #include "cScene.h"
 #include "cPlayer.h"
 #include <queue>
+#define PLAYERS_DELAY 10
 class PlayerController
 {
 public:
@@ -12,6 +13,7 @@ public:
 	cPlayer* getCurrentPlayer();
 	cPlayer* getNotCurrentPlayer();
 	void Punch(cScene* scene);
+	void Stop();
 	void Jump(cScene* scene);
 	void MoveLeft(cScene* scene);
 	void MoveRight(cScene* scene);

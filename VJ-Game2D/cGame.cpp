@@ -121,6 +121,7 @@ bool cGame::Process()
 	else if (keys[GLUT_KEY_RIGHT])	pController.MoveRight(&Scene);
 	else pController.getCurrentPlayer()->Stop();
 	
+	pController.moveCompanion(&Scene);
 	//Camera follows player
 	pController.getCurrentPlayer()->GetPosition(&posx, &posy);
 	posx = -posx;
@@ -130,10 +131,31 @@ bool cGame::Process()
 	Player->Logic(Scene.GetMap());
 	Player2->Logic(Scene.GetMap());
 
+	int xe, ye, we, he;
+	Player2->GetPosition(&xe, &ye);
+	Player2->GetWidthHeight(&we, &he);
+	
+	
+	
+
 	//Process all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {
 		if ((*Entities)[i].alive) {
 			(*Entities)[i].bicho->Logic(Scene.GetMap());
+			int xe, ye, we, he;
+			(*Entities)[i].bicho->GetPosition(&xe, &ye);
+			(*Entities)[i].bicho->GetWidthHeight(&we, &he);
+			cRect EntityBox;
+			EntityBox.left = xe;
+			EntityBox.top = ye;
+			EntityBox.bottom = ye + he;
+			EntityBox.right = xe + we;
+				if (Player->Collides(&EntityBox)) { //Player colliding with enemy
+
+					//std::cout << "Die " << (*Entities)[i].type << std::endl;
+					//(*Entities)[i].Kill();
+				}
+
 		}
 	}
 	return res;

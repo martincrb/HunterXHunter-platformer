@@ -49,8 +49,30 @@ void cBicho::GetWidthHeight(int *width,int *height)
 }
 bool cBicho::Collides(cRect *rc)
 {
-	return ((x>rc->left) && (x+w<rc->right) && (y>rc->bottom) && (y+h<rc->top));
+	//std::cout << "INSIDE COLLIDES" << std::endl;
+	//std::cout << rc->left << " "   << rc->right << rc->bottom << " " << rc->top << " " << std::endl;
+	//std::cout << x        << " "   << x + w     << -y          << " " << -(y + h) << " " << std::endl;
+	if (x + w < rc->left) {
+	//	std::cout << " a is left of b" << std::endl;
+		return false; // a is left of b
+	}
+	if (x > rc->right) {
+	//	std::cout << " a is right of b" << std::endl;
+		return false; // a is right of b
+	}
+	if (-y < -rc->bottom){
+	//	std::cout << " a is above b" << std::endl;
+		return false; // a is above b
+	}
+	if (-(y + h) > -rc->top) {
+	//	std::cout << "a is below b " << std::endl;
+		return false; // a is below b
+	}
+	//std::cout << "yes" << std::endl;
+	return true;
+	
 }
+
 bool cBicho::CollidesMapWall(int *map,bool right)
 {
 	int tile_x,tile_y;
@@ -68,12 +90,12 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 		int tileID = map[abs(tile_x + ((-tile_y-1 + j)*cScene::SCENE_WIDTH))];
 		if (tileID != 0) {
 			if (cScene::tiles[tileID-1].isSolid())	{
-				std::cout << "COLLIDING" << std::endl;
+				//std::cout << "COLLIDING" << std::endl;
 				return true;
 			}
 		}
 	}
-	std::cout << "NOT COLLIDING" << std::endl;
+	//std::cout << "NOT COLLIDING" << std::endl;
 	return false;
 }
 

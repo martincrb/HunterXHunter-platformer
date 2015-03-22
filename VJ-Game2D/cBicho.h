@@ -34,6 +34,7 @@ public:
 	bool Collides(cRect *rc);
 	virtual bool CollidesMapWall(int *map,bool right);
 	virtual bool CollidesMapFloor(int *map);
+
 	void GetArea(cRect *rc);
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 	virtual void Draw(int tex_id);

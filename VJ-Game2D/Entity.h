@@ -6,6 +6,7 @@ class Entity
 public:
 	Entity();
 	~Entity();
+	void Kill();
 	std::string type;
 	cBicho* bicho;
 	bool alive;

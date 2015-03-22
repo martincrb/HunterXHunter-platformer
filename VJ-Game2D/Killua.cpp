@@ -12,11 +12,11 @@ Killua::Killua()
 	animations.push_back(idle);
 
 	Animation walk;
-	walk.addFrame(200, 2, 53, 48, 24, 128, 256, 0, 0);
+	//walk.addFrame(200, 2, 53, 48, 24, 128, 256, 0, 0);
 	walk.addFrame(200, 28, 53, 46, 28, 128, 256, 0, 0);
 	walk.addFrame(200, 58, 53, 46, 25, 128, 256, 0, 0);
 	walk.addFrame(200, 85, 53, 46, 21, 128, 256, 0, 0);
-	walk.addFrame(200, 2, 103, 48, 23, 128, 256, 0, 0);
+	//walk.addFrame(200, 2, 103, 48, 23, 128, 256, 0, 0);
 	walk.addFrame(200, 27, 103, 47, 30, 128, 256, 0, 0);
 	walk.addFrame(200, 59, 103, 45, 27, 128, 256, 0, 0);
 	walk.addFrame(200, 88, 103, 45, 22, 128, 256, 0, 0);

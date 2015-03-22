@@ -1,6 +1,7 @@
 #pragma once
 #include "cScene.h"
 #include "cPlayer.h"
+#include <queue>
 class PlayerController
 {
 public:
@@ -15,9 +16,11 @@ public:
 	void MoveLeft(cScene* scene);
 	void MoveRight(cScene* scene);
 	void changeCurrentPlayer();
+	void moveCompanion(cScene* scene);
 private:
 	cPlayer* currentPlayer;
 	cPlayer* Gon;
 	cPlayer* Killua;
+	std::queue<int> command_queue;
 };
 

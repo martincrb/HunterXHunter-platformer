@@ -16,3 +16,7 @@ void cPlayer::Punch(int *map){
 void cPlayer::Draw(int tex_id)
 {	
 }
+
+bool cPlayer::isPunching() {
+	return punching;
+}

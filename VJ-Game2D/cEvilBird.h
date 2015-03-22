@@ -12,6 +12,9 @@ public:
 	void Logic(int *map);
 	void Draw(int tex_id);
 	bool CollidesMapFloor(int *map);
+	bool CollidesMapWall(int *map, bool right);
+	void MoveRight(int *map);
+	void MoveLeft(int *map);
 private:
 	int actualDirection;
 };

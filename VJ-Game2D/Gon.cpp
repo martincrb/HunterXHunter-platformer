@@ -25,7 +25,12 @@ Gon::Gon()
 	animations.push_back(jump);
 
 	Animation punch;
-	punch.addFrame(200, 42, 135, 42, 52, 128, 256, 0, 0);
+	cRect hitBox;
+	hitBox.bottom = -20;
+	hitBox.left = 40;
+	hitBox.top = -20 - 8;
+	hitBox.right = 40 + 15;
+	punch.addFrame(200, 42, 135, 42, 52, 128, 256, 0, 0, hitBox);
 	animations.push_back(punch);
 
 	currentAnimation = &animations[0];
@@ -134,8 +139,9 @@ void Gon::Draw(int tex_id){
 	//std::cout << "Xo: " << xo << " Yo: " << yo << std::endl;
 	//std::cout << "Xf: " << xf << " Yf: " << yf << std::endl;
 	cBicho::SetWidthHeight(currentFrame.tile_width, currentFrame.tile_heigth);
-	int xd, yd = 0;
-	cBicho::GetPosition(&xd, &yd);
-	cBicho::SetPosition(xd+currentFrame.px_disp, yd-currentFrame.py_disp);
+	//int xd, yd = 0;
+	//cBicho::GetPosition(&xd, &yd);
+	//cBicho::SetPosition(xd+currentFrame.px_disp, yd-currentFrame.py_disp);
 	DrawRect(tex_id, xo, yo, xf, yf);
+	
 }

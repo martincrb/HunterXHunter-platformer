@@ -258,10 +258,14 @@ void cScene::Draw(int tex_id)
 			for (int i = 0; i < SCENE_WIDTH; i++)
 			{
 				if (debugmap[(j*SCENE_WIDTH) + i] == 1) {
+					glColor3f(0, 1, 1);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 					glVertex2i(px, py);;
 					glVertex2i(px + BLOCK_SIZE, py);
 					glVertex2i(px + BLOCK_SIZE, py + BLOCK_SIZE);
 					glVertex2i(px, py + BLOCK_SIZE);
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					glColor3f(1, 1, 1);
 				}
 				px += TILE_SIZE;
 			}

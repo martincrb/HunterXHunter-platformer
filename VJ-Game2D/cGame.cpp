@@ -153,11 +153,38 @@ bool cGame::Process()
 			EntityBox.top = ye;
 			EntityBox.bottom = ye + he;
 			EntityBox.right = xe + we;
-				if (Player->Collides(&EntityBox)) { //Player colliding with enemy
+			if (Player->hasHitBox()) {
+				cRect hitBox = Player->getHitBox();
+				//Set coordinates referencing world not player
 
-					//std::cout << "Die " << (*Entities)[i].type << std::endl;
-					//(*Entities)[i].Kill();
+				int xb, yb, wb, hb;
+				Player->GetPosition(&xb, &yb);
+				xb += hitBox.left;
+				yb += hitBox.bottom;
+				wb = hitBox.right - hitBox.left;
+				hb = hitBox.top - hitBox.bottom;
+
+				hitBox.left = xb;
+				hitBox.bottom = yb + hb;
+				hitBox.top = yb;
+				hitBox.right = xb + wb;
+				//std::cout << "HitBox ON" << std::endl;
+				if ((*Entities)[i].bicho->Collides(&hitBox)) { //if entity collides with hitbox from player
+					if (cScene::DEBUG_ON) {
+						std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
+					}
+					(*Entities)[i].Kill();
 				}
+
+			}
+			
+			if (!Player->isPunching() && Player->Collides(&EntityBox)) { //Player colliding with enemy
+				if (cScene::DEBUG_ON) {
+					std::cout << "Im touching a " << (*Entities)[i].type << std::endl;
+				}
+					//(*Entities)[i].Kill();
+			}
+			
 
 		}
 	}
@@ -183,7 +210,30 @@ void cGame::Render()
 		Player->Draw(Data.GetID(IMG_PLAYER));
 		Player2->Draw(Data.GetID(IMG_PLAYER2));
 	}
-	
+	if (cScene::DEBUG_ON) {
+		//Render hitBoxes
+		if (Player->hasHitBox()) {
+			cRect hitBox = Player->getHitBox();
+			int xb, yb, wb, hb;
+			Player->GetPosition(&xb, &yb);
+
+			xb += hitBox.left;
+			yb += hitBox.bottom;
+			wb = hitBox.right - hitBox.left;
+			hb = hitBox.top - hitBox.bottom;
+
+
+			glBegin(GL_QUADS);
+			glColor3f(1, 0, 0);
+			glVertex2i(xb, yb);;
+			glVertex2i(xb + wb, yb);
+			glVertex2i(xb + wb, yb + hb);
+			glVertex2i(xb, yb + hb);
+			glColor3f(1, 1, 1);
+			glEnd();
+		}
+
+	}
 
 	//Render all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {

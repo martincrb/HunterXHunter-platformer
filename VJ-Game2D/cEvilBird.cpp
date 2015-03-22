@@ -1,5 +1,5 @@
 #include "cEvilBird.h"
-
+#include "cScene.h"
 
 cEvilBird::cEvilBird()
 {
@@ -22,23 +22,124 @@ cEvilBird::~cEvilBird()
 {
 }
 
+bool cEvilBird::CollidesMapWall(int *map, bool right)
+{
+	bool collides = false;
+	//if (right) std::cout << "Going RIGHT" << std::endl;
+	//else std::cout << "Going LEFT" << std::endl;
+	int tile_x, tile_y;
+	int j;
+	int width_tiles, height_tiles;
+	tile_x = x / cScene::TILE_SIZE;
+	tile_y = y / cScene::TILE_SIZE;
+	width_tiles = floor((float(w) / float(cScene::TILE_SIZE)) + 0.5);
+	height_tiles = h / cScene::TILE_SIZE;
+	if (right)	{
+		tile_x = tile_x + width_tiles;
+		for (j = 0; j<height_tiles; j++)
+		{
+
+			cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
+			int tileID = map[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))];
+			if (tileID != 0) {
+				if (cScene::tiles[tileID - 1].isSolid())	{
+					collides = true;
+				}
+			}
+		}
+	}
+	else {
+		for (j = 0; j<height_tiles; j++)
+		{
+
+			cScene::debugmap[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))] = 1;
+			int tileID = map[abs(tile_x + ((-tile_y - 1 + j)*cScene::SCENE_WIDTH))];
+			if (tileID != 0) {
+				if (cScene::tiles[tileID - 1].isSolid())	{
+					collides = true;
+				}
+			}
+		}
+
+	}
+	
+	//std::cout << "NOT COLLIDING" << std::endl;
+	return collides;
+}
+
+void cEvilBird::MoveRight(int *map) {
+	int xaux;
+
+	//Whats next tile?
+	if ((x % cScene::TILE_SIZE) == 0)
+	{
+		xaux = x;
+		x += STEP_LENGTH;
+
+		if (CollidesMapWall(map, true))
+		{
+			x = xaux;
+			state = STATE_LOOKRIGHT;
+			actualDirection = LEFT;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		x += STEP_LENGTH;
+
+		if (state != STATE_WALKRIGHT)
+		{
+			state = STATE_WALKRIGHT;
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
+void cEvilBird::MoveLeft(int *map) {
+	int xaux;
+
+	//Whats next tile?
+	if ((x % cScene::TILE_SIZE) == 0)
+	{
+		xaux = x;
+		x -= STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			x = xaux;
+			state = STATE_LOOKLEFT;
+			actualDirection = RIGHT;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		x -= STEP_LENGTH;
+		if (state != STATE_WALKLEFT)
+		{
+			state = STATE_WALKLEFT;
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
 
 void cEvilBird::Logic(int *map) {
 	//if (actualDirection == LEFT) std::cout << "LEFT" << std::endl;
 	//if (actualDirection == RIGHT) std::cout << "RIGHT" << std::endl;
 	switch (actualDirection) {
 	case LEFT:
+
 		MoveLeft(map);
-		if (CollidesMapWall(map, false)) actualDirection = RIGHT;
 		break;
 
 	case RIGHT:
 		MoveRight(map);
-		if (CollidesMapWall(map, true)) actualDirection = LEFT;
 		break;
 	}
 	
-	cBicho::Logic(map);
+	//cBicho::Logic(map);
 }
 
 bool cEvilBird::CollidesMapFloor(int *map) {

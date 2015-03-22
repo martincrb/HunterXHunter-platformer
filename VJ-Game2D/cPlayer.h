@@ -14,6 +14,7 @@ public:
 	cPlayer(int state);
 	virtual void Punch(int *map);
 	virtual void Draw(int tex_id);
+	bool isPunching();
 protected:
 	int punchDelay;
 	bool punching;

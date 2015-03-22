@@ -5,6 +5,8 @@
 #include "Animation.h"
 #include "cRect.h"
 
+
+
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
 #define JUMP_HEIGHT		96
@@ -39,9 +41,11 @@ public:
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 	virtual void Draw(int tex_id);
 
-	void MoveRight(int *map);
-	void MoveLeft(int *map);
+	virtual void MoveRight(int *map);
+	virtual void MoveLeft(int *map);
 
+	bool hasHitBox();
+	cRect getHitBox();
 
 	void Jump(int *map);
 	void Stop();
@@ -56,14 +60,15 @@ protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;
 	AnimationFrame currentFrame;
-private:
-	int x,y;
-	int w,h;
+	int x, y;
+	int w, h;
 	int state;
 	bool in_air;
 	bool jumping;
 	int jump_alfa;
 	int jump_y;
 
-	int seq,delay;
+	int seq, delay;
+private:
+	
 };

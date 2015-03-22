@@ -8,7 +8,7 @@ AnimationFrame::AnimationFrame(int duration, float tile_px, float tile_py, int t
 	this->tile_py = tile_py;
 	this->tile_heigth = tile_heigth;
 	this->tile_width = tile_width;
-
+	hasHitBox = false;
 }
 AnimationFrame::AnimationFrame()
 {
@@ -17,4 +17,15 @@ AnimationFrame::AnimationFrame()
 
 AnimationFrame::~AnimationFrame()
 {
+}
+
+void AnimationFrame::addHitBox(int x, int y, int w, int h) {
+	hitBox.left = x;
+	hitBox.right = x + w;
+	hitBox.top = -y - h;
+	hitBox.bottom = -y;
+	hasHitBox = true;
+}
+cRect AnimationFrame::getHitBox() {
+	return hitBox;
 }

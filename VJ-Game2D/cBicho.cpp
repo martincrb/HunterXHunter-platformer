@@ -1,6 +1,6 @@
 #include "cBicho.h"
-#include "cScene.h"
 #include "Globals.h"
+#include "cScene.h"
 
 cBicho::cBicho(void)
 {
@@ -57,15 +57,15 @@ bool cBicho::Collides(cRect *rc)
 		return false; // a is left of b
 	}
 	if (x > rc->right) {
-	//	std::cout << " a is right of b" << std::endl;
+		//std::cout << " a is right of b" << std::endl;
 		return false; // a is right of b
 	}
 	if (-y < -rc->bottom){
-	//	std::cout << " a is above b" << std::endl;
+		//std::cout << " a is above b" << std::endl;
 		return false; // a is above b
 	}
 	if (-(y + h) > -rc->top) {
-	//	std::cout << "a is below b " << std::endl;
+		//std::cout << "a is below b " << std::endl;
 		return false; // a is below b
 	}
 	//std::cout << "yes" << std::endl;
@@ -137,16 +137,24 @@ bool cBicho::CollidesMapFloor(int *map)
 	tile_x = x / cScene::TILE_SIZE;
 	tile_y = y / cScene::TILE_SIZE;
 
-	width_tiles = w / cScene::TILE_SIZE;
+	width_tiles = floor((float(w) / float(cScene::TILE_SIZE)) + 0.5);
 	if ((x % cScene::TILE_SIZE) != 0) width_tiles++;
 
 	on_base = false;
 	i = 0;
 	while ((i<width_tiles) && !on_base)
 	{
-		
+
 		cScene::debugmap[abs(tile_x + i + ((-tile_y + 1)*cScene::SCENE_WIDTH))] = 1;
-		
+		int actualTile = map[abs(tile_x + i + ((-tile_y)*cScene::SCENE_WIDTH))];
+		if (actualTile != 0) { //Si me he quedado encajado dentro de un tile solido, subo
+			if (cScene::tiles[actualTile].isSolid())
+			{
+				y = (tile_y + 1) * cScene::TILE_SIZE;
+				in_air = false;
+				on_base = true;
+			}
+		}
 		if ((y % cScene::TILE_SIZE) == 0)
 		{
 
@@ -172,6 +180,13 @@ bool cBicho::CollidesMapFloor(int *map)
 		i++;
 	}
 	return on_base;
+}
+
+bool cBicho::hasHitBox() {
+	return currentFrame.hasHitBox;
+}
+cRect  cBicho::getHitBox() {
+	return currentFrame.getHitBox();
 }
 
 bool cBicho::inAir() {

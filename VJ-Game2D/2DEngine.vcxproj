@@ -69,7 +69,7 @@
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>E:\Programs\OpenAL 1.1 SDK\libs\Win32;E:\Programs\OpenAL 1.1 SDK\libs;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D\glut-3.7.6-bin;C:\Users\Administrador\Source\Repos\VJ-2DGame\VJ-Game2D;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29;F:\Assignaturas\VJ\p02 %28Tile Based Engine%29\glut-3.7.6-bin;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\TMXParser\src;C:\Users\Martin\Desktop\p02 %28Tile Based Engine%29\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenAL32.lib;ALut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

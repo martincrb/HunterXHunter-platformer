@@ -181,6 +181,7 @@ std::string cScene::LoadLevel(const char* level)
 				std::cout << "Object Position Y: " << it2->y << std::endl;
 				std::cout << "Object Width: " << it2->width << std::endl;
 				std::cout << "Object Height: " << it2->height << std::endl;
+				
 				//if (it2->second.gid != 0) { std::cout << "Object Tile GID: " << tmx.objectGroup[it->first].object[it2->first].gid << std::endl; }
 				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
 				cRect boundary;

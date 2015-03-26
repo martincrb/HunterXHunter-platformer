@@ -6,6 +6,7 @@
 #include "Gon.h"
 #include "Killua.h"
 #include "PlayerController.h"
+#include "Camera.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -36,4 +37,5 @@ private:
 	cPlayer* Player;
 	cPlayer* Player2;
 	PlayerController pController;
+	Camera camera;
 };

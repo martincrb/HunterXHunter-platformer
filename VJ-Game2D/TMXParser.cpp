@@ -143,6 +143,10 @@ namespace TMX {
 		  }
 		  obj.x = atoi(object_node->first_attribute("x")->value());
 		  obj.y = atoi(object_node->first_attribute("y")->value());
+		  rapidxml::xml_attribute<>* p = object_node->first_attribute("width");
+		  if (p != 0) obj.width = atoi(p->value());
+		  p = object_node->first_attribute("height");
+		  if (p != 0) obj.height = atoi(p->value());
 		  oGroup.object.push_back(obj);
 
 	  }

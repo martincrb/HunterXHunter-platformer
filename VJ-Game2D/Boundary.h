@@ -9,10 +9,22 @@ public:
 	bool collides(); //TODO
 	void addBoundary(cRect rectangle);
 	bool point_inside(int x, int y);
-	bool adjust(int& orig_x, int& orig_y, int width, int height);
-
+	void adjust(cRect& rect, const cRect& last_valid);
+	bool is_inside(cRect rect);
 private:
-	std::vector<cRect> areas;
+	class Point {
+	public:
+		Point() {}
+		Point(int x, int y) : x(x), y(y) {}
+		bool operator ==(const Point &p) const {
+			return x == p.x && y == p.y;
+		}
+		int x, y;
+	};
 
+	std::vector<cRect> areas;
+	std::vector<Point> vertices;
+
+	void add_vertex(Point p);
 };
 

@@ -2,8 +2,6 @@
 #include "Globals.h"
 #include "Resources.h"
 
-int posx ;
-int posy;
 
 cGame::cGame(void)
 {
@@ -72,12 +70,9 @@ bool cGame::Init()
 	Player2->SetState(STATE_LOOKRIGHT);
 
 	pController.setPlayers(Player, Player2);
-
-	pController.getCurrentPlayer()->GetPosition(&posx, &posy);
-	posx = -posx;
-	posy = -posy;
-	//Camera centered at PLAYER
-
+	int x, y;
+	pController.getCurrentPlayer()->GetPosition(&x, &y);
+	camera = Camera(0, 0, GAME_WIDTH, GAME_HEIGHT, Scene.getBoundaries(), x, -y);
 	
 	return res;
 }
@@ -139,9 +134,10 @@ bool cGame::Process()
 	
 	pController.moveCompanion(&Scene);
 	//Camera follows player
-	pController.getCurrentPlayer()->GetPosition(&posx, &posy);
-	posx = -posx;
-	posy = -posy;
+	int x, y;
+	pController.getCurrentPlayer()->GetPosition(&x, &y);
+	camera.move_player(x, -y);
+	
 	//Game Logic
 	//...
 	Player->Logic(Scene.GetMap());
@@ -211,8 +207,11 @@ void cGame::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	glLoadIdentity();
-	glTranslated(1.5*posx+50, 1.5*posy+90, 0);
-	glScaled(1.5, 1.5, 1.5);
+	int x, y;
+	camera.get_camera_pos(x, y);
+	glTranslated(-x, y + GAME_HEIGHT, 0);
+	//glTranslated(1.5*posx + 50, 1.5*posy + 90, 0);
+	//glScaled(1.5, 1.5, 1.5);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
 	//Current player must be rendered on top of IA player

@@ -210,8 +210,7 @@ void cGame::Render()
 	int x, y;
 	camera.get_camera_pos(x, y);
 	glTranslated(-x, y + GAME_HEIGHT, 0);
-	//glTranslated(1.5*posx + 50, 1.5*posy + 90, 0);
-	//glScaled(1.5, 1.5, 1.5);
+	//glScaled(2, 2, 2);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
 	//Current player must be rendered on top of IA player

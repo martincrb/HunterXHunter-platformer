@@ -29,13 +29,15 @@ public:
 	static int SCENE_WIDTH;
 	static int SCENE_HEIGHT;
 	static int DEBUG_ON;
-	std::vector<int> map;	//scene
+	std::vector< std::vector<int> > map;	//scene
 	static std::vector<int> debugmap;	//scene
 	static std::vector<Tile> tiles; //Tiles and properties
 	Boundary* getBoundaries();
 	std::vector<Entity>* getEntities();
 
 private:
+	int tilesetheight;
+	int tilesetwidth;
 	int id_DL;								//actual level display list
 	std::vector<Entity> Entities;
 	Boundary camera_limits;

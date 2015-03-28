@@ -49,8 +49,7 @@ std::string cScene::LoadLevel(const char* level)
 	int i,j,px,py;
 	char tile;
 	float coordx_tile, coordy_tile;
-	int tilesetheight;
-	int tilesetwidth;
+	
 
 	res=true;
 
@@ -79,7 +78,7 @@ std::string cScene::LoadLevel(const char* level)
 		tiles.push_back(tile);
 	}
 
-	map = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
+	std::vector<int> mapaux = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
 	debugmap = std::vector<int>(SCENE_HEIGHT*SCENE_WIDTH);
 	TILE_SIZE = tmx.mapInfo.tileWidth;
 	BLOCK_SIZE = tmx.mapInfo.tileWidth;
@@ -123,16 +122,16 @@ std::string cScene::LoadLevel(const char* level)
 					if (atoi(layer[(j*SCENE_WIDTH) + i].c_str()) == 0)
 					{
 						//Tiles must be != 0 !!!
-						map[(j*SCENE_WIDTH) + i] = 0;
+						mapaux[(j*SCENE_WIDTH) + i] = 0;
 					}
 					else
 					{
 						//Tiles = 1,2,3,...
 						int tileID = atoi(layer[(j*SCENE_WIDTH) + i].c_str());
-						map[(j*SCENE_WIDTH) + i] = atoi(layer[(j*SCENE_WIDTH) + i].c_str());
+						mapaux[(j*SCENE_WIDTH) + i] = atoi(layer[(j*SCENE_WIDTH) + i].c_str());
 						//std::cout << "TileSetHeigth: " << tilesetheight << std::endl;
-						int tileColumn = (map[(j*SCENE_WIDTH) + i] - 1) % (tilesetheight / TILE_SIZE);
-						int tileRow = (map[(j*SCENE_WIDTH) + i] - 1) / (tilesetwidth / TILE_SIZE);
+						int tileColumn = (mapaux[(j*SCENE_WIDTH) + i] - 1) % (tilesetheight / TILE_SIZE);
+						int tileRow = (mapaux[(j*SCENE_WIDTH) + i] - 1) / (tilesetwidth / TILE_SIZE);
 						coordx_tile = float(tileColumn*TILE_SIZE) / float(tilesetwidth);
 						coordy_tile = float(tileRow*TILE_SIZE) / float(tilesetheight);
 						float offsetW = float(BLOCK_SIZE) / float(tilesetwidth);
@@ -147,6 +146,7 @@ std::string cScene::LoadLevel(const char* level)
 					px += TILE_SIZE;
 				}
 			}
+			map.push_back(mapaux);
 		}
 
 		glEnd();
@@ -243,7 +243,45 @@ void cScene::Draw(int tex_id)
 {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D,tex_id);
-	glCallList(id_DL);
+	glBegin(GL_QUADS);
+	float coordx_tile, coordy_tile;
+	for (int layer = 0; layer < map.size(); ++layer) {
+		for (int j = SCENE_HEIGHT - 1; j >= 0; j--)
+		{
+			int px = SCENE_Xo;
+			int py = SCENE_Yo - (j*TILE_SIZE);
+			//std::cout << px << " " << py << std::endl;
+			for (int i = 0; i < SCENE_WIDTH; i++)
+			{
+				if (map[layer][(j*SCENE_WIDTH) + i] == 0)
+				{
+					//Tiles must be != 0 !!!
+					map[layer][(j*SCENE_WIDTH) + i] = 0;
+				}
+				else
+				{
+					//Tiles = 1,2,3,...
+					int tileID = map[layer][(j*SCENE_WIDTH) + i];
+					//std::cout << "TileSetHeigth: " << tilesetheight << std::endl;
+					int tileColumn = (map[layer][(j*SCENE_WIDTH) + i] - 1) % (tilesetheight / TILE_SIZE);
+					int tileRow = (map[layer][(j*SCENE_WIDTH) + i] - 1) / (tilesetwidth / TILE_SIZE);
+					coordx_tile = float(tileColumn*TILE_SIZE) / float(tilesetwidth);
+					coordy_tile = float(tileRow*TILE_SIZE) / float(tilesetheight);
+					float offsetW = float(BLOCK_SIZE) / float(tilesetwidth);
+					float offsetH = float(BLOCK_SIZE) / float(tilesetheight);
+					//if (tiles[tileID].isSolid()) { //DEBUG:: DRAW ONLY SOLID TILES
+					glTexCoord2f(coordx_tile, coordy_tile + offsetH);	glVertex2i(px, py);
+					glTexCoord2f(coordx_tile + offsetW, coordy_tile + offsetH);	glVertex2i(px + BLOCK_SIZE, py);
+					glTexCoord2f(coordx_tile + offsetW, coordy_tile);	glVertex2i(px + BLOCK_SIZE, py + BLOCK_SIZE);
+					glTexCoord2f(coordx_tile, coordy_tile);	glVertex2i(px, py + BLOCK_SIZE);
+					//}
+				}
+				px += TILE_SIZE;
+			}
+		}
+	}
+	glEnd();
+	//glCallList(id_DL);
 	glDisable(GL_TEXTURE_2D);
 
 	
@@ -276,7 +314,7 @@ void cScene::Draw(int tex_id)
 }
 int* cScene::GetMap()
 {
-	return &map[0];
+	return &map[1][0];
 }
 
 bool cScene::isSolid(int tileID)

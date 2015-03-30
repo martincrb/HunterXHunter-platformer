@@ -33,7 +33,7 @@ void Camera::set_camera(int orig_x, int orig_y, int width, int height) {
 }
 
 void Camera::move_player(int pos_x, int pos_y) {
-	std::cout << "pos: " << pos_x << "|" << pos_y << std::endl;
+	//std::cout << "pos: " << pos_x << "|" << pos_y << std::endl;
 	assert(boundary.point_inside(pos_x, pos_y)); // El jugador tiene que estar dentro
 	
 	int dx = player_last_x - pos_x;

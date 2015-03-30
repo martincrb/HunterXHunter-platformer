@@ -12,6 +12,9 @@ public:
 	static const char* SPRITESHEET_JUMPING_FROG;
 	static const char* SPRITESHEET_EVIL_PTERO;
 	static const char* LEVEL01;
+	static const char* SPRITESHEET_OCTO;
+	static const char* SPRITESHEET_OCTO_BALL;
+	static const char* Resources::SPRITESHEET_GHOST;
 	
 
 };

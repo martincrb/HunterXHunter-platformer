@@ -31,6 +31,9 @@ public:
 
 private:
 	unsigned char keys[256];
+	int actualLevel;
+	bool reaper;
+	int score;
 	cScene Scene;
 	cData Data;
 	std::vector<Entity>* Entities;

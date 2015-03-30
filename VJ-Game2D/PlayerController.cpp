@@ -42,6 +42,13 @@ void PlayerController::Punch(cScene* scene) {
 	}
 	currentPlayer->Punch(scene->GetMap());
 }
+void PlayerController::Duck(cScene* scene) {
+	command_queue.push(0);
+	if (command_queue.size() > PLAYERS_DELAY) {
+		command_queue.pop();
+	}
+	currentPlayer->Duck(scene->GetMap());
+}
 void PlayerController::Jump(cScene* scene){
 	command_queue.push(1);
 	if (command_queue.size() > PLAYERS_DELAY) {
@@ -55,6 +62,7 @@ void PlayerController::MoveLeft(cScene* scene){
 		command_queue.pop();
 	}
 	currentPlayer->MoveLeft(scene->GetMap());
+	
 }
 void PlayerController::MoveRight(cScene* scene){
 	command_queue.push(3);

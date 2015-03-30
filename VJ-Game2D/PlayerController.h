@@ -14,6 +14,7 @@ public:
 	cPlayer* getNotCurrentPlayer();
 	void Punch(cScene* scene);
 	void Stop();
+	void Duck(cScene* scene);
 	void Jump(cScene* scene);
 	void MoveLeft(cScene* scene);
 	void MoveRight(cScene* scene);

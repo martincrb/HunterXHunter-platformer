@@ -14,9 +14,10 @@ cGame::~cGame(void)
 bool cGame::Init()
 {
 	bool res=true;
-
+	reaper = false;
+	score = 0;
 	//Graphics initialization
-	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClearColor(0.0f,0.2f,1.0f,0.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0,GAME_WIDTH,0,GAME_HEIGHT,0,1);
@@ -37,7 +38,7 @@ bool cGame::Init()
 
 	//Entities init
 	for (int i = 0; i < Entities->size(); i++) {
-		if ((*Entities)[i].alive) {
+		if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
 			(*Entities)[i].bicho->SetPosition((*Entities)[i].spawn_x, -(*Entities)[i].spawn_y);
 			(*Entities)[i].bicho->SetWidthHeight(32, 32);
 		}
@@ -55,20 +56,26 @@ bool cGame::Init()
 	if (!res) return false;
 	res = Data.LoadImage(IMG_EVIL_BIRD, Resources::SPRITESHEET_EVIL_PTERO, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_OCTO, Resources::SPRITESHEET_OCTO, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_OCTO_BALL, Resources::SPRITESHEET_OCTO_BALL, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_GHOST, Resources::SPRITESHEET_GHOST, GL_RGBA);
+	if (!res) return false;
 
 	Player = new Gon();
 	Player2 = new Killua();
 
 	Player->SetWidthHeight(32,32);
-	Player->SetTile(5, -5);
+	Player->SetPosition(Scene.player_spawn_x, -Scene.player_spawn_y);
 	Player->SetWidthHeight(32, 32);
 	Player->SetState(STATE_LOOKRIGHT);
-
+	Player->inWater(Scene.getWaterZone());
 	Player2->SetWidthHeight(32, 32);
-	Player2->SetTile(3, -5);
+	Player2->SetPosition(Scene.player_spawn_x-10, -Scene.player_spawn_y);
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetState(STATE_LOOKRIGHT);
-
+	Player2->inWater(Scene.getWaterZone());
 	pController.setPlayers(Player, Player2);
 	int x, y;
 	pController.getCurrentPlayer()->GetPosition(&x, &y);
@@ -109,26 +116,30 @@ bool cGame::Process()
 		cScene::debugmap[k] = 0;
 	}
 	//Process Input
-	bool something_done = false;
+
 	if(keys[27])	res=false;	
 
 	if (keys[99])		pController.changeCurrentPlayer();
 	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
-	if (keys[GLUT_KEY_DOWN])		{
-		pController.Punch(&Scene);
-		something_done = true;
-	}
+	
 	if (keys[GLUT_KEY_UP])			{
 		pController.Jump(&Scene);
-		something_done = true;
+
 	}
 	if (keys[GLUT_KEY_LEFT])			{
 		pController.MoveLeft(&Scene);
-		something_done = true;
+
 	}
 	else if (keys[GLUT_KEY_RIGHT])	{
 		pController.MoveRight(&Scene);
-		something_done = true;
+
+	}
+	else if (keys[GLUT_KEY_DOWN])		{
+		pController.Duck(&Scene);
+
+	}
+	else if (keys[97]) {
+		pController.Punch(&Scene);
 	}
 	else pController.Stop();
 	
@@ -140,23 +151,51 @@ bool cGame::Process()
 	
 	//Game Logic
 	//...
+	int playerx, playery;
+
 	Player->Logic(Scene.GetMap());
 	Player2->Logic(Scene.GetMap());
 
+	Player->GetPosition(&playerx, &playery);
 	int xe, ye, we, he;
 	Player2->GetPosition(&xe, &ye);
 	Player2->GetWidthHeight(&we, &he);
 	
-	
-	
+	if (Player->inWater(Scene.getWaterZone())) {
+		Player->in_water = true;
+	}
+	else Player->in_water = false;
 
+	if (Player2->inWater(Scene.getWaterZone())) {
+		Player2->in_water = true;
+	}
+	else Player2->in_water = false;
+
+	if (Player->CollidesGhostTile(Scene.GetMap()) && !reaper) {
+		reaper = true;
+		std::cout << "ASJDHASGDHAS" << std::endl;
+		Scene.addEntity("ghost", playerx, playery - 50);
+	}
 	//Process all entities in the map
 	for (int i = 0; i < Entities->size(); i++) {
-		if ((*Entities)[i].alive) {
+		if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
 			(*Entities)[i].bicho->Logic(Scene.GetMap());
 			int xe, ye, we, he;
 			(*Entities)[i].bicho->GetPosition(&xe, &ye);
 			(*Entities)[i].bicho->GetWidthHeight(&we, &he);
+			if ((*Entities)[i].type == "octopus") {
+				cRect playerBox;
+				Player->GetArea(&playerBox);
+				if ((*Entities)[i].bicho->Collides(&playerBox)) { //if octopus collides with player
+					//Kill player
+					std::cout << "dead" << std::endl;
+				}
+			}
+			else if ((*Entities)[i].type == "ghost") {
+				
+				
+				(*Entities)[i].bicho->setObjectivePos(playerx, playery);
+			}
 			cRect EntityBox;
 			EntityBox.left = xe;
 			EntityBox.top = ye;
@@ -182,7 +221,9 @@ bool cGame::Process()
 					if (cScene::DEBUG_ON) {
 						std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
 					}
-					(*Entities)[i].Kill();
+					if ((*Entities)[i].type != "ghost") {
+						(*Entities)[i].Kill();
+					}
 				}
 				Player->HurtsDestructible(Scene.GetMap(), hitBox);
 
@@ -255,6 +296,12 @@ void cGame::Render()
 			}
 			else if ((*Entities)[i].type == "evilBird") {
 				(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_BIRD));
+			}
+			else if ((*Entities)[i].type == "octopus") {
+				(*Entities)[i].bicho->Draw(Data.GetID(IMG_OCTO));
+			}
+			else if ((*Entities)[i].type == "ghost") {
+				(*Entities)[i].bicho->Draw(Data.GetID(IMG_GHOST));
 			}
 			 //Select texture using entity type
 			

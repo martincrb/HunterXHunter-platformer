@@ -34,6 +34,7 @@ void cJumpingFrog::Logic(int *map) {
 	{
 		jumpDelay = 0;
 		if (!inAir()) {
+			//std::cout << "Jump" << std::endl;
 			Jump(map);
 		}
 	}

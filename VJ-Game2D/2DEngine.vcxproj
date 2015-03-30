@@ -98,8 +98,11 @@
     <ClCompile Include="cBicho.cpp" />
     <ClCompile Include="cData.cpp" />
     <ClCompile Include="cEvilBird.cpp" />
+    <ClCompile Include="cFireBall.cpp" />
     <ClCompile Include="cGame.cpp" />
+    <ClCompile Include="cGhost.cpp" />
     <ClCompile Include="cJumpingFrog.cpp" />
+    <ClCompile Include="cOctopus.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cRect.cpp" />
     <ClCompile Include="cScene.cpp" />
@@ -123,8 +126,11 @@
     <ClInclude Include="cBicho.h" />
     <ClInclude Include="cData.h" />
     <ClInclude Include="cEvilBird.h" />
+    <ClInclude Include="cFireBall.h" />
     <ClInclude Include="cGame.h" />
+    <ClInclude Include="cGhost.h" />
     <ClInclude Include="cJumpingFrog.h" />
+    <ClInclude Include="cOctopus.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cRect.h" />
     <ClInclude Include="cScene.h" />

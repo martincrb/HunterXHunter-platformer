@@ -8,6 +8,8 @@ const char* Resources::SPRITESHEET_EVIL_PTERO = "res/sprites/enemy_bird.png";
 const char* Resources::SPRITESHEET_OCTO = "res/sprites/octopus.png";
 const char* Resources::SPRITESHEET_OCTO_BALL = "res/sprites/octopus_ball.png";
 const char* Resources::SPRITESHEET_GHOST = "res/sprites/boo.png";
+
+const char* Resources::START_SCREEN = "res/sprites/start.png";
 Resources::Resources()
 {
 }

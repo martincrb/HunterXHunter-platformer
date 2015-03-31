@@ -14,7 +14,8 @@ public:
 	static const char* LEVEL01;
 	static const char* SPRITESHEET_OCTO;
 	static const char* SPRITESHEET_OCTO_BALL;
-	static const char* Resources::SPRITESHEET_GHOST;
+	static const char* SPRITESHEET_GHOST;
+	static const char* START_SCREEN;
 	
 
 };

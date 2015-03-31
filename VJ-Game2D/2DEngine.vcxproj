@@ -106,6 +106,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cRect.cpp" />
     <ClCompile Include="cScene.cpp" />
+    <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GLUTMain.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cRect.h" />
     <ClInclude Include="cScene.h" />
+    <ClInclude Include="cSound.h" />
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />

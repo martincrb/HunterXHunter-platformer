@@ -7,6 +7,7 @@
 #include "Killua.h"
 #include "PlayerController.h"
 #include "Camera.h"
+#include "cSound.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -36,6 +37,7 @@ private:
 	int score;
 	cScene Scene;
 	cData Data;
+	cSound Sound;
 	std::vector<Entity>* Entities;
 	cPlayer* Player;
 	cPlayer* Player2;

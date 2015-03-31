@@ -1,6 +1,5 @@
 #include "cGhost.h"
 
-
 cGhost::cGhost()
 {
 	lick_counter = 0;
@@ -15,6 +14,7 @@ cGhost::cGhost()
 	animations.push_back(idle2);
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
+
 }
 
 

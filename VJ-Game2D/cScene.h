@@ -22,6 +22,7 @@ public:
 	int *GetMap();
 	bool isSolid(int tileID);
 	std::string getTileType(int tileID);
+	void FreeAll();
 	static int TILE_SIZE;
 	static int BLOCK_SIZE;
 	static int SCENE_Xo;

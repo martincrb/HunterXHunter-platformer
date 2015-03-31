@@ -30,6 +30,11 @@ cScene::~cScene(void)
 {
 }
 
+void cScene::FreeAll() {
+	Entities.clear();
+	tiles.clear();
+	map.clear();
+}
 void split(const std::string& s, char c,
 	std::vector<std::string>& v) {
 	std::string::size_type i = 0;

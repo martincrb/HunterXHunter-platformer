@@ -26,10 +26,10 @@ Gon::Gon()
 
 	Animation punch;
 	cRect hitBox;
-	hitBox.bottom = -20;
-	hitBox.left = 40;
-	hitBox.top = -20 - 8;
-	hitBox.right = 40 + 15;
+	hitBox.bottom = -10;
+	hitBox.left = 50;
+	hitBox.top = -20 - 15;
+	hitBox.right = 50 + 30;
 	punch.addFrame(200, 96, 92, 42, 52, 256, 256, 0, 0, hitBox);
 	animations.push_back(punch);
 

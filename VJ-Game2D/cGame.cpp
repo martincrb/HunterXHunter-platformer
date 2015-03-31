@@ -16,7 +16,7 @@ bool cGame::Init()
 {
 	bool res=true;
 	reaper = false;
-	
+	Sound.init();
 	score = 0;
 	//Graphics initialization
 	glClearColor(0.0f,0.2f,1.0f,0.0f);
@@ -46,12 +46,20 @@ bool cGame::Init()
 	res = Data.LoadImage(IMG_GHOST, Resources::SPRITESHEET_GHOST, GL_RGBA);
 	if (!res) return false;
 
+	Sound.LoadSound(TITLE_MUSIC,"res/audio/title_music.wav", BG_MUSIC);
+	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
+	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
+	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
+	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
 	//Scene initialization
 	if (actualLevel == 0) {
-
+		Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
 		
 	}
 	else {
+		if (actualLevel == 1) {
+			Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+		}
 		std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
 		if (strcmp(tileset_source.c_str(), "") == 0) {
 			return false;
@@ -107,6 +115,8 @@ bool cGame::Loop()
 
 void cGame::Finalize()
 {
+	Sound.FreeAll();
+	Scene.FreeAll();
 }
 
 //Input
@@ -123,9 +133,11 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 bool cGame::Process()
 {
 	bool res = true;
+	Sound.UpdateSound();
 	if (actualLevel == 0) {
 		if (keys[98])	{
 			actualLevel = 1;
+			Sound.Stop(TITLE_MUSIC);
 			this->Init();
 		}
 	}
@@ -142,8 +154,11 @@ bool cGame::Process()
 		if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
 
 		if (keys[GLUT_KEY_UP])			{
+			if (!pController.getCurrentPlayer()->inAir()) {
+				Sound.Play(GON_JUMP, EFFECTS_CHANNEL);
+			}
 			pController.Jump(&Scene);
-
+			
 		}
 		if (keys[GLUT_KEY_LEFT])			{
 			pController.MoveLeft(&Scene);
@@ -192,29 +207,18 @@ bool cGame::Process()
 
 		if (Player->CollidesGhostTile(Scene.GetMap()) && !reaper) {
 			reaper = true;
-			std::cout << "ASJDHASGDHAS" << std::endl;
+			Sound.Play(BOO_HI, EFFECTS_CHANNEL);
 			Scene.addEntity("ghost", playerx, playery - 50);
 		}
+
 		//Process all entities in the map
+		cRect playerBox;
+		Player->GetArea(&playerBox);
 		for (int i = 0; i < Entities->size(); i++) {
 			if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
 				(*Entities)[i].bicho->Logic(Scene.GetMap());
-				int xe, ye, we, he;
-				(*Entities)[i].bicho->GetPosition(&xe, &ye);
-				(*Entities)[i].bicho->GetWidthHeight(&we, &he);
-				if ((*Entities)[i].type == "octopus") {
-					cRect playerBox;
-					Player->GetArea(&playerBox);
-					if ((*Entities)[i].bicho->Collides(&playerBox)) { //if octopus collides with player
-						//Kill player
-						std::cout << "dead" << std::endl;
-					}
-				}
-				else if ((*Entities)[i].type == "ghost") {
 
-
-					(*Entities)[i].bicho->setObjectivePos(playerx, playery);
-				}
+				//Player hits enemy
 				cRect EntityBox;
 				EntityBox.left = xe;
 				EntityBox.top = ye;
@@ -248,16 +252,26 @@ bool cGame::Process()
 
 				}
 
-				if (!Player->isPunching() && Player->Collides(&EntityBox)) { //Player colliding with enemy
-					if (cScene::DEBUG_ON) {
-						std::cout << "Im touching a " << (*Entities)[i].type << std::endl;
-					}
-					//(*Entities)[i].Kill();
+				//Enemy touches player
+				int xe, ye, we, he;
+				(*Entities)[i].bicho->GetPosition(&xe, &ye);
+				(*Entities)[i].bicho->GetWidthHeight(&we, &he);
+				if ((*Entities)[i].type == "ghost") {
+					(*Entities)[i].bicho->setObjectivePos(playerx, playery);
 				}
+
+				if ((*Entities)[i].bicho->Collides(&playerBox)) { //if octopus collides with player
+					//Kill player
+					std::cout << "dead" << std::endl;
+					Finalize();
+					Init();
+				}
+
 
 
 			}
 		}
+
 	}
 	return res;
 }

@@ -30,16 +30,12 @@ Killua::Killua()
 	currentFrame = currentAnimation->frames[0];
 
 	punchDelay = 0;
-	punching = false;
+	hability = false;
 }
 
 
 Killua::~Killua()
 {
-}
-
-void Killua::Punch(int *map){
-	punching = true;
 }
 
 void Killua::Draw(int tex_id){

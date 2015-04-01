@@ -10,17 +10,17 @@ cPlayer::cPlayer(int state) {
 	
 }
 
-void cPlayer::Punch(int *map){
-	punching = true;
+void cPlayer::Hability(){
+	hability = true;
 }
 void cPlayer::Draw(int tex_id)
 {	
 }
 
-bool cPlayer::isPunching() {
-	return punching;
+bool cPlayer::isUsingHability() {
+	return hability;
 }
 
-bool cPlayer::HurtsDestructible(int *map, cRect hitBox) {
+bool cPlayer::HurtsDestructible(cRect hitBox) {
 	return false;
 }

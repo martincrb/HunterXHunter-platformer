@@ -28,17 +28,17 @@ cJumpingFrog::~cJumpingFrog()
 void cJumpingFrog::setJumpFreq(int x) {
 	jump_freq = x;
 }
-void cJumpingFrog::Logic(int *map) {
+void cJumpingFrog::Logic() {
 	jumpDelay++;
 	if (jumpDelay == jump_freq)
 	{
 		jumpDelay = 0;
 		if (!inAir()) {
-			Jump(map);
+			Jump();
 		}
 	}
 	
-	cBicho::Logic(map);
+	cBicho::Logic();
 }
 void cJumpingFrog::Draw(int tex_id) {
 	if (inAir()) {

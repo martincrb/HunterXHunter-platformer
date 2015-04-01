@@ -6,8 +6,7 @@ class Gon :
 public:
 	Gon();
 	~Gon();
-	void Punch(int *map);
 	void Draw(int tex_id);
-	bool HurtsDestructible(int *map, cRect hitBox);
+	bool HurtsDestructible(cRect hitBox);
 };
 

@@ -32,25 +32,26 @@ public:
 	void GetTile(int *tx,int *ty);
 	void SetWidthHeight(int w,int h);
 	void GetWidthHeight(int *w,int *h);
+	void SetMap(int* map);
 
 	bool Collides(cRect *rc);
-	virtual bool CollidesMapWall(int *map,bool right);
-	virtual bool CollidesMapFloor(int *map);
-	virtual bool HurtsDestructible(int *map, cRect hitBox);
+	virtual bool CollidesMapWall();
+	virtual bool CollidesMapFloor();
+	virtual bool HurtsDestructible(cRect hitBox);
 
 	void GetArea(cRect *rc);
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 	virtual void Draw(int tex_id);
 
-	virtual void MoveRight(int *map);
-	virtual void MoveLeft(int *map);
+	virtual void MoveRight();
+	virtual void MoveLeft();
 
 	bool hasHitBox();
 	cRect getHitBox();
 
-	void Jump(int *map);
+	void Jump();
 	void Stop();
-	virtual void Logic(int *map);
+	virtual void Logic();
 	int  GetState();
 	void SetState(int s);
 	bool inAir();
@@ -70,6 +71,8 @@ protected:
 	int jump_y;
 
 	int seq, delay;
+	int *map;
 private:
-	
+	int last_x, last_y;
+	void adjust();
 };

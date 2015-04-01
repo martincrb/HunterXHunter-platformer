@@ -71,7 +71,7 @@ std::string cScene::LoadLevel(const char* level)
 
 	//Save Tile properties in a data structure
 	std::vector<std::map<std::string, std::string> > tileVector = tmx.tilesetList[0].property;
-	for (int tileID = 0; tileID < tileVector.size(); ++tileID) {
+	for (unsigned int tileID = 0; tileID < tileVector.size(); ++tileID) {
 		Tile tile(tmx.tilesetList[0].property[tileID]["solid"] == "true", tmx.tilesetList[0].property[tileID]["destructable"] == "true", tmx.tilesetList[0].property[tileID]["type"]);
 		std::cout << "TILEID: " << tileID << std::endl;
 		tile.printinfo();
@@ -114,7 +114,7 @@ std::string cScene::LoadLevel(const char* level)
 			for (j = SCENE_HEIGHT-1; j >= 0; j--)
 			{
 				px = SCENE_Xo;
-				py = SCENE_Yo -(j*TILE_SIZE);
+				py = SCENE_Yo + SCENE_HEIGHT - (j*TILE_SIZE);
 				//std::cout << px << " " << py << std::endl;
 				for (i = 0; i < SCENE_WIDTH; i++)
 				{
@@ -127,7 +127,6 @@ std::string cScene::LoadLevel(const char* level)
 					else
 					{
 						//Tiles = 1,2,3,...
-						int tileID = atoi(layer[(j*SCENE_WIDTH) + i].c_str());
 						mapaux[(j*SCENE_WIDTH) + i] = atoi(layer[(j*SCENE_WIDTH) + i].c_str());
 						//std::cout << "TileSetHeigth: " << tilesetheight << std::endl;
 						int tileColumn = (mapaux[(j*SCENE_WIDTH) + i] - 1) % (tilesetheight / TILE_SIZE);
@@ -187,8 +186,9 @@ std::string cScene::LoadLevel(const char* level)
 				cRect boundary;
 				boundary.left = it2->x;
 				boundary.right = boundary.left + it2->width;
-				boundary.top = it2->y;
-				boundary.bottom = boundary.top + it2->height;
+				boundary.bottom = it2->y;
+				boundary.top = boundary.bottom + it2->height;
+				std::cout << boundary.bottom << "|" << boundary.top << std::endl;
 				camera_limits.addBoundary(boundary);
 			}
 		}
@@ -245,23 +245,17 @@ void cScene::Draw(int tex_id)
 	glBindTexture(GL_TEXTURE_2D,tex_id);
 	glBegin(GL_QUADS);
 	float coordx_tile, coordy_tile;
-	for (int layer = 0; layer < map.size(); ++layer) {
+	for (unsigned int layer = 0; layer < map.size(); ++layer) {
 		for (int j = SCENE_HEIGHT - 1; j >= 0; j--)
 		{
 			int px = SCENE_Xo;
-			int py = SCENE_Yo - (j*TILE_SIZE);
+			int py = SCENE_Yo + (SCENE_HEIGHT - j - 1) * TILE_SIZE;
 			//std::cout << px << " " << py << std::endl;
 			for (int i = 0; i < SCENE_WIDTH; i++)
 			{
-				if (map[layer][(j*SCENE_WIDTH) + i] == 0)
-				{
-					//Tiles must be != 0 !!!
-					map[layer][(j*SCENE_WIDTH) + i] = 0;
-				}
-				else
+				if (map[layer][(j*SCENE_WIDTH) + i] != 0)
 				{
 					//Tiles = 1,2,3,...
-					int tileID = map[layer][(j*SCENE_WIDTH) + i];
 					//std::cout << "TileSetHeigth: " << tilesetheight << std::endl;
 					int tileColumn = (map[layer][(j*SCENE_WIDTH) + i] - 1) % (tilesetheight / TILE_SIZE);
 					int tileRow = (map[layer][(j*SCENE_WIDTH) + i] - 1) / (tilesetwidth / TILE_SIZE);
@@ -284,7 +278,6 @@ void cScene::Draw(int tex_id)
 	//glCallList(id_DL);
 	glDisable(GL_TEXTURE_2D);
 
-	
 
 	if (DEBUG_ON) {
 		glBegin(GL_QUADS);
@@ -292,7 +285,7 @@ void cScene::Draw(int tex_id)
 		for (int j = SCENE_HEIGHT - 1; j >= 0; j--)
 		{
 			int px = SCENE_Xo;
-			int py = SCENE_Yo - (j*TILE_SIZE);
+			int py = SCENE_Yo + (SCENE_HEIGHT - j - 1) * TILE_SIZE;
 			//std::cout << px << " " << py << std::endl;
 			for (int i = 0; i < SCENE_WIDTH; i++)
 			{

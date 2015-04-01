@@ -12,12 +12,12 @@ public:
 	cPlayer();
 	~cPlayer();
 	cPlayer(int state);
-	virtual void Punch(int *map);
+	virtual void Hability();
 	virtual void Draw(int tex_id);
-	bool HurtsDestructible(int *map, cRect hitBox);
-	bool isPunching();
+	bool HurtsDestructible(cRect hitBox);
+	bool isUsingHability();
 protected:
 	int punchDelay;
-	bool punching;
+	bool hability;
 
 };

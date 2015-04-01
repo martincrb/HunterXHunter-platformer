@@ -23,7 +23,7 @@ void Boundary::addBoundary(cRect rect) {
 
 bool Boundary::point_inside(int x, int y) {
 	for (unsigned int i = 0; i < areas.size(); i++) {
-		if (x >= areas[i].left && x <= areas[i].right && y >= areas[i].top && y <= areas[i].bottom)
+		if (x >= areas[i].left && x <= areas[i].right && y <= areas[i].top && y >= areas[i].bottom)
 			return true;
 	}
 	return false;
@@ -51,12 +51,12 @@ void Boundary::adjust(cRect& rect, const cRect& last_valid) {
 	if (!left_top && !right_top) { //top
 		int i = 0; // Indice
 		Point vertex = vertices[0];
-		while (vertex.y < rect.top || vertex.y > last_valid.top) {
+		while (vertex.y > rect.top || vertex.y < last_valid.top) {
 			i++;
 			assert(i < vertices.size()); // Se tendria que cumplir siempre
 			vertex = vertices[i];
 		}
-		rect.bottom += vertex.y - rect.top;
+		rect.bottom += rect.top - vertex.y;
 		rect.top = vertex.y;
 		left_top = point_inside(rect.left, rect.top);
 		left_bottom = point_inside(rect.left, rect.bottom);
@@ -85,12 +85,12 @@ void Boundary::adjust(cRect& rect, const cRect& last_valid) {
 	if (!left_bottom && !right_bottom) { //bottom
 		int i = 0; // Indice
 		Point vertex = vertices[0];
-		while (vertex.y > rect.bottom || vertex.y < last_valid.bottom) {
+		while (vertex.y < rect.bottom || vertex.y > last_valid.bottom) {
 			i++;
 			assert(i < vertices.size()); // Se tendria que cumplir siempre
 			vertex = vertices[i];
 		}
-		rect.top -= rect.bottom - vertex.y;
+		rect.top -= vertex.y - rect.bottom;
 		rect.bottom = vertex.y;
 		
 		left_top = point_inside(rect.left, rect.top);

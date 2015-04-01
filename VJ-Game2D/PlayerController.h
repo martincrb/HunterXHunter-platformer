@@ -6,23 +6,22 @@
 class PlayerController
 {
 public:
+	enum actions { MOVE_RIGHT, MOVE_LEFT, JUMP, JUMP_RIGHT, JUMP_LEFT, STOP, HABILITY, HAB_JUMP, HAB_JUMP_LEFT, HAB_JUMP_RIGHT};
+
 	PlayerController();
-	PlayerController(cPlayer* playerOne, cPlayer* playerTwo);
-	~PlayerController();
+	PlayerController(cPlayer* playerOne, cPlayer* playerTwo, cScene* scene);
 	void setPlayers(cPlayer* playerOne, cPlayer* playerTwo);
 	cPlayer* getCurrentPlayer();
 	cPlayer* getNotCurrentPlayer();
-	void Punch(cScene* scene);
-	void Stop();
-	void Jump(cScene* scene);
-	void MoveLeft(cScene* scene);
-	void MoveRight(cScene* scene);
+	void action(actions a);
 	void changeCurrentPlayer();
-	void moveCompanion(cScene* scene);
+	void moveCompanion();
 private:
 	cPlayer* currentPlayer;
 	cPlayer* Gon;
 	cPlayer* Killua;
-	std::queue<int> command_queue;
+	cScene* scene;
+	std::queue<actions> command_queue;
+	void action(actions a, cPlayer* p);
 };
 

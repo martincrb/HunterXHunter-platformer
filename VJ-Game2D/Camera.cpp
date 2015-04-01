@@ -33,7 +33,7 @@ void Camera::set_camera(int orig_x, int orig_y, int width, int height) {
 }
 
 void Camera::move_player(int pos_x, int pos_y) {
-	std::cout << "pos: " << pos_x << "|" << pos_y << std::endl;
+	//std::cout << "pos: " << pos_x << "|" << pos_y << std::endl;
 	assert(boundary.point_inside(pos_x, pos_y)); // El jugador tiene que estar dentro
 	
 	int dx = player_last_x - pos_x;
@@ -48,7 +48,7 @@ void Camera::move_player(int pos_x, int pos_y) {
 	boundary.adjust(new_camera, last_valid_camera); // La camara tiene que estar dentro
 	last_valid_camera = new_camera;
 	orig_x = new_camera.left;
-	orig_y = new_camera.top;
+	orig_y = new_camera.bottom;
 }
 
 void Camera::get_camera_pos(int& x, int& y) {
@@ -60,7 +60,7 @@ cRect Camera::pos_to_rect() {
 	cRect rect;
 	rect.left = orig_x;
 	rect.right = orig_x + width;
-	rect.top = orig_y;
-	rect.bottom = orig_y + height;
+	rect.bottom = orig_y;
+	rect.top = orig_y + height;
 	return rect;
 }

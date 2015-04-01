@@ -6,7 +6,6 @@ class Killua :
 public:
 	Killua();
 	~Killua();
-	void Punch(int *map);
 	void Draw(int tex_id);
 };
 

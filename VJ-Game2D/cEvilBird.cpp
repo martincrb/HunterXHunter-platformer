@@ -22,7 +22,7 @@ cEvilBird::~cEvilBird()
 {
 }
 
-bool cEvilBird::CollidesMapWall(int *map, bool right)
+bool cEvilBird::CollidesMapWall(bool right)
 {
 	bool collides = false;
 	//if (right) std::cout << "Going RIGHT" << std::endl;
@@ -56,7 +56,7 @@ bool cEvilBird::CollidesMapWall(int *map, bool right)
 	return collides;
 }
 
-void cEvilBird::MoveRight(int *map) {
+void cEvilBird::MoveRight() {
 	int xaux;
 
 	//Whats next tile?
@@ -65,7 +65,7 @@ void cEvilBird::MoveRight(int *map) {
 		xaux = x;
 		x += STEP_LENGTH;
 
-		if (CollidesMapWall(map, true))
+		if (CollidesMapWall(true))
 		{
 			x = xaux;
 			state = STATE_LOOKRIGHT;
@@ -85,7 +85,7 @@ void cEvilBird::MoveRight(int *map) {
 		}
 	}
 }
-void cEvilBird::MoveLeft(int *map) {
+void cEvilBird::MoveLeft() {
 	int xaux;
 
 	//Whats next tile?
@@ -94,7 +94,7 @@ void cEvilBird::MoveLeft(int *map) {
 		xaux = x;
 		x -= STEP_LENGTH;
 
-		if (CollidesMapWall(map, false))
+		if (CollidesMapWall(false))
 		{
 			x = xaux;
 			state = STATE_LOOKLEFT;
@@ -114,24 +114,24 @@ void cEvilBird::MoveLeft(int *map) {
 	}
 }
 
-void cEvilBird::Logic(int *map) {
+void cEvilBird::Logic() {
 	//if (actualDirection == LEFT) std::cout << "LEFT" << std::endl;
 	//if (actualDirection == RIGHT) std::cout << "RIGHT" << std::endl;
 	switch (actualDirection) {
 	case LEFT:
 
-		MoveLeft(map);
+		MoveLeft();
 		break;
 
 	case RIGHT:
-		MoveRight(map);
+		MoveRight();
 		break;
 	}
 	
 	//cBicho::Logic(map);
 }
 
-bool cEvilBird::CollidesMapFloor(int *map) {
+bool cEvilBird::CollidesMapFloor() {
 	return true;
 	//Evil Bird is always flying, so it is always " in the floor "
 }

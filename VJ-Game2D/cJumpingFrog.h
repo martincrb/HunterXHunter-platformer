@@ -10,7 +10,7 @@ public:
 	~cJumpingFrog();
 	void setJumpFreq(int x);
 	void Draw(int text_id);
-	void Logic(int *map);
+	void Logic();
 private:
 	int jump_freq;
 	int jumpDelay;

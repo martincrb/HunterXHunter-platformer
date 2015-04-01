@@ -37,7 +37,7 @@ Gon::Gon()
 	currentFrame = currentAnimation->frames[0];
 
 	punchDelay = 0;
-	punching = false;
+	hability = false;
 }
 
 
@@ -46,7 +46,7 @@ Gon::~Gon()
 }
 
 
-bool Gon::HurtsDestructible(int *map, cRect hitBox) {
+bool Gon::HurtsDestructible(cRect hitBox) {
 	int tile_x, tile_y;
 	int j;
 	int width_tiles, height_tiles;
@@ -103,17 +103,14 @@ bool Gon::HurtsDestructible(int *map, cRect hitBox) {
 	*/
 
 }
-void Gon::Punch(int *map){
-	punching = true;
-}
 
 void Gon::Draw(int tex_id){
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
-	if (punching) punchDelay++;
+	if (hability) punchDelay++;
 	if (punchDelay == PUNCH_DURATION)
 	{
 		punchDelay = 0;
-		punching = false;
+		hability = false;
 	}
 
 	float xo, yo, xf, yf;
@@ -126,7 +123,7 @@ void Gon::Draw(int tex_id){
 			currentAnimation = &animations[2];
 			currentFrame = currentAnimation->frames[0];
 		}
-		else if (punching) {
+		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 			currentFrame.invertHitBoxX();
@@ -145,7 +142,7 @@ void Gon::Draw(int tex_id){
 			currentAnimation = &animations[2];
 			currentFrame = currentAnimation->frames[0];
 		}
-		else if (punching) {
+		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 		}
@@ -163,7 +160,7 @@ void Gon::Draw(int tex_id){
 			currentAnimation = &animations[2];
 			currentFrame = currentAnimation->frames[0];
 		}
-		else if (punching) {
+		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 			currentFrame.invertHitBoxX();
@@ -183,7 +180,7 @@ void Gon::Draw(int tex_id){
 			currentAnimation = &animations[2];
 			currentFrame = currentAnimation->frames[0];
 		}
-		else if (punching) {
+		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 		}

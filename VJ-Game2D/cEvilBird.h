@@ -9,12 +9,12 @@ class cEvilBird :
 public:
 	cEvilBird();
 	~cEvilBird();
-	void Logic(int *map);
+	void Logic();
 	void Draw(int tex_id);
-	bool CollidesMapFloor(int *map);
-	bool CollidesMapWall(int *map, bool right);
-	void MoveRight(int *map);
-	void MoveLeft(int *map);
+	bool CollidesMapFloor();
+	bool CollidesMapWall(bool right);
+	void MoveRight();
+	void MoveLeft();
 private:
 	int actualDirection;
 };

@@ -22,6 +22,10 @@ cEvilBird::~cEvilBird()
 {
 }
 
+void cEvilBird::Hurt() {
+	alive = false;
+}
+
 bool cEvilBird::CollidesMapWall()
 {
 	int tile_x1 = x / cScene::TILE_SIZE;

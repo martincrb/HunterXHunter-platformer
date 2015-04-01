@@ -12,6 +12,7 @@ public:
 	~cGhost();
 	void Logic();
 	void Draw(int tex_id);
+
 	
 private:
 	int lick_counter;

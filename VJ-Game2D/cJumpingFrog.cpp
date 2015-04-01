@@ -20,7 +20,9 @@ cJumpingFrog::cJumpingFrog()
 	currentFrame = currentAnimation->frames[0];
 }
 
-
+void cJumpingFrog::Hurt() {
+	alive = false;
+}
 cJumpingFrog::~cJumpingFrog()
 {
 }

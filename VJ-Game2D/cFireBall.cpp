@@ -10,6 +10,10 @@ cFireBall::~cFireBall()
 {
 }
 
+bool cFireBall::Collides(cRect *rc) {
+	return cBicho::Collides(rc);
+}
+
 void cFireBall::Draw(int tex_id) {
 	float xo, yo, xf, yf;
 

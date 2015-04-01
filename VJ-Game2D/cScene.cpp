@@ -237,30 +237,36 @@ std::string cScene::LoadLevel(const char* level)
 				//SAVE ENTITIES INFORMATION TO THE VECTOR OF ENTITIES
 				
 				Entity entity;
-				entity.alive = true;
+				
 				entity.spawn_x = it2->x;
 				entity.spawn_y = (cScene::SCENE_HEIGHT - 1)*cScene::TILE_SIZE - it2->y;
 				entity.type = it2->type;
 				if (entity.type == "jfrog") {
 					std::cout << "Loading a hell of a frog" << std::endl;
 					entity.bicho = new cJumpingFrog();
+					entity.bicho->alive = true;
 				}
 				else if (entity.type == "evilBird") {
 					std::cout << "An awesome pterodactyle comes to play" << std::endl;
 					entity.bicho = new cEvilBird();
+					entity.bicho->alive = true;
 				}
 				else if (entity.type == "octopus") {
 					std::cout << "KillerKraken! D:" << std::endl;
 					entity.bicho = new cOctopus();
+					entity.bicho->alive = true;
 				}
 				else if (entity.type == "evilFish") {
 					std::cout << "blublublublubKILL" << std::endl;
 					entity.bicho = new cEvilFish();
+					entity.bicho->alive = true;
 				}
 				else if (entity.type == "player_spawn") {
 					player_spawn_x = entity.spawn_x;
 					player_spawn_y = entity.spawn_y;
 				}
+
+				
 				//FILL WITH OTHER ENTITY TYPES
 
 				Entities.push_back(entity);
@@ -283,7 +289,7 @@ std::vector<Entity>* cScene::getEntities() {
 void cScene::addEntity(std::string type, int sx, int sy) {
 	if (type == "ghost") {
 		Entity e;
-		e.alive = true;
+		e.bicho->alive = true;
 		e.spawn_x = sx;
 		e.spawn_y = sy;
 		e.type = "ghost";

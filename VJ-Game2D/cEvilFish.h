@@ -15,6 +15,7 @@ public:
 	bool CollidesMapWall();
 	void MoveRight();
 	void MoveLeft();
+	void Hurt();
 private:
 	int actualDirection;
 };

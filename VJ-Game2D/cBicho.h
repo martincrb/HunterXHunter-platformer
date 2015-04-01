@@ -39,7 +39,7 @@ public:
 	bool inWater(cRect *rc);
 	bool CollidesGhostTile(int *map);
 	int CollidesItem(int *itemMap);
-	bool Collides(cRect *rc);
+	virtual bool Collides(cRect *rc);
 	virtual bool CollidesMapWall();
 	virtual bool CollidesMapWall(bool right);
 	virtual bool CollidesMapFloor();
@@ -51,6 +51,7 @@ public:
 
 	virtual void MoveRight();
 	virtual void MoveLeft();
+	virtual void Hurt();
 
 	bool hasHitBox();
 	cRect getHitBox();
@@ -66,11 +67,14 @@ public:
 	void NextFrame(int max);
 	int  GetFrame();
 	bool in_water;
+	bool alive;
 	
 protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;
 	AnimationFrame currentFrame;
+	int hurtDelay;
+	bool hurtable;
 	double speed;
 	int x, y;
 	int obj_x, obj_y;

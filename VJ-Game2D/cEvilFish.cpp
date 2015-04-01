@@ -23,7 +23,9 @@ cEvilFish::cEvilFish()
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
 }
-
+void cEvilFish::Hurt() {
+	alive = false;
+}
 bool cEvilFish::CollidesMapWall()
 {
 	int tile_x1 = x / cScene::TILE_SIZE;

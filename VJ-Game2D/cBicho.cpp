@@ -116,6 +116,10 @@ int cBicho::HurtsDestructible(cRect hitBox) {
 
 	return 0;
 }
+
+void cBicho::Hurt() {
+
+}
 bool cBicho::CollidesMapFloor()
 {
 	int tile_x = x / cScene::TILE_SIZE;

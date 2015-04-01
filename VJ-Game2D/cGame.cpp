@@ -73,7 +73,7 @@ bool cGame::Init()
 
 		//Entities init
 		for (unsigned int i = 0; i < Entities->size(); i++) {
-			if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
+			if ((*Entities)[i].type != "player_spawn" && (*Entities)[i].bicho->alive) {
 				(*Entities)[i].bicho->SetPosition((*Entities)[i].spawn_x, (*Entities)[i].spawn_y);
 				(*Entities)[i].bicho->SetWidthHeight(32, 32);
 				(*Entities)[i].bicho->SetMap(Scene.GetMap());
@@ -235,7 +235,16 @@ bool cGame::Process()
 			Scene.addEntity("ghost", playerx, playery - 50);
 		}
 
+
 		int itemID = Player->CollidesItem(Scene.GetItemMap());
+		if (itemID != -1) {
+			if (itemID == 44) {
+				score += 40;
+				Sound.Play(GET_COIN, EFFECTS_CHANNEL);
+				std::cout << "score: " << score << std::endl;
+			}
+		}
+		itemID = Player2->CollidesItem(Scene.GetItemMap());
 		if (itemID != -1) {
 			if (itemID == 44) {
 				score += 40;
@@ -248,7 +257,7 @@ bool cGame::Process()
 		cRect playerBox;
 		Player->GetArea(&playerBox);
 		for (unsigned int i = 0; i < Entities->size(); i++) {
-			if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
+			if (((*Entities)[i].type != "player_spawn") && (*Entities)[i].bicho->alive)  {
 				(*Entities)[i].bicho->Logic();
 
 				//Player hits enemy
@@ -278,7 +287,7 @@ bool cGame::Process()
 							std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
 						}
 						if ((*Entities)[i].type != "ghost") {
-							(*Entities)[i].Kill();
+							(*Entities)[i].Hurt();
 						}
 					}
 					int destructedTile = Player->HurtsDestructible(hitBox);
@@ -380,7 +389,7 @@ void cGame::Render()
 
 		//Render all entities in the map
 		for (unsigned int i = 0; i < Entities->size(); i++) {
-			if ((*Entities)[i].alive) {
+			if (((*Entities)[i].type != "player_spawn") && (*Entities)[i].bicho->alive) {
 				if ((*Entities)[i].type == "jfrog") {
 					(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
 				}

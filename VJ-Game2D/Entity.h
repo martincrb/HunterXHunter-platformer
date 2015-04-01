@@ -7,9 +7,9 @@ public:
 	Entity();
 	~Entity();
 	void Kill();
+	void Hurt();
 	std::string type;
 	cBicho* bicho;
-	bool alive;
 	int spawn_x;
 	int spawn_y;
 };

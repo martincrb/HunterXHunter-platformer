@@ -10,6 +10,7 @@ cOctopus::cOctopus()
 		balls[i] = new cFireBall();
 	}
 	sinangle = 0;
+	hurtDelay = 0;
 	Animation idle;
 	idle.addFrame(200, 0, 0, 76, 64, 64, 76, 0, 0);
 	animations.push_back(idle);
@@ -22,10 +23,25 @@ cOctopus::~cOctopus()
 {
 }
 
+void cOctopus::Hurt() {
+		
+		if (hurtDelay == 0) {
+			hurtDelay = 20;
+			if (balls.size() == 0)
+				alive = false;
+			else {
+				balls.pop_back();
+				ball_y.pop_back();
+			}
+		}
+}
+
 bool cOctopus::Collides(cRect *rc) {
 	for (int i = 0; i < balls.size(); ++i) {
-		
-		if (balls[i]->Collides(rc)) return true;
+		if (balls[i]->Collides(rc)) {
+			return true;
+			std::cout << "Collides with ball" << std::endl;
+		}
 	}
 	if (cBicho::Collides(rc)) return true;;
 	return false; 
@@ -33,6 +49,9 @@ bool cOctopus::Collides(cRect *rc) {
 }
 
 void cOctopus::Logic() {
+	if (hurtDelay > 0) {
+		--hurtDelay;
+	}
 	sinangle += 0.06;
 	if (sinangle >= 360) sinangle = 0;
 

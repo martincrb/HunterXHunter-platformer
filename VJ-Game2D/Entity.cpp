@@ -3,6 +3,7 @@
 
 Entity::Entity()
 {
+
 }
 
 
@@ -11,5 +12,9 @@ Entity::~Entity()
 }
 
 void Entity::Kill() {
-	alive = false;
+	bicho->alive = false;
+}
+
+void Entity::Hurt() {
+	bicho->Hurt();
 }

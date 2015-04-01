@@ -6,6 +6,7 @@ class cFireBall :
 public:
 	cFireBall();
 	~cFireBall();
+	bool Collides(cRect *rc);
 	void Draw(int tex_id);
 };
 

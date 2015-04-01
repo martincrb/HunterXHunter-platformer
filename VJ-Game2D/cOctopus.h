@@ -12,6 +12,7 @@ public:
 	bool Collides(cRect *rc);
 	void Logic();
 	void Draw(int tex_id);
+	void Hurt();
 private:
 	std::vector<float> ball_y;
 	std::vector<cBicho*> balls;

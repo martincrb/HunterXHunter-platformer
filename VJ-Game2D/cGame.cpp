@@ -60,51 +60,51 @@ bool cGame::Init()
 		if (actualLevel == 1) {
 			Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
 		}
-	std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
+		std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
 		if (strcmp(tileset_source.c_str(), "") == 0) {
-		return false;
-	}
+			return false;
+		}
 
-	//Point to the entity vector
-	Entities = Scene.getEntities();
+		//Point to the entity vector
+		Entities = Scene.getEntities();
 
-	//Entities init
+		//Entities init
 		for (unsigned int i = 0; i < Entities->size(); i++) {
 			if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
 				(*Entities)[i].bicho->SetPosition((*Entities)[i].spawn_x, (*Entities)[i].spawn_y);
-			(*Entities)[i].bicho->SetWidthHeight(32, 32);
-			(*Entities)[i].bicho->SetMap(Scene.GetMap());
+				(*Entities)[i].bicho->SetWidthHeight(32, 32);
+				(*Entities)[i].bicho->SetMap(Scene.GetMap());
+			}
 		}
-	}
 
 		res = Data.LoadImage(IMG_BLOCKS, tileset_source.c_str(), GL_RGBA);
 		if (!res) return false;
 
-	//Player initialization
+		//Player initialization
 
 
-	Player = new Gon();
-	Player2 = new Killua();
+		Player = new Gon();
+		Player2 = new Killua();
 
-	Player->SetWidthHeight(32, 32);
+		Player->SetWidthHeight(32, 32);
 		Player->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
 		Player->SetWidthHeight(32, 32);
-	Player->SetState(STATE_LOOKRIGHT);
-	Player->SetMap(Scene.GetMap());
+		Player->SetState(STATE_LOOKRIGHT);
+		Player->SetMap(Scene.GetMap());
 
 		Player->inWater(Scene.getWaterZone());
-	Player2->SetWidthHeight(32, 32);
+		Player2->SetWidthHeight(32, 32);
 		Player2->SetPosition(Scene.player_spawn_x - 10, Scene.player_spawn_y);
-	Player2->SetWidthHeight(32, 32);
-	Player2->SetState(STATE_LOOKRIGHT);
-	Player2->SetMap(Scene.GetMap());
+		Player2->SetWidthHeight(32, 32);
+		Player2->SetState(STATE_LOOKRIGHT);
+		Player2->SetMap(Scene.GetMap());
 
 		Player2->inWater(Scene.getWaterZone());
-	pController.setPlayers(Player, Player2);
-	int x, y;
-	pController.getCurrentPlayer()->GetPosition(&x, &y);
-	camera = Camera(0, 0, GAME_WIDTH, GAME_HEIGHT, Scene.getBoundaries(), x, y);
-	
+		pController.setPlayers(Player, Player2);
+		int x, y;
+		pController.getCurrentPlayer()->GetPosition(&x, &y);
+		camera = Camera(0, 0, GAME_WIDTH, GAME_HEIGHT, Scene.getBoundaries(), x, y);
+	}
 	return res;
 }
 
@@ -149,61 +149,67 @@ bool cGame::Process()
 	else {
 		
 		for (int k = 0; k < cScene::debugmap.size(); ++k) {
-		cScene::debugmap[k] = 0;
-	}
-	//Process Input
+			cScene::debugmap[k] = 0;
+		}
+		//Process Input
 
 		if (keys[27])	res = false;
 
-	if (keys[99])		pController.changeCurrentPlayer();
-	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
+		if (keys[99])		pController.changeCurrentPlayer();
+		if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
 
-	if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::HAB_JUMP_LEFT);
+		if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::HAB_JUMP_LEFT);
 
-	else if (keys[97] && keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::HAB_JUMP_RIGHT);
+		else if (keys[97] && keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::HAB_JUMP_RIGHT);
 
-	else if (keys[97] && keys[GLUT_KEY_UP])
-		pController.action(PlayerController::actions::HAB_JUMP);
+		else if (keys[97] && keys[GLUT_KEY_UP])
+			pController.action(PlayerController::actions::HAB_JUMP);
 
-	else if (keys[97])
-		pController.action(PlayerController::actions::HABILITY);
+		else if (keys[97])
+			pController.action(PlayerController::actions::HABILITY);
 
-	else if (keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::JUMP_LEFT);
+		else if (keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::JUMP_LEFT);
 
-	else if (keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::JUMP_RIGHT);
+		else if (keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::JUMP_RIGHT);
 
-	else if (keys[GLUT_KEY_UP])
-		pController.action(PlayerController::actions::JUMP);
+		else if (keys[GLUT_KEY_UP])
+			pController.action(PlayerController::actions::JUMP);
 
-	else if (keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::MOVE_LEFT);
+		else if (keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::MOVE_LEFT);
 
-	else if (!keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::MOVE_RIGHT);
+		else if (!keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::MOVE_RIGHT);
 
-	else if (keys[GLUT_KEY_DOWN])
-		pController.action(PlayerController::actions::DUCK);
+		else if (keys[GLUT_KEY_DOWN])
+			pController.action(PlayerController::actions::DUCK);
 
-	else 
-		pController.action(PlayerController::actions::STOP);
+		else 
+			pController.action(PlayerController::actions::STOP);
 	
-	pController.moveCompanion();
+		pController.moveCompanion();
+
+		if (keys[GLUT_KEY_UP])			{
+			if (!pController.getCurrentPlayer()->inAir()) {
+				Sound.Play(GON_JUMP, EFFECTS_CHANNEL);
+			}
+		}
 	
-	//Camera follows player
-	int x, y;
-	pController.getCurrentPlayer()->GetPosition(&x, &y);
-	camera.move_player(x, y);
+		//Camera follows player
+		int x, y;
+		pController.getCurrentPlayer()->GetPosition(&x, &y);
+		camera.move_player(x, y);
 	
-	//Game Logic
-	//...
+		//Game Logic
+		//...
 		int playerx, playery;
 
-		Player->Logic(Scene.GetMap());
-		Player2->Logic(Scene.GetMap());
+		Player->Logic();
+		Player2->Logic();
 
 		Player->GetPosition(&playerx, &playery);
 		int xe, ye, we, he;
@@ -226,46 +232,45 @@ bool cGame::Process()
 			Scene.addEntity("ghost", playerx, playery - 50);
 		}
 
-	//Process all entities in the map
+		//Process all entities in the map
 		cRect playerBox;
 		Player->GetArea(&playerBox);
 		for (unsigned int i = 0; i < Entities->size(); i++) {
 			if ((*Entities)[i].alive && (*Entities)[i].type != "player_spawn") {
-				(*Entities)[i].bicho->Logic(Scene.GetMap());
+				(*Entities)[i].bicho->Logic();
 
 				//Player hits enemy
-			cRect EntityBox;
-			EntityBox.left = xe;
-			EntityBox.top = ye;
-			EntityBox.bottom = ye + he;
-			EntityBox.right = xe + we;
-			if (Player->hasHitBox()) {
-				cRect hitBox = Player->getHitBox();
-				//Set coordinates referencing world not player
+				cRect EntityBox;
+				EntityBox.left = xe;
+				EntityBox.top = ye;
+				EntityBox.bottom = ye + he;
+				EntityBox.right = xe + we;
+				if (Player->hasHitBox()) {
+					cRect hitBox = Player->getHitBox();
+					//Set coordinates referencing world not player
 
-				int xb, yb, wb, hb;
-				Player->GetPosition(&xb, &yb);
-				xb += hitBox.left;
-				yb += hitBox.bottom;
-				wb = hitBox.right - hitBox.left;
-				hb = hitBox.top - hitBox.bottom;
+					int xb, yb, wb, hb;
+					Player->GetPosition(&xb, &yb);
+					xb += hitBox.left;
+					yb += hitBox.bottom;
+					wb = hitBox.right - hitBox.left;
+					hb = hitBox.top - hitBox.bottom;
 
-				hitBox.left = xb;
-				hitBox.bottom = yb;
-				hitBox.top = yb + hb;
-				hitBox.right = xb + wb;
-				//std::cout << "HitBox ON" << std::endl;
-				if ((*Entities)[i].bicho->Collides(&hitBox)) { //if entity collides with hitbox from player
-					if (cScene::DEBUG_ON) {
-						std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
-					}
+					hitBox.left = xb;
+					hitBox.bottom = yb;
+					hitBox.top = yb + hb;
+					hitBox.right = xb + wb;
+					//std::cout << "HitBox ON" << std::endl;
+					if ((*Entities)[i].bicho->Collides(&hitBox)) { //if entity collides with hitbox from player
+						if (cScene::DEBUG_ON) {
+							std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
+						}
 						if ((*Entities)[i].type != "ghost") {
-					(*Entities)[i].Kill();
-				}
+							(*Entities)[i].Kill();
+						}
 					}
 					Player->HurtsDestructible(hitBox);
-
-			}
+				}
 			
 				//Enemy touches player
 				int xe, ye, we, he;
@@ -280,13 +285,9 @@ bool cGame::Process()
 					std::cout << "dead" << std::endl;
 					Finalize();
 					Init();
+				}
 			}
-			
-
-
 		}
-		}
-
 	}
 	return res;
 }
@@ -316,66 +317,65 @@ void cGame::Render()
 		glDisable(GL_TEXTURE_2D);
 	}
 	else {
-	int x, y;
-	camera.get_camera_pos(x, y);
-	glTranslated(-x, - y, 0);
-	//glTranslated(10, 10, 0);
-	//glScaled(2, 2, 2);
-	Scene.Draw(Data.GetID(IMG_BLOCKS));
+		int x, y;
+		camera.get_camera_pos(x, y);
+		glTranslated(-x, - y, 0);
+		//glTranslated(10, 10, 0);
+		//glScaled(2, 2, 2);
+		Scene.Draw(Data.GetID(IMG_BLOCKS));
 
-	//Current player must be rendered on top of IA player
-	if (pController.getCurrentPlayer() == Player) {
-		Player2->Draw(Data.GetID(IMG_PLAYER2));
-		Player->Draw(Data.GetID(IMG_PLAYER));
-	}
-	else {
-		Player->Draw(Data.GetID(IMG_PLAYER));
-		Player2->Draw(Data.GetID(IMG_PLAYER2));
-	}
-	if (cScene::DEBUG_ON) {
-		//Render hitBoxes
-		if (Player->hasHitBox()) {
-			cRect hitBox = Player->getHitBox();
-			int xb, yb, wb, hb;
-			Player->GetPosition(&xb, &yb);
+		//Current player must be rendered on top of IA player
+		if (pController.getCurrentPlayer() == Player) {
+			Player2->Draw(Data.GetID(IMG_PLAYER2));
+			Player->Draw(Data.GetID(IMG_PLAYER));
+		}
+		else {
+			Player->Draw(Data.GetID(IMG_PLAYER));
+			Player2->Draw(Data.GetID(IMG_PLAYER2));
+		}
+		if (cScene::DEBUG_ON) {
+			//Render hitBoxes
+			if (Player->hasHitBox()) {
+				cRect hitBox = Player->getHitBox();
+				int xb, yb, wb, hb;
+				Player->GetPosition(&xb, &yb);
 
-			xb += hitBox.left;
-			yb += hitBox.bottom;
-			wb = hitBox.right - hitBox.left;
-			hb = hitBox.top - hitBox.bottom;
+				xb += hitBox.left;
+				yb += hitBox.bottom;
+				wb = hitBox.right - hitBox.left;
+				hb = hitBox.top - hitBox.bottom;
 
 
-			glBegin(GL_QUADS);
-			glColor3f(1, 0, 0);
-			glVertex2i(xb, yb);;
-			glVertex2i(xb + wb, yb);
-			glVertex2i(xb + wb, yb + hb);
-			glVertex2i(xb, yb + hb);
-			glColor3f(1, 1, 1);
-			glEnd();
+				glBegin(GL_QUADS);
+				glColor3f(1, 0, 0);
+				glVertex2i(xb, yb);;
+				glVertex2i(xb + wb, yb);
+				glVertex2i(xb + wb, yb + hb);
+				glVertex2i(xb, yb + hb);
+				glColor3f(1, 1, 1);
+				glEnd();
+			}
+
 		}
 
-	}
-
-	//Render all entities in the map
-	for (unsigned int i = 0; i < Entities->size(); i++) {
-		if ((*Entities)[i].alive) {
-			if ((*Entities)[i].type == "jfrog") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
-			}
-			else if ((*Entities)[i].type == "evilBird") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_BIRD));
-			}
+		//Render all entities in the map
+		for (unsigned int i = 0; i < Entities->size(); i++) {
+			if ((*Entities)[i].alive) {
+				if ((*Entities)[i].type == "jfrog") {
+					(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
+				}
+				else if ((*Entities)[i].type == "evilBird") {
+					(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_BIRD));
+				}
 				else if ((*Entities)[i].type == "octopus") {
 					(*Entities)[i].bicho->Draw(Data.GetID(IMG_OCTO));
 				}
 				else if ((*Entities)[i].type == "ghost") {
 					(*Entities)[i].bicho->Draw(Data.GetID(IMG_GHOST));
 				}
-			 //Select texture using entity type
-			
+				 //Select texture using entity type
+			}
 		}
-	}
 	}
 	glutSwapBuffers();
 }

@@ -82,10 +82,8 @@ bool Gon::HurtsDestructible(cRect hitBox) {
 	}
 	return false;
 
-			}
-void Gon::Punch(int *map){
-	punching = true;
 }
+
 
 void Gon::Draw(int tex_id){
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
@@ -129,7 +127,7 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (punching) {
+			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
@@ -156,7 +154,7 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (punching) {
+			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
@@ -183,7 +181,7 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (punching) {
+			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
@@ -211,7 +209,7 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (punching) {
+			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}

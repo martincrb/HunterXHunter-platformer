@@ -289,11 +289,12 @@ std::vector<Entity>* cScene::getEntities() {
 void cScene::addEntity(std::string type, int sx, int sy) {
 	if (type == "ghost") {
 		Entity e;
-		e.bicho->alive = true;
+		
 		e.spawn_x = sx;
 		e.spawn_y = sy;
 		e.type = "ghost";
 		e.bicho = new cGhost();
+		e.bicho->alive = true;
 		e.bicho->SetPosition(sx, sy);
 		Entities.push_back(e);
 	}

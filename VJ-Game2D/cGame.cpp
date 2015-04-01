@@ -45,6 +45,8 @@ bool cGame::Init()
 	if (!res) return false;
 	res = Data.LoadImage(IMG_GHOST, Resources::SPRITESHEET_GHOST, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_EVIL_FISH, Resources::SPRITESHEET_EVIL_FISH, GL_RGBA);
+	if (!res) return false;
 
 	Sound.LoadSound(TITLE_MUSIC,"res/audio/title_music.wav", BG_MUSIC);
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -372,6 +374,9 @@ void cGame::Render()
 				}
 				else if ((*Entities)[i].type == "ghost") {
 					(*Entities)[i].bicho->Draw(Data.GetID(IMG_GHOST));
+				}
+				else if ((*Entities)[i].type == "evilFish") {
+					(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_FISH));
 				}
 				 //Select texture using entity type
 			}

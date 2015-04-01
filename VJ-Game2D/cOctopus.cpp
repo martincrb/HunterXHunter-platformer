@@ -32,7 +32,7 @@ bool cOctopus::Collides(cRect *rc) {
 
 }
 
-void cOctopus::Logic(int *map) {
+void cOctopus::Logic() {
 	sinangle += 0.06;
 	if (sinangle >= 360) sinangle = 0;
 
@@ -42,6 +42,7 @@ void cOctopus::Logic(int *map) {
 	for (int i = 0; i < balls.size(); ++i) {
 		bally = 10 * sin((i + sinangle));
 		balls[i]->SetWidthHeight(16, 16);
+		//balls[i]->SetPosition(octoposx-20, octoposy);
 		balls[i]->SetPosition(octoposx + 10 - (i + 1) * 16, octoposy + 30 + bally);
 	}
 }

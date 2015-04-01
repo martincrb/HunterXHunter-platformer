@@ -98,6 +98,9 @@
     <ClCompile Include="cSound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cEvilFish.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cData.h">
@@ -183,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="cSound.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cEvilFish.h">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

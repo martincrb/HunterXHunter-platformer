@@ -4,6 +4,7 @@
 #include "cBicho.h"
 #include "cPlayer.h"
 #include "cEvilBird.h"
+#include "cEvilFish.h"
 #include "cJumpingFrog.h"
 #include "cOctopus.h"
 #include "cGhost.h"
@@ -218,8 +219,8 @@ std::string cScene::LoadLevel(const char* level)
 				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
 				water_zone.left = it2->x;
 				water_zone.right = water_zone.left + it2->width;
-				water_zone.top = -(it2->y + it2->height);
-				water_zone.bottom = -it2->y;
+				water_zone.top = cScene::SCENE_HEIGHT*cScene::TILE_SIZE - it2->y;//cScene::SCENE_HEIGHT*cScene::TILE_SIZE - it2->y; 
+				water_zone.bottom = cScene::SCENE_HEIGHT*cScene::TILE_SIZE - (it2->y + it2->height);//water_zone.bottom + it2->height;
 			}
 		}
 
@@ -238,7 +239,7 @@ std::string cScene::LoadLevel(const char* level)
 				Entity entity;
 				entity.alive = true;
 				entity.spawn_x = it2->x;
-				entity.spawn_y = it2->y;
+				entity.spawn_y = (cScene::SCENE_HEIGHT - 1)*cScene::TILE_SIZE - it2->y;
 				entity.type = it2->type;
 				if (entity.type == "jfrog") {
 					std::cout << "Loading a hell of a frog" << std::endl;
@@ -251,6 +252,10 @@ std::string cScene::LoadLevel(const char* level)
 				else if (entity.type == "octopus") {
 					std::cout << "KillerKraken! D:" << std::endl;
 					entity.bicho = new cOctopus();
+				}
+				else if (entity.type == "evilFish") {
+					std::cout << "blublublublubKILL" << std::endl;
+					entity.bicho = new cEvilFish();
 				}
 				else if (entity.type == "player_spawn") {
 					player_spawn_x = entity.spawn_x;
@@ -355,7 +360,7 @@ void cScene::Draw(int tex_id)
 }
 int* cScene::GetMap()
 {
-	return &map[0][0];
+	return &map[map.size()-1][0];
 }
 
 bool cScene::isSolid(int tileID)

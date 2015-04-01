@@ -3,12 +3,12 @@
 #define LEFT 0
 #define RIGHT 1
 
-class cEvilBird :
+class cEvilFish :
 	public cBicho
 {
 public:
-	cEvilBird();
-	~cEvilBird();
+	cEvilFish();
+	~cEvilFish();
 	void Logic();
 	void Draw(int tex_id);
 	bool CollidesMapFloor();

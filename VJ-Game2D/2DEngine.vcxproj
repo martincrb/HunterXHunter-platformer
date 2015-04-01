@@ -98,6 +98,7 @@
     <ClCompile Include="cBicho.cpp" />
     <ClCompile Include="cData.cpp" />
     <ClCompile Include="cEvilBird.cpp" />
+    <ClCompile Include="cEvilFish.cpp" />
     <ClCompile Include="cFireBall.cpp" />
     <ClCompile Include="cGame.cpp" />
     <ClCompile Include="cGhost.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="cBicho.h" />
     <ClInclude Include="cData.h" />
     <ClInclude Include="cEvilBird.h" />
+    <ClInclude Include="cEvilFish.h" />
     <ClInclude Include="cFireBall.h" />
     <ClInclude Include="cGame.h" />
     <ClInclude Include="cGhost.h" />

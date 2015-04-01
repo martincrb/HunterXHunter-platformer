@@ -1,15 +1,22 @@
-#include "cEvilBird.h"
+#include "cEvilFish.h"
 #include "cScene.h"
 
-cEvilBird::cEvilBird()
+cEvilFish::cEvilFish()
 {
 	cBicho::SetState(0);
-	actualDirection = LEFT; //random initial dir
+	actualDirection = RIGHT; //random initial dir
 	Animation walk;
-	walk.addFrame(200, 2, 2, 42, 32, 64, 128,0,0);
-	walk.addFrame(200, 2, 46, 43, 29, 64, 128, 0, 0);
-	walk.addFrame(200, 33, 46, 39, 29, 64, 128, 0, 0);
-	walk.addFrame(200, 2, 91, 35, 29, 64, 128, 0, 0);
+	walk.addFrame(200, 2, 2, 28, 30, 128, 128, 0, 0);
+	walk.addFrame(200, 34, 2, 28, 31, 128, 128, 0, 0);
+	walk.addFrame(200, 67, 2, 28, 29, 128, 128, 0, 0);
+	walk.addFrame(200, 2, 32, 28, 29, 128, 128, 0, 0);
+	walk.addFrame(200, 33, 32, 28, 28, 128, 128, 0, 0);
+	walk.addFrame(200, 63, 32, 28, 30, 128, 128, 0, 0);
+	walk.addFrame(200, 95, 32, 28, 30, 128, 128, 0, 0);
+	walk.addFrame(200, 2, 62, 28, 31, 128, 128, 0, 0);
+	walk.addFrame(200, 35, 62, 28, 30, 128, 128, 0, 0);
+	walk.addFrame(200, 67, 62, 28, 29, 128, 128, 0, 0);
+	walk.addFrame(200, 98, 62, 28, 28, 128, 128, 0, 0);
 	animations.push_back(walk);
 
 
@@ -17,15 +24,10 @@ cEvilBird::cEvilBird()
 	currentFrame = currentAnimation->frames[0];
 }
 
-
-cEvilBird::~cEvilBird()
-{
-}
-
-bool cEvilBird::CollidesMapWall()
+bool cEvilFish::CollidesMapWall()
 {
 	int tile_x1 = x / cScene::TILE_SIZE;
-	int tile_x2 = (x + w+1) / cScene::TILE_SIZE;
+	int tile_x2 = (x + w + 1) / cScene::TILE_SIZE;
 	int tile_y = cScene::SCENE_HEIGHT - (y + h) / cScene::TILE_SIZE;
 	int tile_ini = tile_y;
 	int tile_fin = cScene::SCENE_HEIGHT - y / cScene::TILE_SIZE;
@@ -43,8 +45,12 @@ bool cEvilBird::CollidesMapWall()
 	}
 	return false;
 }
+cEvilFish::~cEvilFish()
+{
+}
 
-void cEvilBird::MoveRight() {
+
+void cEvilFish::MoveRight() {
 	int xaux;
 
 	//Whats next tile?
@@ -73,7 +79,7 @@ void cEvilBird::MoveRight() {
 		}
 	}
 }
-void cEvilBird::MoveLeft() {
+void cEvilFish::MoveLeft() {
 	int xaux;
 
 	//Whats next tile?
@@ -102,7 +108,7 @@ void cEvilBird::MoveLeft() {
 	}
 }
 
-void cEvilBird::Logic() {
+void cEvilFish::Logic() {
 	//if (actualDirection == LEFT) std::cout << "LEFT" << std::endl;
 	//if (actualDirection == RIGHT) std::cout << "RIGHT" << std::endl;
 	switch (actualDirection) {
@@ -115,16 +121,15 @@ void cEvilBird::Logic() {
 		MoveRight();
 		break;
 	}
-	
+
 	//cBicho::Logic(map);
 }
 
-bool cEvilBird::CollidesMapFloor() {
+bool cEvilFish::CollidesMapFloor() {
 	return true;
-	//Evil Bird is always flying, so it is always " in the floor "
 }
 
-void cEvilBird::Draw(int tex_id) {
+void cEvilFish::Draw(int tex_id) {
 
 	float xo, yo, xf, yf;
 
@@ -132,7 +137,7 @@ void cEvilBird::Draw(int tex_id) {
 	{
 		//1
 	case STATE_LOOKRIGHT:
-		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(64);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
+		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(128);
 		NextFrame(currentAnimation->frames.size());
@@ -140,13 +145,13 @@ void cEvilBird::Draw(int tex_id) {
 		//4
 	case STATE_LOOKLEFT:
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
-		xf = xo + float(currentFrame.tile_width) / float(64);
+		xf = xo + float(currentFrame.tile_width) / float(128);
 		yf = yo - float(currentFrame.tile_heigth) / float(128);
 		NextFrame(currentAnimation->frames.size());
 		break;
 		//1..3
 	case STATE_WALKRIGHT:
-		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(64);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
+		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(128);
 		NextFrame(currentAnimation->frames.size());
@@ -154,7 +159,7 @@ void cEvilBird::Draw(int tex_id) {
 		//4..6
 	case STATE_WALKLEFT:
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(128);
-		xf = xo + float(currentFrame.tile_width) / float(64);
+		xf = xo + float(currentFrame.tile_width) / float(128);
 		yf = yo - float(currentFrame.tile_heigth) / float(128);
 		NextFrame(currentAnimation->frames.size());
 		break;

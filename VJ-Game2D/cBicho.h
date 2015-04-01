@@ -40,6 +40,7 @@ public:
 	bool CollidesGhostTile(int *map);
 	bool Collides(cRect *rc);
 	virtual bool CollidesMapWall();
+	virtual bool CollidesMapWall(bool right);
 	virtual bool CollidesMapFloor();
 	virtual bool HurtsDestructible(cRect hitBox);
 
@@ -77,10 +78,11 @@ protected:
 	bool jumping;
 	int jump_alfa;
 	int jump_y;
+	int last_x, last_y;
+	void adjust();
 
 	int seq, delay;
 	int *map;
 private:
-	int last_x, last_y;
-	void adjust();
+	
 };

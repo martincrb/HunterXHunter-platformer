@@ -87,7 +87,9 @@ bool cBicho::Collides(cRect *rc)
 bool cBicho::inWater(cRect *rc) {
 	return Collides(rc);
 }
-
+bool cBicho::CollidesMapWall(bool right) {
+	return CollidesMapWall();
+}
 bool cBicho::CollidesMapWall()
 {
 	int tile_x1 = x / cScene::TILE_SIZE;
@@ -123,7 +125,7 @@ bool cBicho::CollidesMapFloor()
 	int tile_ini = tile_x;
 	int tile_fin = (x + w) / cScene::TILE_SIZE;
 	for (int i = tile_ini; i <= tile_fin; i++) {
-		//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
+		cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
 		int tileID = map[i + tile_y * cScene::SCENE_WIDTH];
 		if (tileID != 0 && cScene::tiles[tileID - 1].isSolid()) {
 			in_air = false;

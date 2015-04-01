@@ -70,13 +70,13 @@ bool Gon::HurtsDestructible(cRect hitBox) {
 	//Set tile from these coords
 
 	tile_x = hitBox.left / cScene::TILE_SIZE;
-	tile_y = hitBox.top / cScene::TILE_SIZE;
+	tile_y = cScene::SCENE_HEIGHT - (hitBox.top / cScene::TILE_SIZE);
 
-	int tileID = map[abs(tile_x + ((-tile_y+1)*cScene::SCENE_WIDTH))];
+	int tileID = map[tile_x + tile_y*cScene::SCENE_WIDTH];
 	if (tileID != 0) {
 		if (cScene::tiles[tileID - 1].isDestructable())	{
 			std::cout << "DESTROY" << std::endl;
-			map[abs(tile_x + ((-tile_y + 1)*cScene::SCENE_WIDTH))] = 0;
+			map[tile_x + tile_y*cScene::SCENE_WIDTH] = 0;
 			return true;
 		}
 	}

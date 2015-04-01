@@ -22,7 +22,7 @@ cGhost::~cGhost()
 {
 }
 
-void cGhost::Logic(int *map) {
+void cGhost::Logic() {
 	if (initial_counter < INITIAL_DELAY) ++initial_counter;
 	else {
 		//Pursue player

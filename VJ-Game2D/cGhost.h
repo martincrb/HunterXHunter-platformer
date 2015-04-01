@@ -10,7 +10,7 @@ class cGhost :
 public:
 	cGhost();
 	~cGhost();
-	void Logic(int* map);
+	void Logic();
 	void Draw(int tex_id);
 	
 private:

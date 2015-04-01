@@ -37,10 +37,6 @@ public:
 	cRect* getWaterZone();
 	std::vector<Entity>* getEntities();
 	void addEntity(std::string type, int sx, int sy);
-	int player1_actualx;
-	int player1_actualy;
-	int player2_actualx;
-	int player2_actualy;
 	int player_spawn_x;
 	int player_spawn_y;
 private:

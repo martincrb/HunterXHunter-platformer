@@ -6,7 +6,7 @@
 class PlayerController
 {
 public:
-	enum actions { MOVE_RIGHT, MOVE_LEFT, JUMP, JUMP_RIGHT, JUMP_LEFT, STOP, HABILITY, HAB_JUMP, HAB_JUMP_LEFT, HAB_JUMP_RIGHT};
+	enum actions { MOVE_RIGHT, MOVE_LEFT, JUMP, JUMP_RIGHT, JUMP_LEFT, STOP, HABILITY, HAB_JUMP, HAB_JUMP_LEFT, HAB_JUMP_RIGHT, DUCK};
 
 	PlayerController();
 	PlayerController(cPlayer* playerOne, cPlayer* playerTwo, cScene* scene);

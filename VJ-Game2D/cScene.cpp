@@ -5,6 +5,8 @@
 #include "cPlayer.h"
 #include "cEvilBird.h"
 #include "cJumpingFrog.h"
+#include "cOctopus.h"
+#include "cGhost.h"
 #include <iostream>
 #include <functional>
 //TMXParser git: https://github.com/solar-storm-studios/TMXParser
@@ -28,6 +30,11 @@ cScene::~cScene(void)
 {
 }
 
+void cScene::FreeAll() {
+	Entities.clear();
+	tiles.clear();
+	map.clear();
+}
 void split(const std::string& s, char c,
 	std::vector<std::string>& v) {
 	std::string::size_type i = 0;
@@ -39,6 +46,10 @@ void split(const std::string& s, char c,
 		if (j == std::string::npos)
 			v.push_back(s.substr(i, s.length()));
 	}
+}
+
+cRect* cScene::getWaterZone() {
+	return &water_zone;
 }
 
 std::string cScene::LoadLevel(const char* level)
@@ -88,8 +99,8 @@ std::string cScene::LoadLevel(const char* level)
 	//fd=fopen(file,"r");
 	//if(fd==NULL) return false;
 
-	id_DL=glGenLists(1);
-	glNewList(id_DL,GL_COMPILE);
+	//id_DL=glGenLists(1);
+	//glNewList(id_DL,GL_COMPILE);
 		glBegin(GL_QUADS);
 		
 		//Print every layer from the TMX
@@ -149,7 +160,7 @@ std::string cScene::LoadLevel(const char* level)
 		}
 
 		glEnd();
-	glEndList();
+	//glEndList();
 
 	//Fill OBJECTS DATA from TMX:
 
@@ -171,7 +182,6 @@ std::string cScene::LoadLevel(const char* level)
 
 		if (strcmp(name.c_str(), "Camera_limits") == 0) {
 			//Read Camera Boundaries
-			std::cout << "LOADING BOUNDARY " << std::endl;
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
 				std::cout << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
@@ -192,10 +202,29 @@ std::string cScene::LoadLevel(const char* level)
 				camera_limits.addBoundary(boundary);
 			}
 		}
+		if (strcmp(name.c_str(), "Water") == 0) {
+			//Read Camera Boundaries
+			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
+				std::cout << std::endl;
+				std::cout << "WATER"<< std::endl;
+				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
+				//if (it2->second.type != "") { std::cout << "Object Type: " << tmx.objectGroup[it->first].object[it2->first].type << std::endl; }
+				std::cout << "Object Position X: " << it2->x << std::endl;
+				std::cout << "Object Position Y: " << it2->y << std::endl;
+				std::cout << "Object Width: " << it2->width << std::endl;
+				std::cout << "Object Height: " << it2->height << std::endl;
+
+				//if (it2->second.gid != 0) { std::cout << "Object Tile GID: " << tmx.objectGroup[it->first].object[it2->first].gid << std::endl; }
+				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
+				water_zone.left = it2->x;
+				water_zone.right = water_zone.left + it2->width;
+				water_zone.top = -(it2->y + it2->height);
+				water_zone.bottom = -it2->y;
+			}
+		}
 
 		if (strcmp(name.c_str(), "Entities") == 0) {
 			//Read Entity data
-			std::cout << "LOADING ENTITY " << std::endl;
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
 				std::cout << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
@@ -219,6 +248,14 @@ std::string cScene::LoadLevel(const char* level)
 					std::cout << "An awesome pterodactyle comes to play" << std::endl;
 					entity.bicho = new cEvilBird();
 				}
+				else if (entity.type == "octopus") {
+					std::cout << "KillerKraken! D:" << std::endl;
+					entity.bicho = new cOctopus();
+				}
+				else if (entity.type == "player_spawn") {
+					player_spawn_x = entity.spawn_x;
+					player_spawn_y = entity.spawn_y;
+				}
 				//FILL WITH OTHER ENTITY TYPES
 
 				Entities.push_back(entity);
@@ -238,7 +275,18 @@ std::vector<Entity>* cScene::getEntities() {
 	return &Entities;
 }
 
-
+void cScene::addEntity(std::string type, int sx, int sy) {
+	if (type == "ghost") {
+		Entity e;
+		e.alive = true;
+		e.spawn_x = sx;
+		e.spawn_y = sy;
+		e.type = "ghost";
+		e.bicho = new cGhost();
+		e.bicho->SetPosition(sx, sy);
+		Entities.push_back(e);
+	}
+}
 void cScene::Draw(int tex_id)
 {
 	glEnable(GL_TEXTURE_2D);
@@ -307,7 +355,7 @@ void cScene::Draw(int tex_id)
 }
 int* cScene::GetMap()
 {
-	return &map[1][0];
+	return &map[0][0];
 }
 
 bool cScene::isSolid(int tileID)

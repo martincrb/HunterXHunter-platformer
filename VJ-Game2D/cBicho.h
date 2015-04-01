@@ -16,6 +16,8 @@
 #define STATE_LOOKRIGHT		1
 #define STATE_WALKLEFT		2
 #define STATE_WALKRIGHT		3
+#define STATE_DUCKLEFT		4
+#define STATE_DUCKRIGHT		5
 
 
 
@@ -34,6 +36,8 @@ public:
 	void GetWidthHeight(int *w,int *h);
 	void SetMap(int* map);
 
+	bool inWater(cRect *rc);
+	bool CollidesGhostTile(int *map);
 	bool Collides(cRect *rc);
 	virtual bool CollidesMapWall();
 	virtual bool CollidesMapFloor();
@@ -49,7 +53,9 @@ public:
 	bool hasHitBox();
 	cRect getHitBox();
 
+	void setObjectivePos(int x, int y);
 	void Jump();
+	void Duck();
 	void Stop();
 	virtual void Logic();
 	int  GetState();
@@ -57,12 +63,14 @@ public:
 	bool inAir();
 	void NextFrame(int max);
 	int  GetFrame();
+	bool in_water;
 	
 protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;
 	AnimationFrame currentFrame;
 	int x, y;
+	int obj_x, obj_y;
 	int w, h;
 	int state;
 	bool in_air;

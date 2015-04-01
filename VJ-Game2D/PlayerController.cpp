@@ -33,7 +33,7 @@ void PlayerController::setPlayers(cPlayer* playerOne, cPlayer* playerTwo)
 
 void PlayerController::action(PlayerController::actions a) {
 	action(a, currentPlayer);
-}
+	}
 
 void PlayerController::action(PlayerController::actions a, cPlayer* p) {
 	if (currentPlayer == p) {
@@ -45,9 +45,11 @@ void PlayerController::action(PlayerController::actions a, cPlayer* p) {
 			command_queue.push(actions::JUMP_LEFT);
 		else if (a == actions::HAB_JUMP_RIGHT)
 			command_queue.push(actions::JUMP_RIGHT);
+		else if (a == actions::DUCK)
+			command_queue.push(actions::STOP);
 		else
 			command_queue.push(a);
-	}
+		}
 	switch (a) {
 	case actions::JUMP:
 		p->Jump();
@@ -86,8 +88,11 @@ void PlayerController::action(PlayerController::actions a, cPlayer* p) {
 		p->MoveRight();
 		p->Hability();
 		break;
+	case actions::DUCK:
+		p->Duck();
+		break;
+		}
 	}
-}
 
 void PlayerController::moveCompanion() {
 	actions command = command_queue.front();

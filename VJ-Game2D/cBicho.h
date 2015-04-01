@@ -38,11 +38,12 @@ public:
 
 	bool inWater(cRect *rc);
 	bool CollidesGhostTile(int *map);
+	int CollidesItem(int *itemMap);
 	bool Collides(cRect *rc);
 	virtual bool CollidesMapWall();
 	virtual bool CollidesMapWall(bool right);
 	virtual bool CollidesMapFloor();
-	virtual bool HurtsDestructible(cRect hitBox);
+	virtual int HurtsDestructible(cRect hitBox);
 
 	void GetArea(cRect *rc);
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
@@ -70,6 +71,7 @@ protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;
 	AnimationFrame currentFrame;
+	double speed;
 	int x, y;
 	int obj_x, obj_y;
 	int w, h;

@@ -14,7 +14,7 @@ public:
 	cPlayer(int state);
 	virtual void Hability();
 	virtual void Draw(int tex_id);
-	bool HurtsDestructible(cRect hitBox);
+	int HurtsDestructible(cRect hitBox);
 	bool isUsingHability();
 protected:
 	int punchDelay;

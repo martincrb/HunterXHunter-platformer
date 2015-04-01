@@ -5,6 +5,7 @@ cGhost::cGhost()
 	lick_counter = 0;
 	initial_counter = 0;
 	lick = false;
+	speed = 2;
 	state = STATE_LOOKLEFT;
 	Animation idle1;
 	Animation idle2;
@@ -14,6 +15,7 @@ cGhost::cGhost()
 	animations.push_back(idle2);
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
+
 
 }
 
@@ -32,8 +34,8 @@ void cGhost::Logic() {
 		//normalize
 		float module = sqrt(pow(move_x, 2) + pow(move_y, 2));
 
-		move_x = move_x/module;
-		move_y = move_y/module;
+		move_x = speed*move_x/module;
+		move_y = speed*move_y/module;
 		if (move_x < 0) state = STATE_LOOKLEFT;
 		else if (move_x >= 0) state = STATE_LOOKRIGHT;
 		x += floor(move_x+0.5);

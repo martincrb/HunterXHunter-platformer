@@ -53,6 +53,7 @@ bool cGame::Init()
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
 	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
+	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
 	//Scene initialization
 	if (actualLevel == 0) {
 		Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
@@ -234,6 +235,15 @@ bool cGame::Process()
 			Scene.addEntity("ghost", playerx, playery - 50);
 		}
 
+		int itemID = Player->CollidesItem(Scene.GetItemMap());
+		if (itemID != -1) {
+			if (itemID == 44) {
+				score += 40;
+				Sound.Play(GET_COIN, EFFECTS_CHANNEL);
+				std::cout << "score: " << score << std::endl;
+			}
+		}
+
 		//Process all entities in the map
 		cRect playerBox;
 		Player->GetArea(&playerBox);
@@ -271,7 +281,15 @@ bool cGame::Process()
 							(*Entities)[i].Kill();
 						}
 					}
-					Player->HurtsDestructible(hitBox);
+					int destructedTile = Player->HurtsDestructible(hitBox);
+					if (destructedTile != -1) {
+						if (destructedTile == 35) {
+							if (rand() % 100 < 30) {
+								Sound.Play(BOO_HI, EFFECTS_CHANNEL);
+								Scene.addEntity("ghost", playerx, playery - 50);
+							}
+						}
+					}
 				}
 			
 				//Enemy touches player

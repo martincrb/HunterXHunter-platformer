@@ -112,9 +112,9 @@ bool cBicho::CollidesMapWall()
 	return false;
 }
 
-bool cBicho::HurtsDestructible(cRect hitBox) {
+int cBicho::HurtsDestructible(cRect hitBox) {
 
-	return false;
+	return 0;
 }
 bool cBicho::CollidesMapFloor()
 {
@@ -135,7 +135,25 @@ bool cBicho::CollidesMapFloor()
 	return false;
 
 }
+int cBicho::CollidesItem(int *itemMap) {
+	int tile_x = x / cScene::TILE_SIZE;
+	int tile_y = cScene::SCENE_HEIGHT - 1 - y / cScene::TILE_SIZE;
+	//if (y % cScene::TILE_SIZE == 0) tile_y++;
 
+	int tile_ini = tile_x;
+	int tile_fin = (x + w) / cScene::TILE_SIZE;
+	for (int i = tile_ini; i <= tile_fin; i++) {
+		//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
+		int tileID = itemMap[i + tile_y * cScene::SCENE_WIDTH];
+		int coverTileID = map[i + tile_y * cScene::SCENE_WIDTH];
+		if (tileID != 0 && coverTileID == 0) {
+			itemMap[i + tile_y * cScene::SCENE_WIDTH] = 0;
+			return tileID;
+			
+		}
+	}
+	return -1;
+}
 bool cBicho::CollidesGhostTile(int *map)
 {
 	int tile_x = x / cScene::TILE_SIZE;

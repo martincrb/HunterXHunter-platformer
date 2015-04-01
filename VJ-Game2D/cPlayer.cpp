@@ -21,6 +21,6 @@ bool cPlayer::isUsingHability() {
 	return hability;
 }
 
-bool cPlayer::HurtsDestructible(cRect hitBox) {
+int cPlayer::HurtsDestructible(cRect hitBox) {
 	return false;
 }

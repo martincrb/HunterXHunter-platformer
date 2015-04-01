@@ -7,6 +7,6 @@ public:
 	Gon();
 	~Gon();
 	void Draw(int tex_id);
-	bool HurtsDestructible(cRect hitBox);
+	int HurtsDestructible(cRect hitBox);
 };
 

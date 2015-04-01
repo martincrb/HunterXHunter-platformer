@@ -59,7 +59,7 @@ Gon::~Gon()
 }
 
 
-bool Gon::HurtsDestructible(cRect hitBox) {
+int Gon::HurtsDestructible(cRect hitBox) {
 	int tile_x, tile_y;
 	int j;
 	int width_tiles, height_tiles;
@@ -77,10 +77,10 @@ bool Gon::HurtsDestructible(cRect hitBox) {
 		if (cScene::tiles[tileID - 1].isDestructable())	{
 			std::cout << "DESTROY" << std::endl;
 			map[tile_x + tile_y*cScene::SCENE_WIDTH] = 0;
-			return true;
+			return tileID;
 		}
 	}
-	return false;
+	return -1;
 
 }
 

@@ -20,6 +20,7 @@ public:
 	std::string LoadLevel(const char* level);
 	void Draw(int tex_id);
 	int *GetMap();
+	int* GetItemMap();
 	bool isSolid(int tileID);
 	std::string getTileType(int tileID);
 	void FreeAll();

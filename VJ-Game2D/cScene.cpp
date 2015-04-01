@@ -363,6 +363,12 @@ int* cScene::GetMap()
 	return &map[map.size()-1][0];
 }
 
+int* cScene::GetItemMap()
+{
+	return &map[map.size() - 2][0];
+}
+
+
 bool cScene::isSolid(int tileID)
 {
 	return tiles[tileID].isSolid();

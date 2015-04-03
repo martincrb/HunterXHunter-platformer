@@ -13,7 +13,7 @@ class LevelScreen :
 public:
 	LevelScreen();
 	~LevelScreen();
-	bool Init();
+	bool Init(cGame* cg);
 	bool Loop();
 	void Finalize();
 

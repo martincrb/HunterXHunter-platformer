@@ -149,5 +149,5 @@ void Hisoka::Card::Draw() {
 	currentFrame.py_disp = 0;
 	yf = yo - float(currentFrame.tile_heigth) / float(16);
 	//cBicho::SetWidthHeight(16, 16);
-	DrawRect(7, 0, 1, 1, 0);
+	DrawRect(19, 0, 1, 1, 0);
 }

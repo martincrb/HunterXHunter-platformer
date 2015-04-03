@@ -4,6 +4,10 @@
 
 StartScreen::StartScreen()
 {
+	frameCounter = 0;
+	initialAnimCounter = 0;
+	drawPressButton = false;
+	endInitialAnim = false;
 }
 
 
@@ -18,33 +22,22 @@ bool StartScreen::Init(cGame* cG) {
 
 
 
-	res = Data.LoadImage(IMG_START_SCREEN, Resources::START_SCREEN, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN0, Resources::START_SCREEN0, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_PLAYER, Resources::SPRITESHEET_GON, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN1, Resources::START_SCREEN1, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_PLAYER2, Resources::SPRITESHEET_KILLUA, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN2, Resources::START_SCREEN2, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_JUMPING_FROG, Resources::SPRITESHEET_JUMPING_FROG, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN3, Resources::START_SCREEN3, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_EVIL_BIRD, Resources::SPRITESHEET_EVIL_PTERO, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN4, Resources::START_SCREEN4, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_OCTO, Resources::SPRITESHEET_OCTO, GL_RGBA);
+	res = Data.LoadImage(IMG_START_SCREEN5, Resources::START_SCREEN, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_OCTO_BALL, Resources::SPRITESHEET_OCTO_BALL, GL_RGBA);
-	if (!res) return false;
-	res = Data.LoadImage(IMG_GHOST, Resources::SPRITESHEET_GHOST, GL_RGBA);
-	if (!res) return false;
-	res = Data.LoadImage(IMG_EVIL_FISH, Resources::SPRITESHEET_EVIL_FISH, GL_RGBA);
-	if (!res) return false;
-	res = Data.LoadImage(IMG_HISOKA, Resources::SPRITESHEET_HISOKA, GL_RGBA);
+	res = Data.LoadImage(IMG_PUSH_START, Resources::PUSH_START, GL_RGBA);
 	if (!res) return false;
 
 	Sound.LoadSound(TITLE_MUSIC, "res/audio/title_music.wav", BG_MUSIC);
-	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
-	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
-	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
-	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
-	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
 
 	Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
 
@@ -77,11 +70,47 @@ void StartScreen::ReadMouse(int button, int state, int x, int y) {
 //Process
 bool StartScreen::Process() {
 	Sound.UpdateSound();
-	if (keys[99])		gameController->startLevel(1);
+	if (keys[99] && endInitialAnim)		gameController->startMapScreen(1);
 	return true;
 }
 //Output
 void StartScreen::Render() {
+	if (endInitialAnim) {
+		++frameCounter;
+	}
+	else {
+		++initialAnimCounter;
+	}
+
+	int bgID = Data.GetID(IMG_START_SCREEN5);
+	if (!endInitialAnim) {
+		if (initialAnimCounter < INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN0);
+		}
+		else if (initialAnimCounter < 2 * INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN1);
+		}
+		else if (initialAnimCounter < 3 * INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN2);
+		}
+		else if (initialAnimCounter < 4 * INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN3);
+		}
+		else if (initialAnimCounter < 5 * INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN4);
+		}
+		else if (initialAnimCounter < 6 * INITIAL_ANIM_DELAY) {
+			bgID = Data.GetID(IMG_START_SCREEN5);
+		}
+		else {
+			endInitialAnim = true;
+		}
+	}
+
+	if (frameCounter == PUSH_START_BLINK_FREQ) {
+		frameCounter = 0;
+		drawPressButton = !drawPressButton;
+	}
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glLoadIdentity();
@@ -92,7 +121,7 @@ void StartScreen::Render() {
 	glEnable(GL_TEXTURE_2D);
 	//std::cout << "QUAD SIZE: " << std::endl;
 	//std::cout << w << " " << h << std::endl;
-	glBindTexture(GL_TEXTURE_2D, Data.GetID(IMG_START_SCREEN));
+	glBindTexture(GL_TEXTURE_2D, bgID);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1);	glVertex2i(screen_x, screen_y);
 	glTexCoord2f(1, 1);	glVertex2i(screen_x + GAME_WIDTH, screen_y);
@@ -100,6 +129,17 @@ void StartScreen::Render() {
 	glTexCoord2f(0, 0);	glVertex2i(screen_x, screen_y + GAME_HEIGHT);
 	glEnd();
 
+	if (drawPressButton) {
+		glBindTexture(GL_TEXTURE_2D, Data.GetID(IMG_PUSH_START));
+		screen_x = 368;
+		screen_y = 200;
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 1);	glVertex2i(screen_x, screen_y);
+		glTexCoord2f(1, 1);	glVertex2i(screen_x + 136 * 2, screen_y);
+		glTexCoord2f(1, 0);	glVertex2i(screen_x + 136 * 2, screen_y + 8 * 2);
+		glTexCoord2f(0, 0);	glVertex2i(screen_x, screen_y + 8 * 2);
+		glEnd();
+	}
 	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }

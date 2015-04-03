@@ -20,8 +20,6 @@ bool LevelScreen::Init(cGame* cG) {
 	int level = cG->getLevel();
 	Sound.init();
 	score = 0;
-	res = Data.LoadImage(IMG_START_SCREEN, Resources::START_SCREEN, GL_RGBA);
-	if (!res) return false;
 	res = Data.LoadImage(IMG_PLAYER, Resources::SPRITESHEET_GON, GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_PLAYER2, Resources::SPRITESHEET_KILLUA, GL_RGBA);
@@ -40,8 +38,9 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_HISOKA, Resources::SPRITESHEET_HISOKA, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_HISO_CARD, Resources::SPRITESHEET_HISO_CARD, GL_RGBA);
+	if (!res) return false;
 
-	Sound.LoadSound(TITLE_MUSIC, "res/audio/title_music.wav", BG_MUSIC);
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
@@ -51,7 +50,7 @@ bool LevelScreen::Init(cGame* cG) {
 	//Scene initialization
 	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
 
-	std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
+	std::string tileset_source = Scene.LoadLevel(Resources::getResourceLevel(level));
 	if (strcmp(tileset_source.c_str(), "") == 0) {
 		return false;
 	}

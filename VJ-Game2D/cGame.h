@@ -3,6 +3,7 @@
 #include "cScreen.h"
 #include "StartScreen.h"
 #include "LevelScreen.h"
+#include "MapScreen.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -25,12 +26,14 @@ public:
 	//Output
 	void Render();
 
+	void startMapScreen(int lvl);
 	void startLevel(int lvl);
 	int getLevel();
 
 private:
 	StartScreen startScreen;
 	LevelScreen levelScreen;
+	MapScreen mapScreen;
 	cScreen* currentScreen;
 	int actualLevel;
 	int score;

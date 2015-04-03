@@ -81,7 +81,7 @@ void cOctopus::Logic() {
 void cOctopus::Draw(int tex_id) {
 
 	for (int i = 0; i < balls.size(); ++i) {
-		balls[i]->Draw(7);
+		balls[i]->Draw(15);
 	}
 
 	float xo, yo, xf, yf;

@@ -1,15 +1,13 @@
 #pragma once
 #include "cScreen.h"
 
-#define INITIAL_ANIM_DELAY 48
-#define PUSH_START_BLINK_FREQ 10
-
-class StartScreen :
+#define MAP_SCREEN_DURATION 240
+class MapScreen :
 	public cScreen
 {
 public:
-	StartScreen();
-	~StartScreen();
+	MapScreen();
+	~MapScreen();
 	bool Init(cGame* cG);
 	bool Loop();
 	void Finalize();
@@ -21,11 +19,9 @@ public:
 	bool Process();
 	//Output
 	void Render();
+
 private:
 	int frameCounter;
-	int initialAnimCounter;
-	bool endInitialAnim;
-	bool drawPressButton;
-
+	int uncover_displace;
 };
 

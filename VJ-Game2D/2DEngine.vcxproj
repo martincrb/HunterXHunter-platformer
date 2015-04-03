@@ -116,6 +116,7 @@
     <ClCompile Include="Hisoka.cpp" />
     <ClCompile Include="Killua.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
+    <ClCompile Include="MapScreen.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="StartScreen.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Hisoka.h" />
     <ClInclude Include="Killua.h" />
     <ClInclude Include="LevelScreen.h" />
+    <ClInclude Include="MapScreen.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="StartScreen.h" />

@@ -1,16 +1,26 @@
 #include "Resources.h"
 
-const char* Resources::SPRITESHEET_GON = "res/sprites/gon.png";
-const char* Resources::SPRITESHEET_KILLUA = "res/sprites/killua.png";
+const char* Resources::SPRITESHEET_GON = "res/sprites/char/gon.png";
+const char* Resources::SPRITESHEET_KILLUA = "res/sprites/char/killua.png";
 const char* Resources::LEVEL01 = "res/levels/AK.tmx";
-const char* Resources::SPRITESHEET_JUMPING_FROG = "res/sprites/enemy_frog.png";
-const char* Resources::SPRITESHEET_EVIL_PTERO = "res/sprites/enemy_bird.png";
-const char* Resources::SPRITESHEET_EVIL_FISH = "res/sprites/evilFish.png";
-const char* Resources::SPRITESHEET_OCTO = "res/sprites/octopus.png";
-const char* Resources::SPRITESHEET_OCTO_BALL = "res/sprites/octopus_ball.png";
-const char* Resources::SPRITESHEET_GHOST = "res/sprites/boo.png";
-const char* Resources::SPRITESHEET_HISOKA = "res/sprites/hisoka.png";
-const char* Resources::START_SCREEN = "res/sprites/start.png";
+const char* Resources::SPRITESHEET_JUMPING_FROG = "res/sprites/entities/enemy_frog.png";
+const char* Resources::SPRITESHEET_EVIL_PTERO = "res/sprites/entities/enemy_bird.png";
+const char* Resources::SPRITESHEET_EVIL_FISH = "res/sprites/entities/evilFish.png";
+const char* Resources::SPRITESHEET_OCTO = "res/sprites/entities/octopus.png";
+const char* Resources::SPRITESHEET_OCTO_BALL = "res/sprites/entities/octopus_ball.png";
+const char* Resources::SPRITESHEET_HISO_CARD = "res/sprites/entities/card.png";
+const char* Resources::SPRITESHEET_GHOST = "res/sprites/entities/boo.png";
+const char* Resources::SPRITESHEET_HISOKA = "res/sprites/entities/hisoka.png";
+const char* Resources::START_SCREEN0 = "res/sprites/start_menu/start_0.png";
+const char* Resources::START_SCREEN1 = "res/sprites/start_menu/start_1.png";
+const char* Resources::START_SCREEN2 = "res/sprites/start_menu/start_2.png";
+const char* Resources::START_SCREEN3 = "res/sprites/start_menu/start_3.png";
+const char* Resources::START_SCREEN4 = "res/sprites/start_menu/start_4.png";
+const char* Resources::START_SCREEN = "res/sprites/start_menu/start_5.png";
+const char* Resources::MAP_SCREEN = "res/sprites/start_menu/map_level.png";
+const char* Resources::MAP_COVER = "res/sprites/start_menu/map_uncover.png";
+const char* Resources::PUSH_START = "res/sprites/start_menu/push_start.png";
+
 Resources::Resources()
 {
 }
@@ -18,4 +28,15 @@ Resources::Resources()
 
 Resources::~Resources()
 {
+}
+const char* Resources::getResourceLevel(int level) {
+	switch (level) {
+	case 1:
+		return LEVEL01;
+		break;
+	case 2:
+		//return LEVEL02;
+		break;
+
+	}
 }

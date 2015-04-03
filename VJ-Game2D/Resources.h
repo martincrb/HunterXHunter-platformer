@@ -18,7 +18,16 @@ public:
 	static const char* SPRITESHEET_GHOST;
 	static const char* START_SCREEN;
 	static const char* SPRITESHEET_HISOKA;
-	
+	static const char* getResourceLevel(int level);
+	static const char* START_SCREEN0;
+	static const char* START_SCREEN1;
+	static const char* START_SCREEN2;
+	static const char* SPRITESHEET_HISO_CARD;
+	static const char* START_SCREEN3;
+	static const char* START_SCREEN4;
+	static const char* MAP_SCREEN;
+	static const char* MAP_COVER;
+	static const char* PUSH_START;
 
 };
 

@@ -126,6 +126,7 @@ void LevelScreen::ReadMouse(int button, int state, int x, int y) {
 bool LevelScreen::Process() {
 	bool res = true;
 	Sound.UpdateSound();
+
 	for (int k = 0; k < cScene::debugmap.size(); ++k) {
 		cScene::debugmap[k] = 0;
 	}
@@ -231,6 +232,7 @@ bool LevelScreen::Process() {
 	//Process all entities in the map
 	cRect playerBox;
 	Player->GetArea(&playerBox);
+
 	for (unsigned int i = 0; i < Entities->size(); i++) {
 		if (((*Entities)[i].type != "player_spawn") && (*Entities)[i].bicho->alive)  {
 			(*Entities)[i].bicho->Logic();
@@ -284,7 +286,14 @@ bool LevelScreen::Process() {
 				(*Entities)[i].bicho->setObjectivePos(playerx, playery);
 			}
 
-			if ((*Entities)[i].bicho->Collides(&playerBox)) { //if octopus collides with player
+			int xb, yb;
+			Player->GetPosition(&xb, &yb);
+			playerBox.left += xb;
+			playerBox.bottom += yb;
+			playerBox.right += playerBox.left;
+			playerBox.top += playerBox.bottom;
+
+			if ((*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 				//Kill player
 				std::cout << "dead" << std::endl;
 				//Finalize();

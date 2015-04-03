@@ -148,5 +148,8 @@ void cPlayer::adjust() {
 
 void cPlayer::GetArea(cRect *rc)
 {
-	rc = &coll_box;
+	rc->bottom = coll_box.bottom;
+	rc->right = coll_box.right;
+	rc->left = coll_box.left;
+	rc->top = coll_box.top;
 }

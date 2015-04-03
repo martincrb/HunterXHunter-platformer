@@ -14,10 +14,13 @@ public:
 	cPlayer(int state);
 	virtual void Hability();
 	virtual void Draw(int tex_id);
+	virtual bool Collides(cRect *rc);
 	int HurtsDestructible(cRect hitBox);
 	bool isUsingHability();
+	void setCollisionBox(cRect r);
 protected:
 	int punchDelay;
 	bool hability;
+	cRect coll_box;
 
 };

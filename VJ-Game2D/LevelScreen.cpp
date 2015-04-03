@@ -92,13 +92,16 @@ bool LevelScreen::Init() {
 	Player->SetWidthHeight(32, 32);
 	Player->SetState(STATE_LOOKRIGHT);
 	Player->SetMap(Scene.GetMap());
+	cRect r; r.bottom = 0; r.left = 0; r.right = 32; r.top = 32;
+	Player->setCollisionBox(r);
 
 	Player->inWater(Scene.getWaterZone());
 	Player2->SetWidthHeight(32, 32);
-	Player2->SetPosition(Scene.player_spawn_x - 10, Scene.player_spawn_y);
+	Player2->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetState(STATE_LOOKRIGHT);
 	Player2->SetMap(Scene.GetMap());
+	Player->setCollisionBox(r);
 
 	Player2->inWater(Scene.getWaterZone());
 	pController.setPlayers(Player, Player2);

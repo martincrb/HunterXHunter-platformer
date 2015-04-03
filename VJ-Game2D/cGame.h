@@ -25,9 +25,12 @@ public:
 	//Output
 	void Render();
 
+	void startLevel(int lvl);
+	int getLevel();
 
 private:
 	StartScreen startScreen;
+	LevelScreen levelScreen;
 	cScreen* currentScreen;
 	int actualLevel;
 	int score;

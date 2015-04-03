@@ -13,23 +13,13 @@ LevelScreen::~LevelScreen()
 
 }
 
-bool LevelScreen::Init() {
-	//gameController = cG;
+bool LevelScreen::Init(cGame* cG) {
+	gameController = cG;
 	bool res = true;
 	reaper = false;
+	int level = cG->getLevel();
 	Sound.init();
 	score = 0;
-	//Graphics initialization
-	glClearColor(0.0f, 0.2f, 1.0f, 0.0f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
-	glMatrixMode(GL_MODELVIEW);
-
-	glAlphaFunc(GL_GREATER, 0.05f);
-	glEnable(GL_ALPHA_TEST);
-
-
 	res = Data.LoadImage(IMG_START_SCREEN, Resources::START_SCREEN, GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_PLAYER, Resources::SPRITESHEET_GON, GL_RGBA);
@@ -65,6 +55,8 @@ bool LevelScreen::Init() {
 	if (strcmp(tileset_source.c_str(), "") == 0) {
 		return false;
 	}
+	res = Data.LoadImage(IMG_BLOCKS, tileset_source.c_str(), GL_RGBA);
+	if (!res) return false;
 
 	//Point to the entity vector
 	Entities = Scene.getEntities();
@@ -78,9 +70,7 @@ bool LevelScreen::Init() {
 		}
 	}
 
-	res = Data.LoadImage(IMG_BLOCKS, tileset_source.c_str(), GL_RGBA);
-	if (!res) return false;
-
+	
 	//Player initialization
 
 
@@ -307,6 +297,10 @@ bool LevelScreen::Process() {
 }
 //Output
 void LevelScreen::Render() {
+
+	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
+
 	int x, y;
 	camera.get_camera_pos(x, y);
 	glTranslated(-x, -y, 0);

@@ -5,7 +5,7 @@
 
 cGame::cGame(void)
 {
-
+	currentScreen = &startScreen;
 }
 
 cGame::~cGame(void)
@@ -15,10 +15,28 @@ cGame::~cGame(void)
 
 bool cGame::Init()
 {
-	currentScreen = &startScreen;
+	//Graphics initialization
+	glClearColor(0.0f, 0.2f, 1.0f, 0.0f);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
+
+	glAlphaFunc(GL_GREATER, 0.05f);
+	glEnable(GL_ALPHA_TEST);
 	return currentScreen->Init(this);
 }
 
+void cGame::startLevel(int lvl) {
+	Finalize();
+	actualLevel = lvl;
+	currentScreen = &levelScreen;
+	Init();
+}
+
+int cGame::getLevel(){
+	return actualLevel;
+}
 bool cGame::Loop()
 {
 	bool res=true;
@@ -48,6 +66,7 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 //Process
 bool cGame::Process()
 {
+	
 	return currentScreen->Process();
 }
 

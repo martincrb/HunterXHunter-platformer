@@ -16,15 +16,6 @@ bool StartScreen::Init(cGame* cG) {
 	bool res = true;
 	Sound.init();
 
-	//Graphics initialization
-	glClearColor(0.0f, 0.2f, 1.0f, 0.0f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
-	glMatrixMode(GL_MODELVIEW);
-
-	glAlphaFunc(GL_GREATER, 0.05f);
-	glEnable(GL_ALPHA_TEST);
 
 
 	res = Data.LoadImage(IMG_START_SCREEN, Resources::START_SCREEN, GL_RGBA);
@@ -73,7 +64,7 @@ bool StartScreen::Loop() {
 }
 void StartScreen::Finalize() {
 	Sound.Stop(TITLE_MUSIC);
-	Sound.FreeAll();
+	//Sound.FreeAll();
 }
 
 //Input
@@ -86,10 +77,14 @@ void StartScreen::ReadMouse(int button, int state, int x, int y) {
 //Process
 bool StartScreen::Process() {
 	Sound.UpdateSound();
+	if (keys[99])		gameController->startLevel(1);
 	return true;
 }
 //Output
 void StartScreen::Render() {
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glLoadIdentity();
 	int screen_x, screen_y;
 	screen_x = 0;
 	screen_y = 0;

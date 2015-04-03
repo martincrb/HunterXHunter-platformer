@@ -107,6 +107,7 @@
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cRect.cpp" />
     <ClCompile Include="cScene.cpp" />
+    <ClCompile Include="cScreen.cpp" />
     <ClCompile Include="cSound.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -114,8 +115,10 @@
     <ClCompile Include="Gon.cpp" />
     <ClCompile Include="Hisoka.cpp" />
     <ClCompile Include="Killua.cpp" />
+    <ClCompile Include="LevelScreen.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TMXParser.cpp" />
@@ -138,6 +141,7 @@
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cRect.h" />
     <ClInclude Include="cScene.h" />
+    <ClInclude Include="cScreen.h" />
     <ClInclude Include="cSound.h" />
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="Entity.h" />
@@ -145,8 +149,10 @@
     <ClInclude Include="Gon.h" />
     <ClInclude Include="Hisoka.h" />
     <ClInclude Include="Killua.h" />
+    <ClInclude Include="LevelScreen.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="StartScreen.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tile.h" />

@@ -45,7 +45,7 @@ public:
 	virtual int HurtsDestructible(cRect hitBox);
 
 	void GetArea(cRect *rc);
-	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
+	virtual void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 	virtual void Draw(int tex_id);
 
 	virtual void MoveRight();

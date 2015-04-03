@@ -30,7 +30,7 @@ Gon::Gon()
 	hitBox.left = 50;
 	hitBox.top = -20 - 15;
 	hitBox.right = 50 + 30;
-	punch.addFrame(200, 96, 92, 42, 52, 256, 256, 0, 0, hitBox);
+	punch.addFrame(200, 96, 92, 42, 52, 256, 256, -20, 0, hitBox);
 	animations.push_back(punch);
 
 	Animation swim;
@@ -84,7 +84,31 @@ int Gon::HurtsDestructible(cRect hitBox) {
 
 }
 
+void Gon::DrawRect(int tex_id, float xo, float yo, float xf, float yf) {
+	int screen_x, screen_y;
+	screen_x = x + cScene::SCENE_Xo;
+	screen_y = y + cScene::SCENE_Yo;
 
+	int dx = currentFrame.px_disp;
+	int dy = currentFrame.py_disp;
+
+	if (state == STATE_LOOKLEFT || state == STATE_WALKLEFT) {
+		screen_x += dx;
+	}
+	screen_y += dy;
+	glEnable(GL_TEXTURE_2D);
+	//std::cout << "QUAD SIZE: " << std::endl;
+	//std::cout << w << " " << h << std::endl;
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glBegin(GL_QUADS);
+	glTexCoord2f(xo, yo);	glVertex2i(screen_x, screen_y);
+	glTexCoord2f(xf, yo);	glVertex2i(screen_x + w, screen_y);
+	glTexCoord2f(xf, yf);	glVertex2i(screen_x + w, screen_y + h);
+	glTexCoord2f(xo, yf);	glVertex2i(screen_x, screen_y + h);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+}
 void Gon::Draw(int tex_id){
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
 	if (hability) punchDelay++;

@@ -1,18 +1,13 @@
 #pragma once
-
 #include "cScreen.h"
-#include "StartScreen.h"
-#include "LevelScreen.h"
 
-#define GAME_WIDTH	800
-#define GAME_HEIGHT 600
 
-class cGame
+class StartScreen :
+	public cScreen
 {
 public:
-	cGame(void);
-	virtual ~cGame(void);
-
+	StartScreen();
+	~StartScreen();
 	bool Init();
 	bool Loop();
 	void Finalize();
@@ -24,10 +19,7 @@ public:
 	bool Process();
 	//Output
 	void Render();
-
-
 private:
-	StartScreen currentScreen;
-	int actualLevel;
-	int score;
+	cSound Sound;
 };
+

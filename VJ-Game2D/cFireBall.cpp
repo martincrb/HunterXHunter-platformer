@@ -1,8 +1,8 @@
 #include "cFireBall.h"
 
 
-cFireBall::cFireBall()
-{
+cFireBall::cFireBall(int dist, float angle) : dist(dist), angle(angle) {
+	direc = -1;
 }
 
 

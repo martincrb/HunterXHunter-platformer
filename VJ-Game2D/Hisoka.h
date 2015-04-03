@@ -15,13 +15,17 @@ public:
 private:
 	class Card : public cBicho {
 	public:
-		Card(int x, int y);
+		Card(int x, int y, int obj_x, int obj_y);
 		void Logic();
 		void Draw();
 	private:
+		float move_x;
+		float move_y;
 		int initial_x;
+		int initial_y;
+		int dist;
 		//static int tex_id;
-		static const int STEP = 2;
+		static const int SPEED = 2;
 		static const int MAX_DIST = 500;
 	};
 

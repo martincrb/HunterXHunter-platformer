@@ -50,7 +50,7 @@ void Hisoka::Logic() {
 		if (shoot_time <= 0) {
 			shoot_time = T;
 			currentFrame = currentAnimation->frames[1];
-			Card card = Card(x, y);
+			Card card = Card(x, y, obj_x + 16, obj_y + 10);
 			card.SetWidthHeight(16, 16);
 			cards.push_back(card);
 		}
@@ -115,15 +115,29 @@ void Hisoka::Hurt() {
 	}
 }
 
-Hisoka::Card::Card(int x, int y) {
+Hisoka::Card::Card(int x, int y, int obj_x, int obj_y) {
 	this->x = x;
 	this->y = y + 16;
 	initial_x = x;
+	initial_y = y + 16;
+	dist = 0;
+
+	move_x = obj_x - x;
+	move_y = obj_y - y;
+
+	//normalize
+	float module = sqrt(pow(move_x, 2) + pow(move_y, 2));
+
+	move_x = SPEED * move_x / module;
+	move_y = SPEED * move_y / module;
 }
 
 void Hisoka::Card::Logic() {
-	alive = (initial_x - x) <= MAX_DIST;
-	x -= STEP;
+	alive = dist <= MAX_DIST;
+	dist++;
+
+	x = initial_x + move_x * SPEED * dist;
+	y = initial_y + move_y * SPEED * dist;
 }
 
 void Hisoka::Card::Draw() {

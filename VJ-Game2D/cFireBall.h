@@ -4,9 +4,13 @@ class cFireBall :
 	public cBicho
 {
 public:
-	cFireBall();
+	cFireBall(int dist, float angle);
 	~cFireBall();
 	bool Collides(cRect *rc);
 	void Draw(int tex_id);
+
+	int dist;
+	int direc;
+	float angle;
 };
 

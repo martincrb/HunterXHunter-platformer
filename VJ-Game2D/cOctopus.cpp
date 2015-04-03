@@ -1,13 +1,16 @@
 #include "cOctopus.h"
 #include "cFireBall.h"
+#include <cmath>
 
 
 cOctopus::cOctopus()
 {
 	ball_y = std::vector<float>(BALLS);
-	balls = std::vector<cBicho*>(BALLS);
+	balls = std::vector<cFireBall*>(BALLS);
 	for (int i = 0; i < balls.size(); ++i) {
-		balls[i] = new cFireBall();
+		int dist = (i + 1) * 12;
+		float angle = MIN_ANGLE + 8 * i;
+		balls[i] = new cFireBall(dist, angle);
 	}
 	sinangle = 0;
 	hurtDelay = 0;
@@ -52,17 +55,27 @@ void cOctopus::Logic() {
 	if (hurtDelay > 0) {
 		--hurtDelay;
 	}
-	sinangle += 0.06;
-	if (sinangle >= 360) sinangle = 0;
 
-	int octoposx, octoposy;
-	GetPosition(&octoposx, &octoposy);
-	int bally;
+	int ball_x, ball_y;
+
 	for (int i = 0; i < balls.size(); ++i) {
-		bally = 10 * sin((i + sinangle));
+		float angle = balls[i]->angle;
+		ball_x = cos(angle * PI / 180.0) * balls[i]->dist;
+		ball_y = sin(angle * PI / 180.0) * balls[i]->dist;
 		balls[i]->SetWidthHeight(16, 16);
 		//balls[i]->SetPosition(octoposx-20, octoposy);
-		balls[i]->SetPosition(octoposx + 10 - (i + 1) * 16, octoposy + 30 + bally);
+		balls[i]->SetPosition(x + 10 + ball_x, y + 30 + ball_y);
+
+		angle += balls[i]->direc * STEP;
+		if (angle > MAX_ANGLE) {
+			angle = MAX_ANGLE - (angle - MAX_ANGLE);
+			balls[i]->direc = -balls[i]->direc;
+		}
+		else if (angle < MIN_ANGLE) {
+			angle = MIN_ANGLE - (MIN_ANGLE - angle);
+			balls[i]->direc = -balls[i]->direc;
+		}
+		balls[i]->angle = angle;
 	}
 }
 void cOctopus::Draw(int tex_id) {

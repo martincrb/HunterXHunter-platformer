@@ -5,6 +5,7 @@
 cBicho::cBicho(void)
 {
 	seq=0;
+	frameDelay = 8;
 	delay=0;
 	jumping = false;
 	in_water = false;
@@ -205,13 +206,17 @@ void cBicho::DrawRect(int tex_id,float xo,float yo,float xf,float yf)
 	screen_x = x + cScene::SCENE_Xo;
 	screen_y = y + cScene::SCENE_Yo;
 
+	int dx = currentFrame.px_disp;
+	int dy = currentFrame.py_disp;
 
+	screen_x += dx;
+	screen_y += dy;
 	glEnable(GL_TEXTURE_2D);
 	//std::cout << "QUAD SIZE: " << std::endl;
 	//std::cout << w << " " << h << std::endl;
 	glBindTexture(GL_TEXTURE_2D,tex_id);
 	glBegin(GL_QUADS);	
-		glTexCoord2f(xo,yo);	glVertex2i(screen_x  ,screen_y);
+		glTexCoord2f(xo,yo);	glVertex2i(screen_x ,screen_y);
 		glTexCoord2f(xf,yo);	glVertex2i(screen_x + w,screen_y);
 		glTexCoord2f(xf, yf);	glVertex2i(screen_x + w, screen_y + h);
 		glTexCoord2f(xo, yf);	glVertex2i(screen_x, screen_y + h);
@@ -396,7 +401,7 @@ void cBicho::Logic()
 void cBicho::NextFrame(int max)
 {
 	delay++;
-	if(delay == FRAME_DELAY)
+	if(delay == frameDelay)
 	{
 		seq++;
 		seq%=max;

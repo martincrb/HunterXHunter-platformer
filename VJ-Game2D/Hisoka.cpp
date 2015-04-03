@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-Hisoka::Hisoka(PlayerController* p) {
+Hisoka::Hisoka() {
 	this->p = p;
 	attacking = false;
 	invulnerable = false;
@@ -10,46 +10,55 @@ Hisoka::Hisoka(PlayerController* p) {
 	lives = 5;
 	shoot_time = 0;
 	inv_time = 0;
-
+	
 	Animation idle;
-	idle.addFrame(200, 2, 2, 23, 25, 32, 64, 0, 0);
+	idle.addFrame(200, 2, 2, 61, 24, 60, 134, 0, 0);
 	animations.push_back(idle);
+
+	Animation attack;
+	attack.addFrame(200, 28, 2, 65, 30, 60, 134, 0, 0);
+	attack.addFrame(200, 2, 69, 63, 49, 60, 134, -15, 0);
+	animations.push_back(attack);
+
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
 }
 
 bool Hisoka::Collides(cRect *rc) {
-	cRect playerBox;
-	p->getCurrentPlayer()->GetArea(&playerBox);
-	if (rc->bottom == playerBox.bottom && rc->left == playerBox.left && rc->right == playerBox.right && rc->top == playerBox.top) { // si rc es el player box
-		if (cBicho::Collides(rc))
+	for (int i = 0; i < cards.size(); ++i) {
+		if (cards[i].Collides(rc)) {
 			return true;
-		for (unsigned int i = 0; i < cards.size(); i++)
-			if (cards[i].Collides(rc))
-				return true;
-		return false;
+		}
 	}
-	else { // si rc es el hitbox
-		return cBicho::Collides(rc);
-	}
+	if (cBicho::Collides(rc)) return true;;
+	return false;
 }
 
 void Hisoka::Logic() {
-	int player_x, player_y;
-	p->getCurrentPlayer()->GetPosition(&player_x, &player_y);
-	if ((x - player_x) <= MIN_DIST) {
+
+	if ((x - obj_x) <= MIN_DIST) {
 		if (!attacking) {
 			attacking = true;
+			currentAnimation = &animations[1];
+			currentFrame = currentAnimation->frames[0];
+
 		}
 		if (shoot_time <= 0) {
 			shoot_time = T;
+			currentFrame = currentAnimation->frames[1];
 			Card card = Card(x, y);
 			card.SetWidthHeight(16, 16);
 			cards.push_back(card);
 		}
+		if (shoot_time == T - 20) {
+			currentFrame = currentAnimation->frames[0];
+		}
 	}
 	else {
 		attacking = false;
+		currentAnimation = &animations[0];
+		currentFrame = currentAnimation->frames[0];
+		frameDelay = 8;
 	}
 	if (shoot_time > 0) shoot_time--;
 	if (invulnerable) {
@@ -67,11 +76,12 @@ void Hisoka::Logic() {
 
 void Hisoka::Draw(int tex_id) {
 	float xo, yo, xf, yf;
-	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(32);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(64);
+	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(60);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(134);
 	xf = currentFrame.tile_px;
-	yf = yo - float(currentFrame.tile_heigth) / float(64);
+	yf = yo - float(currentFrame.tile_heigth) / float(134);
+	//NextFrame(currentAnimation->frames.size());
 	cBicho::SetWidthHeight(currentFrame.tile_width, currentFrame.tile_heigth);
-	DrawRect(7, xo, yo, xf, yf);
+	DrawRect(tex_id, xo, yo, xf, yf);
 
 	for (unsigned int i = 0; i < cards.size(); ++i)
 		cards[i].Draw();
@@ -103,6 +113,8 @@ void Hisoka::Card::Draw() {
 
 	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(16);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(16);
 	xf = currentFrame.tile_px;
+	currentFrame.px_disp = 0;
+	currentFrame.py_disp = 0;
 	yf = yo - float(currentFrame.tile_heigth) / float(16);
 	//cBicho::SetWidthHeight(16, 16);
 	DrawRect(7, 0, 1, 1, 0);

@@ -4,6 +4,7 @@
 #include "cBicho.h"
 #include "cPlayer.h"
 #include "cEvilBird.h"
+#include "Hisoka.h"
 #include "cEvilFish.h"
 #include "cJumpingFrog.h"
 #include "cOctopus.h"
@@ -265,8 +266,11 @@ std::string cScene::LoadLevel(const char* level)
 					player_spawn_x = entity.spawn_x;
 					player_spawn_y = entity.spawn_y;
 				}
-
-				
+				else if (entity.type == "hisoka") {
+					Hisoka* h = new Hisoka();
+					h->alive = true;
+					entity.bicho = h;
+				}
 				//FILL WITH OTHER ENTITY TYPES
 
 				Entities.push_back(entity);

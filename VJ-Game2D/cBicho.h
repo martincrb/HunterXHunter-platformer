@@ -7,7 +7,6 @@
 
 
 
-#define FRAME_DELAY		8
 #define STEP_LENGTH		2
 #define JUMP_HEIGHT		96
 #define JUMP_STEP		4
@@ -73,6 +72,7 @@ protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;
 	AnimationFrame currentFrame;
+	int frameDelay;
 	int hurtDelay;
 	bool hurtable;
 	double speed;

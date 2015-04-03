@@ -17,6 +17,7 @@ public:
 	static const char* SPRITESHEET_OCTO_BALL;
 	static const char* SPRITESHEET_GHOST;
 	static const char* START_SCREEN;
+	static const char* SPRITESHEET_HISOKA;
 	
 
 };

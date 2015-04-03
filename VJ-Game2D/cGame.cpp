@@ -48,6 +48,8 @@ bool cGame::Init()
 	if (!res) return false;
 	res = Data.LoadImage(IMG_EVIL_FISH, Resources::SPRITESHEET_EVIL_FISH, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_HISOKA, Resources::SPRITESHEET_HISOKA, GL_RGBA);
+	if (!res) return false;
 
 	Sound.LoadSound(TITLE_MUSIC,"res/audio/title_music.wav", BG_MUSIC);
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -108,16 +110,6 @@ bool cGame::Init()
 		int x, y;
 		pController.getCurrentPlayer()->GetPosition(&x, &y);
 		camera = Camera(0, 0, GAME_WIDTH, GAME_HEIGHT, Scene.getBoundaries(), x, y);
-
-		for (unsigned int i = 0; i < Entities->size(); i++) {
-			if ((*Entities)[i].type == "octopus") {
-				Hisoka* h = new Hisoka(&pController);
-				h->SetPosition((*Entities)[i].spawn_x, (*Entities)[i].spawn_y);
-				h->alive = true;
-				(*Entities)[i].bicho = h;
-				(*Entities)[i].type = "hisoka";
-			}
-		}
 	}
 	return res;
 }
@@ -316,7 +308,7 @@ bool cGame::Process()
 				int xe, ye, we, he;
 				(*Entities)[i].bicho->GetPosition(&xe, &ye);
 				(*Entities)[i].bicho->GetWidthHeight(&we, &he);
-				if ((*Entities)[i].type == "ghost") {
+				if ((*Entities)[i].type == "ghost" || (*Entities)[i].type == "hisoka") {
 					(*Entities)[i].bicho->setObjectivePos(playerx, playery);
 				}
 
@@ -417,7 +409,7 @@ void cGame::Render()
 					(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_FISH));
 				}
 				else if ((*Entities)[i].type == "hisoka") {
-					(*Entities)[i].bicho->Draw(Data.GetID(IMG_GHOST));
+					(*Entities)[i].bicho->Draw(Data.GetID(IMG_HISOKA));
 				}
 				 //Select texture using entity type
 			}

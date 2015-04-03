@@ -9,7 +9,7 @@ const char* Resources::SPRITESHEET_EVIL_FISH = "res/sprites/evilFish.png";
 const char* Resources::SPRITESHEET_OCTO = "res/sprites/octopus.png";
 const char* Resources::SPRITESHEET_OCTO_BALL = "res/sprites/octopus_ball.png";
 const char* Resources::SPRITESHEET_GHOST = "res/sprites/boo.png";
-
+const char* Resources::SPRITESHEET_HISOKA = "res/sprites/hisoka.png";
 const char* Resources::START_SCREEN = "res/sprites/start.png";
 Resources::Resources()
 {

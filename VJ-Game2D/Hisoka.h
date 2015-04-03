@@ -6,7 +6,7 @@ class Hisoka :
 	public cBicho
 {
 public:
-	Hisoka(PlayerController* p);
+	Hisoka();
 	bool Collides(cRect *rc);
 	void Logic();
 	void Draw(int tex_id);

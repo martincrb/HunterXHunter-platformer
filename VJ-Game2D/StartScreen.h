@@ -20,6 +20,6 @@ public:
 	//Output
 	void Render();
 private:
-	cSound Sound;
+	
 };
 

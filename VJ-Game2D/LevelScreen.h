@@ -31,7 +31,6 @@ private:
 	cPlayer* Player2;
 	PlayerController pController;
 	Camera camera;
-	cSound Sound;
 	bool reaper;
 	int score;
 	cScene Scene;

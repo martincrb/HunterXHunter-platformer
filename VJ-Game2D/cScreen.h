@@ -25,6 +25,7 @@ public:
 protected:
 	unsigned char keys[256];
 	cGame* gameController;
+	cSound Sound;
 	cData Data;
 };
 

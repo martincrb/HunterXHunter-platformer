@@ -55,7 +55,7 @@ bool StartScreen::Init(cGame* cG) {
 	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
 	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
 
-	//Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
+	Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
 
 	return res;
 

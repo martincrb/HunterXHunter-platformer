@@ -15,7 +15,7 @@ cGame::~cGame(void)
 
 bool cGame::Init()
 {
-	currentScreen = new StartScreen();
+	currentScreen = &startScreen;
 	return currentScreen->Init(this);
 }
 

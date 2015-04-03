@@ -5,10 +5,10 @@ Killua::Killua()
 {
 	cBicho::SetState(0);
 	Animation idle;
-	idle.addFrame(200, 2, 2, 49, 20, 128, 256, 0, 0);
-	idle.addFrame(200, 24, 2, 49, 20, 128, 256, 0, 0);
-	idle.addFrame(200, 46, 2, 48, 20, 128, 256, 0, 0);
-	idle.addFrame(200, 68, 2, 47, 20, 128, 156, 0, 0);
+	idle.addFrame(200, 2, 2, 49, 20, 128, 256, 0, -1);
+	idle.addFrame(200, 24, 2, 49, 20, 128, 256, 0, -1);
+	idle.addFrame(200, 46, 2, 48, 20, 128, 256, 0, -1);
+	idle.addFrame(200, 68, 2, 47, 20, 128, 156, 0, -2);
 	animations.push_back(idle);
 
 	Animation walk;

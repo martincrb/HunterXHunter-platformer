@@ -340,7 +340,7 @@ void LevelScreen::Render() {
 
 			glBegin(GL_QUADS);
 			glColor3f(1, 0, 0);
-			glVertex2i(xb, yb);;
+			glVertex2i(xb, yb);
 			glVertex2i(xb + wb, yb);
 			glVertex2i(xb + wb, yb + hb);
 			glVertex2i(xb, yb + hb);

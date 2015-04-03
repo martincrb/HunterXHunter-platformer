@@ -3,7 +3,6 @@
 
 
 Hisoka::Hisoka() {
-	this->p = p;
 	attacking = false;
 	invulnerable = false;
 	hurtDelay = 0;
@@ -29,13 +28,15 @@ Hisoka::Hisoka() {
 }
 
 bool Hisoka::Collides(cRect *rc) {
-	for (int i = 0; i < cards.size(); ++i) {
-		if (cards[i].Collides(rc)) {
-			return true;
-		}
+	if (rc->bottom == obj_y && rc->left == obj_x) { // si rc es el player box
+		for (unsigned int i = 0; i < cards.size(); i++)
+			if (cards[i].Collides(rc))
+				return true;
+		return false;
 	}
-	if (cBicho::Collides(rc)) return true;;
-	return false;
+	else { // si rc es el hitbox
+		return cBicho::Collides(rc);
+	}
 }
 
 void Hisoka::Logic() {
@@ -133,7 +134,7 @@ Hisoka::Card::Card(int x, int y, int obj_x, int obj_y) {
 }
 
 void Hisoka::Card::Logic() {
-	alive = dist <= MAX_DIST;
+	alive = (dist * SPEED) <= MAX_DIST;
 	dist++;
 
 	x = initial_x + move_x * SPEED * dist;

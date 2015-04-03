@@ -44,7 +44,7 @@ public:
 	virtual bool CollidesMapFloor();
 	virtual int HurtsDestructible(cRect hitBox);
 
-	void GetArea(cRect *rc);
+	virtual void GetArea(cRect *rc);
 	virtual void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 	virtual void Draw(int tex_id);
 
@@ -85,7 +85,7 @@ protected:
 	int jump_alfa;
 	int jump_y;
 	int last_x, last_y;
-	void adjust();
+	virtual void adjust();
 
 	int seq, delay;
 	int *map;

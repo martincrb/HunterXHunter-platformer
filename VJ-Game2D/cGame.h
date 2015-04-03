@@ -27,7 +27,7 @@ public:
 
 
 private:
-	StartScreen currentScreen;
+	cScreen* currentScreen;
 	int actualLevel;
 	int score;
 };

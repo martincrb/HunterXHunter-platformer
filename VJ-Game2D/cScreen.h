@@ -2,6 +2,7 @@
 #include "cSound.h"
 #include "cData.h"
 
+class cGame;
 
 class cScreen
 {
@@ -9,7 +10,7 @@ public:
 	cScreen();
 	~cScreen();
 
-	virtual bool Init() = 0;
+	virtual bool Init(cGame* cg) = 0;
 	virtual bool Loop() = 0;
 	virtual void Finalize() = 0;
 
@@ -23,7 +24,7 @@ public:
 
 protected:
 	unsigned char keys[256];
-//	cGame* gameController;
+	cGame* gameController;
 	cData Data;
 };
 

@@ -8,7 +8,7 @@ class StartScreen :
 public:
 	StartScreen();
 	~StartScreen();
-	bool Init();
+	bool Init(cGame* cG);
 	bool Loop();
 	void Finalize();
 

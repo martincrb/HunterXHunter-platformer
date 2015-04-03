@@ -18,9 +18,13 @@ public:
 	int HurtsDestructible(cRect hitBox);
 	bool isUsingHability();
 	void setCollisionBox(cRect r);
+	virtual bool CollidesMapWall();
+	virtual bool CollidesMapFloor();
+	virtual void GetArea(cRect *rc);
 protected:
 	int punchDelay;
 	bool hability;
 	cRect coll_box;
+	virtual void adjust();
 
 };

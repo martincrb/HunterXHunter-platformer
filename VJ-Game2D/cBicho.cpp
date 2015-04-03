@@ -270,7 +270,7 @@ void cBicho::adjust() {
 		int tile_ini = tile_x;
 		int tile_fin = (x + w) / cScene::TILE_SIZE;
 		for (int i = tile_ini; i <= tile_fin; i++) {
-			cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
+			//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
 			int tileID = map[i + tile_y * cScene::SCENE_WIDTH];
 			if (tileID != 0 && cScene::tiles[tileID - 1].isSolid()) {
 				y = (cScene::SCENE_HEIGHT - tile_y - 1) * cScene::TILE_SIZE - h;
@@ -345,6 +345,7 @@ void cBicho::Jump()
 		//WATER LOGIC
 		y += (STEP_LENGTH);
 	}
+	adjust();
 }
 
 void cBicho::Duck() {

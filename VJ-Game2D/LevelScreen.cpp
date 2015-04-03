@@ -49,7 +49,7 @@ bool LevelScreen::Init(cGame* cG) {
 	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
 
 	//Scene initialization
-	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+	//Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
 
 	std::string tileset_source = Scene.LoadLevel(Resources::LEVEL01);
 	if (strcmp(tileset_source.c_str(), "") == 0) {
@@ -82,7 +82,7 @@ bool LevelScreen::Init(cGame* cG) {
 	Player->SetWidthHeight(32, 32);
 	Player->SetState(STATE_LOOKRIGHT);
 	Player->SetMap(Scene.GetMap());
-	cRect r; r.bottom = 0; r.left = 0; r.right = 32; r.top = 32;
+	cRect r; r.bottom = 0; r.left = 0; r.right = 31; r.top = 31;
 	Player->setCollisionBox(r);
 
 	Player->inWater(Scene.getWaterZone());
@@ -91,7 +91,7 @@ bool LevelScreen::Init(cGame* cG) {
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetState(STATE_LOOKRIGHT);
 	Player2->SetMap(Scene.GetMap());
-	Player->setCollisionBox(r);
+	Player2->setCollisionBox(r);
 
 	Player2->inWater(Scene.getWaterZone());
 	pController.setPlayers(Player, Player2);

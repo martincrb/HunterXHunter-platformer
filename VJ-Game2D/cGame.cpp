@@ -315,8 +315,8 @@ bool cGame::Process()
 				if ((*Entities)[i].bicho->Collides(&playerBox)) { //if octopus collides with player
 					//Kill player
 					std::cout << "dead" << std::endl;
-					Finalize();
-					Init();
+					//Finalize();
+					//Init();
 				}
 			}
 		}

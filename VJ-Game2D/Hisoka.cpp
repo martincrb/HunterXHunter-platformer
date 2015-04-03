@@ -12,13 +12,17 @@ Hisoka::Hisoka() {
 	inv_time = 0;
 	
 	Animation idle;
-	idle.addFrame(200, 2, 2, 61, 24, 60, 134, 0, 0);
+	idle.addFrame(200, 2, 2, 61, 24, 60, 202, 0, 0);
 	animations.push_back(idle);
 
 	Animation attack;
-	attack.addFrame(200, 28, 2, 65, 30, 60, 134, 0, 0);
-	attack.addFrame(200, 2, 69, 63, 49, 60, 134, -15, 0);
+	attack.addFrame(200, 28, 2, 65, 30, 60, 202, 0, 0);
+	attack.addFrame(200, 2, 69, 63, 49, 60, 202, -15, 0);
 	animations.push_back(attack);
+
+	Animation defend;
+	defend.addFrame(200, 2, 134, 66, 45, 60, 202, 0, 0);
+	animations.push_back(defend);
 
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
@@ -36,7 +40,7 @@ bool Hisoka::Collides(cRect *rc) {
 
 void Hisoka::Logic() {
 
-	if ((x - obj_x) <= MIN_DIST) {
+	if (!invulnerable && (x - obj_x) <= MIN_DIST) {
 		if (!attacking) {
 			attacking = true;
 			currentAnimation = &animations[1];
@@ -56,16 +60,29 @@ void Hisoka::Logic() {
 	}
 	else {
 		attacking = false;
-		currentAnimation = &animations[0];
-		currentFrame = currentAnimation->frames[0];
+		if (invulnerable) {
+			currentAnimation = &animations[2];
+			currentFrame = currentAnimation->frames[0];
+		}
+		else {
+			currentAnimation = &animations[0];
+			currentFrame = currentAnimation->frames[0];
+		}
 		frameDelay = 8;
 	}
 	if (shoot_time > 0) shoot_time--;
 	if (invulnerable) {
 		inv_time--;
 		invulnerable = inv_time > 0;
+		if (!invulnerable) {
+			currentAnimation = &animations[0];
+			currentFrame = currentAnimation->frames[0];
+		}
 	}
-
+	if (inv_time == INV_TIME - 30) {
+		currentAnimation = &animations[2];
+		currentFrame = currentAnimation->frames[0];
+	}
 	if (!cards.empty() && !cards[0].alive)
 		cards.erase(cards.begin());
 
@@ -76,9 +93,9 @@ void Hisoka::Logic() {
 
 void Hisoka::Draw(int tex_id) {
 	float xo, yo, xf, yf;
-	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(60);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(134);
+	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(60);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(202);
 	xf = currentFrame.tile_px;
-	yf = yo - float(currentFrame.tile_heigth) / float(134);
+	yf = yo - float(currentFrame.tile_heigth) / float(202);
 	//NextFrame(currentAnimation->frames.size());
 	cBicho::SetWidthHeight(currentFrame.tile_width, currentFrame.tile_heigth);
 	DrawRect(tex_id, xo, yo, xf, yf);
@@ -92,6 +109,7 @@ void Hisoka::Hurt() {
 		lives--;
 		alive = lives > 0;
 		invulnerable = true;
+		attacking = false;
 		inv_time = INV_TIME;
 		std::cout << "asdfadsfasdfasdfasd" << std::endl;
 	}

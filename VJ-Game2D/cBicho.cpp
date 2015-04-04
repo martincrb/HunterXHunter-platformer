@@ -193,7 +193,11 @@ bool cBicho::hasHitBox() {
 	return currentFrame.hasHitBox;
 }
 cRect  cBicho::getHitBox() {
-	return currentFrame.getHitBox();
+	if (state == STATE_LOOKLEFT || state == STATE_WALKLEFT)
+		return currentFrame.getHitBox(true);
+	else {
+		return currentFrame.getHitBox(false);
+	}
 }
 
 bool cBicho::inAir() {

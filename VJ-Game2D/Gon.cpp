@@ -150,26 +150,31 @@ void Gon::Draw(int tex_id){
 	case STATE_LOOKLEFT:
 		if (inAir()) {
 			if (in_water) in_air = false;
-			currentAnimation = &animations[2];
-			currentFrame = currentAnimation->frames[0];
 			if (hability) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
+				//currentFrame.invertHitBoxX();
+			}
+			else {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
 			}
 		}
 		else if (in_water) {
-			currentAnimation = &animations[4];
+			
 			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
+				//currentFrame.invertHitBoxX();
+			}
+			else {
+				currentAnimation = &animations[4];
 			}
 		}
 		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			currentFrame.invertHitBoxX();
+			//currentFrame.invertHitBoxX();
 		}
 		else {
 			currentAnimation = &animations[0];
@@ -183,19 +188,24 @@ void Gon::Draw(int tex_id){
 	case STATE_LOOKRIGHT:
 		if (inAir()) {
 			if (in_water) in_air = false;
-			currentAnimation = &animations[2];
-			currentFrame = currentAnimation->frames[0];
 			if (hability) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
+				//currentFrame.invertHitBoxX();
+			}
+			else {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
 			}
 		}
 		else if (in_water) {
-			currentAnimation = &animations[4];
+			
 			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
+			}
+			else {
+				currentAnimation = &animations[4];
 			}
 		}
 		else if (hability) {
@@ -228,7 +238,7 @@ void Gon::Draw(int tex_id){
 		else if (hability) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			currentFrame.invertHitBoxX();
+			//currentFrame.invertHitBoxX();
 			
 		}
 		else {

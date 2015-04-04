@@ -20,8 +20,9 @@ AnimationFrame::~AnimationFrame()
 }
 
 void AnimationFrame::invertHitBoxX() { //Inverts hitbox for mirrored animations 
-	hitBox.right = hitBox.right - (tile_width - (hitBox.right - tile_width)) + px_disp;
-	hitBox.left = hitBox.left - (hitBox.left -  (hitBox.left - tile_width)) + px_disp;
+	int width = hitBox.right - hitBox.left;
+	hitBox.left -= (1.5*tile_width - (hitBox.right - hitBox.left) - px_disp);
+	hitBox.right = hitBox.left + width;
 }
 
 void AnimationFrame::addHitBox(int x, int y, int w, int h) {
@@ -29,8 +30,19 @@ void AnimationFrame::addHitBox(int x, int y, int w, int h) {
 	hitBox.right = x + w;
 	hitBox.top = -y - h;
 	hitBox.bottom = -y;
+
+	invhitBox.left = x - (tile_width + w) + px_disp + 5;
+	invhitBox.right = invhitBox.left + w;
+	invhitBox.top = hitBox.top;
+	invhitBox.bottom = hitBox.bottom;
+
 	hasHitBox = true;
 }
-cRect AnimationFrame::getHitBox() {
-	return hitBox;
+cRect AnimationFrame::getHitBox(bool inverted) {
+	if (!inverted) {
+		return hitBox;
+	}
+	else {
+		return invhitBox;
+	}
 }

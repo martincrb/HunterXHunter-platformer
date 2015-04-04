@@ -6,6 +6,7 @@
 LevelScreen::LevelScreen()
 {
 	changePlayerDelay = 0;
+	reset_delay = RESET_LEVEL_DELAY;
 }
 
 
@@ -24,6 +25,9 @@ bool LevelScreen::currentIsKillua() {
 
 bool LevelScreen::Init(cGame* cG) {
 	gameController = cG;
+	particleSystem.clear();
+	reset_delay = RESET_LEVEL_DELAY;
+	you_died = false;
 	bool res = true;
 	reaper = false;
 	int level = cG->getLevel();
@@ -59,6 +63,10 @@ bool LevelScreen::Init(cGame* cG) {
 	res = Data.LoadImage(IMG_PARTICLE_EXPLOSION, Resources::PARTICLE_EXPLOSION, GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_HUNTER_LIC, Resources::HUNTER_LICENSE, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_PARTICLE_GON_GHOST, Resources::PARTICLE_GON_GHOST, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_PARTICLE_KILLUA_GHOST, Resources::PARTICLE_KILLUA_GHOST, GL_RGBA);
 	if (!res) return false;
 
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -159,6 +167,13 @@ bool LevelScreen::Process() {
 	if (changePlayerDelay > 0) {
 		--changePlayerDelay;
 	}
+	if (you_died) {
+		--reset_delay;
+		if (reset_delay == 0) {
+			Finalize();
+			Init(gameController);
+		}
+	}
 
 	for (int k = 0; k < cScene::debugmap.size(); ++k) {
 		cScene::debugmap[k] = 0;
@@ -170,49 +185,49 @@ bool LevelScreen::Process() {
 	}
 	//Process Input
 
-	if (keys[27])	res = false;
+	if (!you_died) {
+		if (keys[27])	res = false;
 
-	if (changePlayerDelay == 0 && keys[99])		{
-		pController.changeCurrentPlayer();
-		changePlayerDelay = 20;
+		if (changePlayerDelay == 0 && keys[99])		{
+			pController.changeCurrentPlayer();
+			changePlayerDelay = 20;
+		}
+		if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
+
+		if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::HAB_JUMP_LEFT);
+
+		else if (keys[97] && keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::HAB_JUMP_RIGHT);
+
+		else if (keys[97] && keys[GLUT_KEY_UP])
+			pController.action(PlayerController::actions::HAB_JUMP);
+
+		else if (keys[97])
+			pController.action(PlayerController::actions::HABILITY);
+
+		else if (keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::JUMP_LEFT);
+
+		else if (keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::JUMP_RIGHT);
+
+		else if (keys[GLUT_KEY_UP])
+			pController.action(PlayerController::actions::JUMP);
+
+		else if (keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::MOVE_LEFT);
+
+		else if (!keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
+			pController.action(PlayerController::actions::MOVE_RIGHT);
+
+		else if (keys[GLUT_KEY_DOWN])
+			pController.action(PlayerController::actions::DUCK);
+
+		else
+			pController.action(PlayerController::actions::STOP);
+		pController.moveCompanion();
 	}
-	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
-
-	if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::HAB_JUMP_LEFT);
-
-	else if (keys[97] && keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::HAB_JUMP_RIGHT);
-
-	else if (keys[97] && keys[GLUT_KEY_UP])
-		pController.action(PlayerController::actions::HAB_JUMP);
-
-	else if (keys[97])
-		pController.action(PlayerController::actions::HABILITY);
-
-	else if (keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::JUMP_LEFT);
-
-	else if (keys[GLUT_KEY_UP] && !keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::JUMP_RIGHT);
-
-	else if (keys[GLUT_KEY_UP])
-		pController.action(PlayerController::actions::JUMP);
-
-	else if (keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::MOVE_LEFT);
-
-	else if (!keys[GLUT_KEY_LEFT] && keys[GLUT_KEY_RIGHT])
-		pController.action(PlayerController::actions::MOVE_RIGHT);
-
-	else if (keys[GLUT_KEY_DOWN])
-		pController.action(PlayerController::actions::DUCK);
-
-	else
-		pController.action(PlayerController::actions::STOP);
-
-	pController.moveCompanion();
-
 	//Camera follows player
 	int x, y;
 	pController.getCurrentPlayer()->GetPosition(&x, &y);
@@ -231,8 +246,10 @@ bool LevelScreen::Process() {
 	}
 	int playerx, playery;
 
-	Player->Logic();
-	Player2->Logic();
+	if (!you_died) {
+		Player->Logic();
+		Player2->Logic();
+	}
 
 	pController.getCurrentPlayer()->GetPosition(&playerx, &playery);
 	int xe, ye, we, he;
@@ -351,11 +368,22 @@ bool LevelScreen::Process() {
 			}
 
 
-			if ((*Entities)[i].killsPlayer && (*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
+			if (!you_died && (*Entities)[i].killsPlayer && (*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 				//Kill player
 				std::cout << "dead" << std::endl;
-				//Finalize();
-				//Init();
+				you_died = true;
+				ParticleSystem pS;
+				pS.setLifespan(200);
+				if (currentIsGon()) {
+					pS.setWidthHeight(20, 50);
+					pS.type = "gon_ghost";
+				}
+				else if (currentIsKillua()) {
+					pS.setWidthHeight(25, 48);
+					pS.type = "killua_ghost";
+				}
+				pS.Init(1, playerx, playery, 0, 0, 0, 0.8);
+				particleSystem.push_back(pS);
 			}
 			if ((*Entities)[i].type == "end_level" && (*Entities)[i].bicho->Collides(&playerBox)) {
 				gameController->startMapScreen(gameController->getLevel()+1);
@@ -393,9 +421,16 @@ void LevelScreen::Render() {
 		else if (particleSystem[p].type == "explosion") {
 			particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_EXPLOSION));
 		}
+		else if (particleSystem[p].type == "gon_ghost") {
+			particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_GON_GHOST));
+		}
+		else if (particleSystem[p].type == "killua_ghost") {
+			particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_KILLUA_GHOST));
+		}
 	}
 	//Current player must be rendered on top of IA player
-	pController.Draw(&Data);
+	if (!you_died) 
+		pController.Draw(&Data);
 
 	if (cScene::DEBUG_ON) {
 		//Render hitBoxes

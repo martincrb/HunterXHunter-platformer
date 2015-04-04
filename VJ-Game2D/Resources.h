@@ -35,5 +35,7 @@ public:
 	static const char* HUNTER_LICENSE;
 	static const char* PARTICLE_ROCK;
 	static const char* PARTICLE_EXPLOSION;
+	static const char* PARTICLE_GON_GHOST;
+	static const char* PARTICLE_KILLUA_GHOST;
 };
 

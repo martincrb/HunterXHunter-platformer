@@ -143,6 +143,7 @@ void cPlayer::adjust() {
 			if (tileID != 0 && cScene::tiles[tileID - 1].isSolid()) {
 				y = (cScene::SCENE_HEIGHT - tile_y - 1) * cScene::TILE_SIZE - coll_box.top;
 				jumping = false;
+				charge = 0;
 				break;
 			}
 		}

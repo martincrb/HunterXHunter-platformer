@@ -26,6 +26,7 @@ const char* Resources::GUI_USING_GON = "res/sprites/GUI/using_gon.png";
 const char* Resources::GUI_USING_KILLUA = "res/sprites/GUI/using_killua.png";
 const char* Resources::HUNTER_LICENSE = "res/sprites/entities/hunter_license.png";
 const char* Resources::PARTICLE_ROCK = "res/sprites/particle/rock.png";
+const char* Resources::PARTICLE_EXPLOSION = "res/sprites/particle/explosion.png";
 Resources::Resources()
 {
 }

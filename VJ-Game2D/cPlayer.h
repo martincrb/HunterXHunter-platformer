@@ -5,6 +5,7 @@
 #define PLAYER_START_CX		3
 #define PLAYER_START_CY		2
 #define PUNCH_DURATION		2
+#define CHARGE_SPEED	0.025
 
 class cPlayer: public cBicho
 {
@@ -16,15 +17,24 @@ public:
 	virtual void Draw(int tex_id);
 	virtual bool Collides(cRect *rc);
 	int HurtsDestructible(cRect hitBox);
-	bool isUsingHability();
+	virtual bool isUsingHability();
 	void setCollisionBox(cRect r);
 	virtual bool CollidesMapWall();
 	virtual bool CollidesMapFloor();
 	virtual void GetArea(cRect *rc);
+	virtual void Logic();
+	void SuperJump();
+	bool isSuperJumping();
 protected:
 	int punchDelay;
 	bool hability;
 	cRect coll_box;
 	virtual void adjust();
+	
+	bool superjump;
+	bool charging;
+	float charge;
+
+	static const int MAX_CHARGE = 4;
 
 };

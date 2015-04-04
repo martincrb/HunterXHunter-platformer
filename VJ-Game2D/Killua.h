@@ -1,5 +1,6 @@
 #pragma once
 #include "cPlayer.h"
+
 class Killua :
 	public cPlayer
 {

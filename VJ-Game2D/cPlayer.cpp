@@ -3,6 +3,9 @@
 #include "cScene.h"
 
 cPlayer::cPlayer() {
+	superjump = false;
+	charging = false;
+	charge = 0;
 }
 
 cPlayer::~cPlayer(){}
@@ -148,8 +151,88 @@ void cPlayer::adjust() {
 
 void cPlayer::GetArea(cRect *rc)
 {
-	rc->bottom = coll_box.bottom;
-	rc->right = coll_box.right;
-	rc->left = coll_box.left;
-	rc->top = coll_box.top;
+	rc->bottom = y + coll_box.bottom;
+	rc->right = x + coll_box.right;
+	rc->left = x + coll_box.left;
+	rc->top = y + coll_box.top;
+}
+
+void cPlayer::Logic()
+{
+	float alfa;
+	last_x = x;
+	last_y = y;
+	if (charging && !superjump) {
+		charging = false;
+		in_air = true;
+		jumping = true;
+		jump_alfa = 0;
+		jump_y = y;
+	}
+	if (jumping) {
+		jump_alfa += JUMP_STEP;
+
+		if (jump_alfa == 180) {
+			jumping = false;
+			charging = false;
+			charge = 0;
+			y = jump_y;
+		}
+		else {
+			alfa = ((float)jump_alfa) * 0.017453f;
+			if (charge != 0)
+				y = jump_y + (int)(JUMP_HEIGHT * charge * sin(alfa));
+			else
+				y = jump_y + (int)(JUMP_HEIGHT * sin(alfa));
+
+			if (jump_alfa > 90)	{
+				//Over floor?
+				in_air = !CollidesMapFloor();
+				jumping = false;
+				charge = 0;
+			}
+		}
+	}
+	else {
+		//Over floor?
+		if (!CollidesMapFloor()) {
+			if (!in_water) {
+				y -= (2 * STEP_LENGTH);
+				in_air = true;
+			}
+			else {
+				y -= (STEP_LENGTH / 2);
+			}
+		}
+	}
+	if (superjump)
+		superjump = false;
+	adjust();
+}
+
+void cPlayer::SuperJump() {
+	if (!inAir() && !in_water) {
+		if (state == STATE_WALKLEFT || state == STATE_LOOKLEFT) {
+			state = STATE_DUCKLEFT;
+		}
+		else if (state == STATE_WALKRIGHT || state == STATE_LOOKRIGHT) {
+			state = STATE_DUCKRIGHT;
+		}
+		if (charging) {
+			charge += CHARGE_SPEED;
+			if (charge > MAX_CHARGE)
+				charge = MAX_CHARGE;
+		}
+		else {
+			charging = true;
+			charge = 0.4;
+		}
+		superjump = true;
+	}
+	//else
+	//hability = false;
+}
+
+bool cPlayer::isSuperJumping() {
+	return jumping && charge != 0;
 }

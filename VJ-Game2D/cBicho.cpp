@@ -137,6 +137,7 @@ bool cBicho::CollidesMapFloor()
 			return true;
 		}
 	}
+	in_air = true;
 	return false;
 
 }
@@ -381,7 +382,7 @@ void cBicho::Logic()
 		
 			if (jump_alfa > 90)	{
 				//Over floor?
-				//jumping = !CollidesMapFloor();
+				in_air = !CollidesMapFloor();
 				jumping = false;
 			}
 		}
@@ -391,6 +392,7 @@ void cBicho::Logic()
 		if (!CollidesMapFloor()) {
 			if (!in_water) {
 				y -= (2 * STEP_LENGTH);
+				in_air = true;
 			}
 			else {
 				y -= (STEP_LENGTH/2);

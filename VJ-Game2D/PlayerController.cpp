@@ -37,19 +37,28 @@ void PlayerController::action(PlayerController::actions a) {
 
 void PlayerController::action(PlayerController::actions a, cPlayer* p) {
 	if (currentPlayer == p) {
-		if (a == actions::HABILITY) // Las habilidades solo las realiza el currentPlayer
-			command_queue.push(actions::STOP);
-		else if (a == actions::HAB_JUMP)
-			command_queue.push(actions::JUMP);
-		else if (a == actions::HAB_JUMP_LEFT)
-			command_queue.push(actions::JUMP_LEFT);
-		else if (a == actions::HAB_JUMP_RIGHT)
-			command_queue.push(actions::JUMP_RIGHT);
-		else if (a == actions::DUCK)
-			command_queue.push(actions::STOP);
-		else
+		if (p == Gon) {
+			if (a == actions::HABILITY) // Las habilidades solo las realiza el currentPlayer
+				command_queue.push(actions::STOP);
+			else if (a == actions::HAB_JUMP)
+				command_queue.push(actions::JUMP);
+			else if (a == actions::HAB_JUMP_LEFT)
+				command_queue.push(actions::JUMP_LEFT);
+			else if (a == actions::HAB_JUMP_RIGHT)
+				command_queue.push(actions::JUMP_RIGHT);
+			else
+				command_queue.push(a);
+		}
+		else {
+			if (a == actions::HABILITY || a == actions::HAB_JUMP)
+				a = actions::SJ;
+			else if (a == actions::HAB_JUMP_LEFT)
+				a = actions::SJ_LEFT;
+			else if (a == actions::HAB_JUMP_RIGHT)
+				a = actions::SJ_RIGHT;
 			command_queue.push(a);
 		}
+	}
 	switch (a) {
 	case actions::JUMP:
 		p->Jump();
@@ -75,24 +84,35 @@ void PlayerController::action(PlayerController::actions a, cPlayer* p) {
 		p->Hability();
 		break;
 	case actions::HAB_JUMP:
+		p->Hability(); 
 		p->Jump();
-		p->Hability();
 		break;
 	case actions::HAB_JUMP_LEFT:
+		p->Hability(); 
 		p->Jump();
 		p->MoveLeft();
-		p->Hability();
 		break;
 	case actions::HAB_JUMP_RIGHT:
+		p->Hability(); 
 		p->Jump();
 		p->MoveRight();
-		p->Hability();
 		break;
 	case actions::DUCK:
 		p->Duck();
 		break;
-		}
+	case actions::SJ:
+		p->SuperJump();
+		break;
+	case actions::SJ_LEFT:
+		p->SuperJump();
+		p->MoveLeft();
+		break;
+	case actions::SJ_RIGHT:
+		p->SuperJump();
+		p->MoveRight();
+		break;
 	}
+}
 
 void PlayerController::moveCompanion() {
 	actions command = command_queue.front();
@@ -108,5 +128,20 @@ void PlayerController::changeCurrentPlayer(){
 	else {
 		Killua->Stop();
 		currentPlayer = Gon;
+	}
+}
+
+void PlayerController::Draw(cData* Data) {
+	if (currentPlayer == Killua) {
+		if (Killua->isSuperJumping())
+			Killua->Draw(Data->GetID(IMG_PLAYER));
+		else {
+			Gon->Draw(Data->GetID(IMG_PLAYER));
+			Killua->Draw(Data->GetID(IMG_PLAYER));
+		}
+	}
+	else {
+		Killua->Draw(Data->GetID(IMG_PLAYER));
+		Gon->Draw(Data->GetID(IMG_PLAYER));
 	}
 }

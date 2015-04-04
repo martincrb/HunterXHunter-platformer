@@ -56,9 +56,9 @@ public:
 	cRect getHitBox();
 
 	void setObjectivePos(int x, int y);
-	void Jump();
-	void Duck();
-	void Stop();
+	virtual void Jump();
+	virtual void Duck();
+	virtual void Stop();
 	virtual void Logic();
 	int  GetState();
 	void SetState(int s);

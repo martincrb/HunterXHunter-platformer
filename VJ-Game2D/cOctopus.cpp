@@ -8,8 +8,8 @@ cOctopus::cOctopus()
 	ball_y = std::vector<float>(BALLS);
 	balls = std::vector<cFireBall*>(BALLS);
 	for (int i = 0; i < balls.size(); ++i) {
-		int dist = (i + 1) * 12;
-		float angle = MIN_ANGLE + 8 * i;
+		int dist = (i + 1) * 15;
+		float angle = MIN_ANGLE + 4 * i;
 		balls[i] = new cFireBall(dist, angle);
 	}
 	sinangle = 0;

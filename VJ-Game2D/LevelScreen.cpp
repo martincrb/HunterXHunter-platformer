@@ -130,6 +130,11 @@ bool LevelScreen::Process() {
 	for (int k = 0; k < cScene::debugmap.size(); ++k) {
 		cScene::debugmap[k] = 0;
 	}
+	if (keys[GLUT_KEY_UP])			{
+		if (!pController.getCurrentPlayer()->inAir() && !pController.getCurrentPlayer()->in_water) {
+			Sound.Play(GON_JUMP, EFFECTS_CHANNEL);
+		}
+	}
 	//Process Input
 
 	if (keys[27])	res = false;
@@ -172,12 +177,6 @@ bool LevelScreen::Process() {
 
 	pController.moveCompanion();
 
-	if (keys[GLUT_KEY_UP])			{
-		if (!pController.getCurrentPlayer()->inAir()) {
-			Sound.Play(GON_JUMP, EFFECTS_CHANNEL);
-		}
-	}
-
 	//Camera follows player
 	int x, y;
 	pController.getCurrentPlayer()->GetPosition(&x, &y);
@@ -190,7 +189,7 @@ bool LevelScreen::Process() {
 	Player->Logic();
 	Player2->Logic();
 
-	Player->GetPosition(&playerx, &playery);
+	pController.getCurrentPlayer()->GetPosition(&playerx, &playery);
 	int xe, ye, we, he;
 	Player2->GetPosition(&xe, &ye);
 	Player2->GetWidthHeight(&we, &he);
@@ -205,14 +204,14 @@ bool LevelScreen::Process() {
 	}
 	else Player2->in_water = false;
 
-	if (Player->CollidesGhostTile(Scene.GetMap()) && !reaper) {
+	if (pController.getCurrentPlayer()->CollidesGhostTile(Scene.GetMap()) && !reaper) {
 		reaper = true;
 		Sound.Play(BOO_HI, EFFECTS_CHANNEL);
 		Scene.addEntity("ghost", playerx, playery - 50);
 	}
 
 
-	int itemID = Player->CollidesItem(Scene.GetItemMap());
+	int itemID = pController.getCurrentPlayer()->CollidesItem(Scene.GetItemMap());
 	if (itemID != -1) {
 		if (itemID == 44) {
 			score += 40;
@@ -231,7 +230,7 @@ bool LevelScreen::Process() {
 
 	//Process all entities in the map
 	cRect playerBox;
-	Player->GetArea(&playerBox);
+	pController.getCurrentPlayer()->GetArea(&playerBox);
 
 	for (unsigned int i = 0; i < Entities->size(); i++) {
 		if (((*Entities)[i].type != "player_spawn") && (*Entities)[i].bicho->alive)  {
@@ -286,12 +285,6 @@ bool LevelScreen::Process() {
 				(*Entities)[i].bicho->setObjectivePos(playerx, playery);
 			}
 
-			int xb, yb;
-			Player->GetPosition(&xb, &yb);
-			playerBox.left += xb;
-			playerBox.bottom += yb;
-			playerBox.right += playerBox.left;
-			playerBox.top += playerBox.bottom;
 
 			if ((*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 				//Kill player
@@ -317,14 +310,7 @@ void LevelScreen::Render() {
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
 	//Current player must be rendered on top of IA player
-	if (pController.getCurrentPlayer() == Player) {
-		Player2->Draw(Data.GetID(IMG_PLAYER2));
-		Player->Draw(Data.GetID(IMG_PLAYER));
-	}
-	else {
-		Player->Draw(Data.GetID(IMG_PLAYER));
-		Player2->Draw(Data.GetID(IMG_PLAYER2));
-	}
+	pController.Draw(&Data);
 	if (cScene::DEBUG_ON) {
 		//Render hitBoxes
 		if (Player->hasHitBox()) {

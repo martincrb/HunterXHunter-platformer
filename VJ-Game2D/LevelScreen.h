@@ -6,6 +6,7 @@
 #include "Killua.h"
 #include "PlayerController.h"
 #include "Camera.h"
+#include "ParticleSystem.h"
 #include "GUI.h"
 
 #define CHANGE_PLAYER_DELAY 30
@@ -33,6 +34,7 @@ private:
 	int changePlayerDelay;
 	GUI gui;
 	std::vector<Entity>* Entities;
+	std::vector<ParticleSystem> particleSystem;
 	cPlayer* Player;
 	cPlayer* Player2;
 	PlayerController pController;

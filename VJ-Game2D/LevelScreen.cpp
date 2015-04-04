@@ -54,6 +54,8 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_GUI_KILLUA, Resources::GUI_USING_KILLUA, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_PARTICLE_ROCK, Resources::PARTICLE_ROCK, GL_RGBA);
+	if (!res) return false;
 	res = Data.LoadImage(IMG_HUNTER_LIC, Resources::HUNTER_LICENSE, GL_RGBA);
 	if (!res) return false;
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -87,7 +89,10 @@ bool LevelScreen::Init(cGame* cG) {
 		}
 	}
 
-	
+	//Particle System init
+	//particleSystem.setRandomSpeed(-0.5, 0.5);
+	//particleSystem.Init(50, Data.GetID(IMG_OCTO_BALL), Scene.player_spawn_x, Scene.player_spawn_y, 0, -0.07, 0, 0);
+
 	//Player initialization
 
 
@@ -209,6 +214,29 @@ bool LevelScreen::Process() {
 
 	//Game Logic
 	//...
+
+	//Process Particles
+	/*
+	if (!particleSystem.empty()) {
+		std::list<ParticleSystem>::iterator it = particleSystem.begin();
+		while (it != particleSystem.end()) {
+			it->Process();
+			if (it->isFinished()) {
+				it = particleSystem.erase(it);
+			}
+			else {
+				it++;
+			}
+		}
+	}
+	*/
+
+	for (int p = particleSystem.size()-1; p >= 0; --p) {
+		particleSystem[p].Process();
+		if (particleSystem[p].isFinished()) {
+			particleSystem.erase(particleSystem.begin() + p);
+		}
+	}
 	int playerx, playery;
 
 	Player->Logic();
@@ -294,6 +322,13 @@ bool LevelScreen::Process() {
 				}
 				int destructedTile = Player->HurtsDestructible(hitBox);
 				if (destructedTile != -1) {
+					//play particleSystem
+					ParticleSystem pS;
+					pS.setLifespan(100);
+					pS.setRandomSpeed(-0.5, 0.5);
+					pS.Init(10, hitBox.left, hitBox.bottom, 0, -0.08, 0, 0);
+					particleSystem.push_back(pS);
+
 					if (destructedTile == 35) {
 						if (rand() % 100 < 30) {
 							Sound.Play(BOO_HI, EFFECTS_CHANNEL);
@@ -338,6 +373,18 @@ void LevelScreen::Render() {
 	//glScaled(2, 2, 2);
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 
+	//Draw particles
+	/*
+	if (!particleSystem.empty()) {
+		std::list<ParticleSystem>::iterator it = particleSystem.begin();
+		while (it != particleSystem.end()) {
+			it->Draw(Data.GetID(IMG_OCTO_BALL));
+		}
+	}
+	*/
+	for (int p = 0; p < particleSystem.size(); ++p) {
+		particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_ROCK));
+	}
 	//Current player must be rendered on top of IA player
 	pController.Draw(&Data);
 

@@ -33,6 +33,7 @@ public:
 	static const char* GUI_USING_GON;
 	static const char* GUI_USING_KILLUA;
 	static const char* HUNTER_LICENSE;
+	static const char* PARTICLE_ROCK;
 
 };
 

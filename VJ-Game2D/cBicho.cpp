@@ -9,6 +9,7 @@ cBicho::cBicho(void)
 	delay=0;
 	jumping = false;
 	in_water = false;
+	dying = false;
 }
 cBicho::~cBicho(void){}
 

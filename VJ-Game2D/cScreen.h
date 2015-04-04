@@ -22,6 +22,7 @@ public:
 	//Output
 	virtual void Render() = 0;
 
+	int getTexID(int tex_id);
 protected:
 	unsigned char keys[256];
 	cGame* gameController;

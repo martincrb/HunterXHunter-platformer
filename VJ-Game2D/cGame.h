@@ -29,7 +29,9 @@ public:
 	void startMapScreen(int lvl);
 	void startLevel(int lvl);
 	int getLevel();
-
+	int getScore();
+	void setScore(int s);
+	cScreen* getCurrentScreen();
 private:
 	StartScreen startScreen;
 	LevelScreen levelScreen;

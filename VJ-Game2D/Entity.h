@@ -8,6 +8,7 @@ public:
 	~Entity();
 	void Kill();
 	void Hurt();
+	bool killsPlayer;
 	std::string type;
 	cBicho* bicho;
 	int spawn_x;

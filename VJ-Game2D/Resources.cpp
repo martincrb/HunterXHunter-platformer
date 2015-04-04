@@ -20,7 +20,7 @@ const char* Resources::START_SCREEN = "res/sprites/start_menu/start_5.png";
 const char* Resources::MAP_SCREEN = "res/sprites/start_menu/map_level.png";
 const char* Resources::MAP_COVER = "res/sprites/start_menu/map_uncover.png";
 const char* Resources::PUSH_START = "res/sprites/start_menu/push_start.png";
-
+const char* Resources::FONT = "res/sprites/font.png";
 Resources::Resources()
 {
 }

@@ -28,6 +28,7 @@ public:
 	static const char* MAP_SCREEN;
 	static const char* MAP_COVER;
 	static const char* PUSH_START;
+	static const char* FONT;
 
 };
 

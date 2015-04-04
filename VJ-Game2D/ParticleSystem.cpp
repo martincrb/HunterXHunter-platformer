@@ -33,6 +33,7 @@ void ParticleSystem::Init(int max, float emit_x, float emit_y, float a_x, float 
 		Particle p(emitter_x, emitter_y);
 		p.setAcceleration(acc_x, acc_y);
 		p.setSpeed(vel_x, vel_y);
+		p.setWidthHeight(particle_w, particle_h);
 		if (randomSpeed) {
 			float random_x = ((float)rand()) / (float)RAND_MAX;
 			float random_y = ((float)rand()) / (float)RAND_MAX;
@@ -89,6 +90,12 @@ void ParticleSystem::Process() {
 bool ParticleSystem::isFinished() {
 	return finished;
 }
+
+void ParticleSystem::setWidthHeight(int w, int h) {
+	particle_h = h;
+	particle_w = w;
+}
+
 void ParticleSystem::Draw(int tex_id) {
 	if (!particles.empty()) {
 		for (std::list<Particle>::iterator it = particles.begin(); it != particles.end(); it++)

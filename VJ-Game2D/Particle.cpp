@@ -3,6 +3,8 @@
 
 Particle::Particle()
 {
+	particle_h = 16;
+	particle_w = 16;
 }
 
 Particle::Particle(float spawn_x, float spawn_y) {
@@ -39,14 +41,19 @@ void Particle::Process() {
 			dead = true;
 	}
 }
+
+void Particle::setWidthHeight(int w, int h) {
+	particle_h = h;
+	particle_w = w;
+}
 void Particle::Draw(int tex_id) {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, tex_id);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 1);  glVertex2i(location_x, location_y);
-	glTexCoord2f(1, 1); glVertex2i(location_x + 16, location_y);
-	glTexCoord2f(1, 0); glVertex2i(location_x + 16, location_y + 16);
-	glTexCoord2f(0, 0); glVertex2i(location_x, location_y + 16);
+	glTexCoord2f(1, 1); glVertex2i(location_x + particle_w, location_y);
+	glTexCoord2f(1, 0); glVertex2i(location_x + particle_w, location_y + particle_h);
+	glTexCoord2f(0, 0); glVertex2i(location_x, location_y + particle_h);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 }

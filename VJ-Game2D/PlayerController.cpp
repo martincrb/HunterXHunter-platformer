@@ -125,6 +125,8 @@ void PlayerController::changeCurrentPlayer(){
 	}
 }
 
+
+
 void PlayerController::Draw(cData* Data) {
 	if (currentPlayer == Killua) {
 		if (Killua->isSuperJumping()) {

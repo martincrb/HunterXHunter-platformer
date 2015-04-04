@@ -55,6 +55,8 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_PARTICLE_ROCK, Resources::PARTICLE_ROCK, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_PARTICLE_EXPLOSION, Resources::PARTICLE_EXPLOSION, GL_RGBA);
+	if (!res) return false;
 	res = Data.LoadImage(IMG_HUNTER_LIC, Resources::HUNTER_LICENSE, GL_RGBA);
 	if (!res) return false;
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -215,20 +217,6 @@ bool LevelScreen::Process() {
 	//...
 
 	//Process Particles
-	/*
-	if (!particleSystem.empty()) {
-		std::list<ParticleSystem>::iterator it = particleSystem.begin();
-		while (it != particleSystem.end()) {
-			it->Process();
-			if (it->isFinished()) {
-				it = particleSystem.erase(it);
-			}
-			else {
-				it++;
-			}
-		}
-	}
-	*/
 
 	for (int p = particleSystem.size()-1; p >= 0; --p) {
 		particleSystem[p].Process();
@@ -316,6 +304,13 @@ bool LevelScreen::Process() {
 						std::cout << "Im killing a " << (*Entities)[i].type << std::endl;
 					}
 					if ((*Entities)[i].type != "ghost") {
+						ParticleSystem pS;
+						pS.setLifespan(40);
+						pS.setRandomSpeed(-0.7, 0.7);
+						pS.setWidthHeight(20, 20);
+						pS.Init(3, hitBox.left, hitBox.bottom, 0, 0, 0, 0);
+						pS.type = "explosion";
+						particleSystem.push_back(pS);
 						(*Entities)[i].Hurt();
 					}
 				}
@@ -325,7 +320,9 @@ bool LevelScreen::Process() {
 					ParticleSystem pS;
 					pS.setLifespan(100);
 					pS.setRandomSpeed(-0.5, 0.5);
+					pS.setWidthHeight(16, 16);
 					pS.Init(10, hitBox.left, hitBox.bottom, 0, -0.08, 0, 0);
+					pS.type = "rocks";
 					particleSystem.push_back(pS);
 
 					if (destructedTile == 35) {
@@ -382,7 +379,12 @@ void LevelScreen::Render() {
 	}
 	*/
 	for (int p = 0; p < particleSystem.size(); ++p) {
-		particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_ROCK));
+		if (particleSystem[p].type == "rocks") {
+			particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_ROCK));
+		}
+		else if (particleSystem[p].type == "explosion") {
+			particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_EXPLOSION));
+		}
 	}
 	//Current player must be rendered on top of IA player
 	pController.Draw(&Data);

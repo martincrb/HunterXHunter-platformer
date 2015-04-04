@@ -11,8 +11,11 @@ public:
 	void setAcceleration(float x, float y);
 	bool isDead();
 	void Process();
+	void setWidthHeight(int w, int h);
 	void Draw(int tex_id);
 private:
+	int particle_h;
+	int particle_w;
 	int frame_lifetime;
 	float location_x;
 	float location_y;

@@ -13,12 +13,13 @@ public:
 				float acc_x, float acc_y,
 				float vel_x, float vel_y);
 	void setRandomSpeed(float min, float max);
+	void setWidthHeight(int w, int h);
 	void setRandomAcc(float min, float max);
 	void setLifespan(int lfspan);
 	void Process();
 	void Draw(int tex_id);
 	bool isFinished();
-
+	std::string type;
 protected:
 	std::list<Particle> particles;
 	bool randomSpeed;
@@ -29,6 +30,9 @@ protected:
 
 	float min_vel;
 	float max_vel;
+
+	int particle_w;
+	int particle_h;
 
 	float emitter_x;
 	float emitter_y;

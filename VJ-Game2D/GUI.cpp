@@ -26,6 +26,14 @@ void GUI::Draw(cGame* data){
 	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glColor3f(0, 0, 0);
+	glBegin(GL_QUADS);
+	glVertex2i(0, GAME_HEIGHT);
+	glVertex2i(GAME_WIDTH, GAME_HEIGHT);
+	glVertex2i(GAME_WIDTH, GAME_HEIGHT-50);
+	glVertex2i(0, GAME_HEIGHT-50);
+	glColor3f(1, 1, 1);
+	glEnd();
 	text.Draw(data->getCurrentScreen()->getTexID(IMG_FONT));
 
 	//Draw currentPlayer GUI

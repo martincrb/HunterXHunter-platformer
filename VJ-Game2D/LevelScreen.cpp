@@ -102,15 +102,17 @@ bool LevelScreen::Init(cGame* cG) {
 
 	Player->SetWidthHeight(32, 32);
 	Player->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
+	//Player->SetPosition((Scene.SCENE_WIDTH - 5) * Scene.TILE_SIZE, (Scene.SCENE_HEIGHT - 5) * Scene.TILE_SIZE);
 	Player->SetWidthHeight(32, 32);
 	Player->SetState(STATE_LOOKRIGHT);
 	Player->SetMap(Scene.GetMap());
-	cRect r; r.bottom = 0; r.left = 0; r.right = 31; r.top = 31;
+	cRect r; r.bottom = 0; r.left = 0; r.right = 31; r.top = 41;
 	Player->setCollisionBox(r);
 
 	Player->inWater(Scene.getWaterZone());
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
+	//Player2->SetPosition((Scene.SCENE_WIDTH - 5) * Scene.TILE_SIZE, (Scene.SCENE_HEIGHT - 5) * Scene.TILE_SIZE);
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetState(STATE_LOOKRIGHT);
 	Player2->SetMap(Scene.GetMap());
@@ -252,14 +254,6 @@ bool LevelScreen::Process() {
 
 	int actualScore = gameController->getScore();
 	int itemID = pController.getCurrentPlayer()->CollidesItem(Scene.GetItemMap());
-	if (itemID != -1) {
-		if (itemID == 44) {
-			actualScore += 40;
-			Sound.Play(GET_COIN, EFFECTS_CHANNEL);
-			std::cout << "score: " << actualScore << std::endl;
-		}
-	}
-	itemID = Player2->CollidesItem(Scene.GetItemMap());
 	if (itemID != -1) {
 		if (itemID == 44) {
 			actualScore += 40;

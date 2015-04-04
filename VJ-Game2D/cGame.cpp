@@ -5,7 +5,9 @@
 
 cGame::cGame(void)
 {
-	currentScreen = &startScreen;
+	//currentScreen = &startScreen;
+	currentScreen = &levelScreen;
+	actualLevel = 2;
 }
 
 cGame::~cGame(void)

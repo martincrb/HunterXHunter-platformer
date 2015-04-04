@@ -10,7 +10,7 @@
 #include "GUI.h"
 
 #define CHANGE_PLAYER_DELAY 30
-
+#define RESET_LEVEL_DELAY 100
 class LevelScreen :
 	public cScreen
 {
@@ -31,6 +31,8 @@ public:
 	bool currentIsGon();
 	bool currentIsKillua();
 private:
+	bool you_died;
+	int reset_delay;
 	int changePlayerDelay;
 	GUI gui;
 	std::vector<Entity>* Entities;

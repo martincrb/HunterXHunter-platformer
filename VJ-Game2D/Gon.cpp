@@ -183,13 +183,13 @@ void Gon::Draw(int tex_id){
 	case STATE_LOOKRIGHT:
 		if (inAir()) {
 			if (in_water) in_air = false;
+			currentAnimation = &animations[2];
+			currentFrame = currentAnimation->frames[0];
 			if (hability) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
 				currentFrame.invertHitBoxX();
 			}
-			currentAnimation = &animations[2];
-			currentFrame = currentAnimation->frames[0];
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];

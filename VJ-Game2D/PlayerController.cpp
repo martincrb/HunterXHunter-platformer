@@ -134,14 +134,14 @@ void PlayerController::changeCurrentPlayer(){
 void PlayerController::Draw(cData* Data) {
 	if (currentPlayer == Killua) {
 		if (Killua->isSuperJumping())
-			Killua->Draw(Data->GetID(IMG_PLAYER));
+			Killua->Draw(Data->GetID(IMG_PLAYER2));
 		else {
 			Gon->Draw(Data->GetID(IMG_PLAYER));
-			Killua->Draw(Data->GetID(IMG_PLAYER));
+			Killua->Draw(Data->GetID(IMG_PLAYER2));
 		}
 	}
 	else {
-		Killua->Draw(Data->GetID(IMG_PLAYER));
+		Killua->Draw(Data->GetID(IMG_PLAYER2));
 		Gon->Draw(Data->GetID(IMG_PLAYER));
 	}
 }

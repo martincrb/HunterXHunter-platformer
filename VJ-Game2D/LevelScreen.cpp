@@ -313,6 +313,7 @@ void LevelScreen::Render() {
 
 	//Current player must be rendered on top of IA player
 	pController.Draw(&Data);
+
 	if (cScene::DEBUG_ON) {
 		//Render hitBoxes
 		if (Player->hasHitBox()) {

@@ -3,7 +3,7 @@
 
 Killua::Killua()
 {
-	/*cBicho::SetState(0);
+	cBicho::SetState(0);
 	Animation idle;
 	idle.addFrame(200, 2, 2, 49, 20, 128, 256, 0, -1);
 	idle.addFrame(200, 24, 2, 49, 20, 128, 256, 0, -1);
@@ -22,56 +22,24 @@ Killua::Killua()
 	walk.addFrame(200, 88, 103, 45, 22, 128, 256, 0, 0);
 	animations.push_back(walk);
 
+	Animation special;
+	special.addFrame(200, 89, 190, 49, 33, 128, 256, 0, 0);
+	animations.push_back(special);
+
 	Animation jump;
 	jump.addFrame(200, 90, 2, 40, 28, 128, 256, 0, 0);
 	animations.push_back(jump);
 
-	currentAnimation = &animations[0];
-	currentFrame = currentAnimation->frames[0];*/
-
-	cBicho::SetState(0);
-	Animation idle;
-	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, 0);
-	idle.addFrame(200, 34, 2, 45, 31, 256, 256, 0, 0);
-	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, 0);
-	idle.addFrame(200, 67, 2, 43, 30, 256, 256, 0, 0);
-	animations.push_back(idle);
-
-	Animation walk;
-	walk.addFrame(200, 99, 2, 40, 31, 256, 256, 0, 0);
-	walk.addFrame(200, 132, 2, 41, 36, 256, 256, 0, 0);
-	walk.addFrame(200, 170, 2, 40, 23, 256, 256, 0, 0);
-	walk.addFrame(200, 195, 2, 40, 31, 256, 256, 0, 0);
-	walk.addFrame(200, 2, 49, 41, 36, 256, 256, 0, 0);
-	walk.addFrame(200, 40, 49, 39, 23, 256, 256, 0, 0);
-	animations.push_back(walk);
-
-	Animation jump;
-	jump.addFrame(200, 56, 92, 45, 38, 256, 256, 0, 0);
-	animations.push_back(jump);
-
-	Animation punch;
-	cRect hitBox;
-	hitBox.bottom = -10;
-	hitBox.left = 50;
-	hitBox.top = -20 - 15;
-	hitBox.right = 50 + 30;
-	punch.addFrame(200, 96, 92, 42, 52, 256, 256, -20, 0, hitBox);
-	animations.push_back(punch);
-
 	Animation swim;
-	swim.addFrame(200, 102, 49, 34, 37, 256, 256, 0, 0);
-	swim.addFrame(200, 141, 49, 28, 46, 256, 256, 0, 0);
-	swim.addFrame(200, 189, 49, 34, 37, 256, 256, 0, 0);
+	swim.addFrame(200, 39, 153, 35, 43, 128, 256, 0, 0);
+	swim.addFrame(200, 2, 190, 28, 43, 128, 256, 0, 0);
+	swim.addFrame(200, 47, 190, 35, 40, 128, 256, 0, 0);
 	animations.push_back(swim);
 
-	Animation swimPunch;
-	swimPunch.addFrame(200, 2, 92, 34, 52, 256, 256, 0, 0);
-	animations.push_back(swimPunch);
-
 	Animation duck;
-	duck.addFrame(200, 65, 49, 39, 35, 256, 256, 0, 0);
+	duck.addFrame(200, 2, 153, 34, 35, 128, 256, 0, 0);
 	animations.push_back(duck);
+
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
 
@@ -92,32 +60,30 @@ void Killua::Draw(int tex_id){
 	switch (GetState())	{
 	case STATE_DUCKLEFT:
 		if (!inAir() && !in_water) {
-			currentAnimation = &animations[6];
-
+			currentAnimation = &animations[5];
 			NextFrame(currentAnimation->frames.size());
 		}
-		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(256);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		break;
 	case STATE_DUCKRIGHT:
 		if (!inAir() && !in_water) {
-			currentAnimation = &animations[6];
+			currentAnimation = &animations[5];
 
 			NextFrame(currentAnimation->frames.size());
 		}
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-		xf = currentFrame.tile_px + float(currentFrame.tile_width) / float(256);
+		xf = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		break;
 	case STATE_LOOKLEFT:
 		if (inAir()) {
-			currentAnimation = &animations[2];
+			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			if (hability) {
-				currentAnimation = &animations[3];
+			if (isSuperJumping()) {
+				currentAnimation = &animations[2];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (in_water) {
@@ -126,7 +92,7 @@ void Killua::Draw(int tex_id){
 		else {
 			currentAnimation = &animations[0];
 		}
-		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(256);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		NextFrame(currentAnimation->frames.size());
@@ -134,13 +100,14 @@ void Killua::Draw(int tex_id){
 		//4
 	case STATE_LOOKRIGHT:
 		if (inAir()) {
-			if (hability) {
-				currentAnimation = &animations[3];
+			currentAnimation = &animations[3];
+			currentFrame = currentAnimation->frames[0];
+			if (isSuperJumping()) {
+				currentAnimation = &animations[2];
 				currentFrame = currentAnimation->frames[0];
 				currentFrame.invertHitBoxX();
 			}
-			currentAnimation = &animations[2];
-			currentFrame = currentAnimation->frames[0];
+			
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
@@ -149,7 +116,7 @@ void Killua::Draw(int tex_id){
 			currentAnimation = &animations[0];
 		}
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-		xf = xo + float(currentFrame.tile_width) / float(256);
+		xf = xo + float(currentFrame.tile_width) / float(128);
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		//std::cout << currentAnimation->frames.size() << std::endl;
 		NextFrame(currentAnimation->frames.size());
@@ -157,8 +124,13 @@ void Killua::Draw(int tex_id){
 		//1..3
 	case STATE_WALKLEFT:
 		if (inAir()) {
-			currentAnimation = &animations[2];
+			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
+			if (isSuperJumping()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+				currentFrame.invertHitBoxX();
+			}
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
@@ -166,7 +138,7 @@ void Killua::Draw(int tex_id){
 		else {
 			currentAnimation = &animations[1];
 		}
-		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(256);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
+		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(128);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		NextFrame(currentAnimation->frames.size());
@@ -174,8 +146,13 @@ void Killua::Draw(int tex_id){
 		//4..6
 	case STATE_WALKRIGHT:
 		if (inAir()) {
-			currentAnimation = &animations[2];
+			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
+			if (isSuperJumping()) {
+				currentAnimation = &animations[2];
+				currentFrame = currentAnimation->frames[0];
+				currentFrame.invertHitBoxX();
+			}
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
@@ -184,7 +161,7 @@ void Killua::Draw(int tex_id){
 			currentAnimation = &animations[1];
 		}
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(256);
-		xf = xo + float(currentFrame.tile_width) / float(256);
+		xf = xo + float(currentFrame.tile_width) / float(128);
 		yf = yo - float(currentFrame.tile_heigth) / float(256);
 		NextFrame(currentAnimation->frames.size());
 		break;

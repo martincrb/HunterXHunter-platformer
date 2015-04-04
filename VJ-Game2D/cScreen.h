@@ -22,6 +22,9 @@ public:
 	//Output
 	virtual void Render() = 0;
 
+	virtual bool currentIsGon();
+	virtual bool currentIsKillua();
+
 	int getTexID(int tex_id);
 protected:
 	unsigned char keys[256];

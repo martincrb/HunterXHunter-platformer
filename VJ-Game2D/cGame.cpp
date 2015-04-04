@@ -13,6 +13,13 @@ cGame::~cGame(void)
 
 }
 
+bool cGame::currentIsGon() {
+	return currentScreen->currentIsGon();
+}
+bool cGame::currentIsKillua() {
+	return currentScreen->currentIsKillua();
+}
+
 bool cGame::Init()
 {
 	//Graphics initialization

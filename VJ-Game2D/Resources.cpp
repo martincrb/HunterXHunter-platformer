@@ -21,6 +21,9 @@ const char* Resources::MAP_SCREEN = "res/sprites/start_menu/map_level.png";
 const char* Resources::MAP_COVER = "res/sprites/start_menu/map_uncover.png";
 const char* Resources::PUSH_START = "res/sprites/start_menu/push_start.png";
 const char* Resources::FONT = "res/sprites/font.png";
+const char* Resources::GUI_USING_GON = "res/sprites/GUI/using_gon.png";
+const char* Resources::GUI_USING_KILLUA = "res/sprites/GUI/using_killua.png";
+
 Resources::Resources()
 {
 }

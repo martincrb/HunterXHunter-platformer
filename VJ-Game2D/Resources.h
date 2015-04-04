@@ -29,6 +29,9 @@ public:
 	static const char* MAP_COVER;
 	static const char* PUSH_START;
 	static const char* FONT;
+	static const char* GUI_USING_GON;
+	static const char* GUI_USING_KILLUA;
+
 
 };
 

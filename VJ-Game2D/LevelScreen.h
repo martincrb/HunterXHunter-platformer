@@ -8,6 +8,8 @@
 #include "Camera.h"
 #include "GUI.h"
 
+#define CHANGE_PLAYER_DELAY 30
+
 class LevelScreen :
 	public cScreen
 {
@@ -25,8 +27,10 @@ public:
 	bool Process();
 	//Output
 	void Render();
-
+	bool currentIsGon();
+	bool currentIsKillua();
 private:
+	int changePlayerDelay;
 	GUI gui;
 	std::vector<Entity>* Entities;
 	cPlayer* Player;

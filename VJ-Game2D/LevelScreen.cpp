@@ -4,12 +4,21 @@
 
 LevelScreen::LevelScreen()
 {
-
+	changePlayerDelay = 0;
 }
 
 
 LevelScreen::~LevelScreen()
 {
+
+}
+
+bool LevelScreen::currentIsGon() {
+	return pController.getCurrentPlayer() == Player;
+
+}
+bool LevelScreen::currentIsKillua() {
+	return pController.getCurrentPlayer() == Player2;
 
 }
 
@@ -41,7 +50,10 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_FONT, Resources::FONT, GL_RGBA);
 	if (!res) return false;
-
+	res = Data.LoadImage(IMG_GUI_GON, Resources::GUI_USING_GON, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_GUI_KILLUA, Resources::GUI_USING_KILLUA, GL_RGBA);
+	if (!res) return false;
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
@@ -128,6 +140,10 @@ bool LevelScreen::Process() {
 	bool res = true;
 	Sound.UpdateSound();
 
+	if (changePlayerDelay > 0) {
+		--changePlayerDelay;
+	}
+
 	for (int k = 0; k < cScene::debugmap.size(); ++k) {
 		cScene::debugmap[k] = 0;
 	}
@@ -140,7 +156,10 @@ bool LevelScreen::Process() {
 
 	if (keys[27])	res = false;
 
-	if (keys[99])		pController.changeCurrentPlayer();
+	if (changePlayerDelay == 0 && keys[99])		{
+		pController.changeCurrentPlayer();
+		changePlayerDelay = 20;
+	}
 	if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
 
 	if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])

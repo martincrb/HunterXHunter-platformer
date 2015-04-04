@@ -32,6 +32,8 @@ public:
 	int getScore();
 	void setScore(int s);
 	cScreen* getCurrentScreen();
+	bool currentIsGon();
+	bool currentIsKillua();
 private:
 	StartScreen startScreen;
 	LevelScreen levelScreen;

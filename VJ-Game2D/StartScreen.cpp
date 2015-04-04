@@ -1,6 +1,7 @@
 #include "StartScreen.h"
 #include "Resources.h"
 #include "cGame.h"
+#include "cText.h"
 
 StartScreen::StartScreen()
 {
@@ -34,7 +35,7 @@ bool StartScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_START_SCREEN5, Resources::START_SCREEN, GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_PUSH_START, Resources::PUSH_START, GL_RGBA);
+	res = Data.LoadImage(IMG_FONT, Resources::FONT, GL_RGBA);
 	if (!res) return false;
 
 	Sound.LoadSound(TITLE_MUSIC, "res/audio/title_music.wav", BG_MUSIC);
@@ -75,6 +76,10 @@ bool StartScreen::Process() {
 }
 //Output
 void StartScreen::Render() {
+	cText text;
+	text.setText("PUSH START BUTTON");
+	text.setPosition(370, 200);
+	
 	if (endInitialAnim) {
 		++frameCounter;
 	}
@@ -130,16 +135,9 @@ void StartScreen::Render() {
 	glEnd();
 
 	if (drawPressButton) {
-		glBindTexture(GL_TEXTURE_2D, Data.GetID(IMG_PUSH_START));
-		screen_x = 368;
-		screen_y = 200;
-		glBegin(GL_QUADS);
-		glTexCoord2f(0, 1);	glVertex2i(screen_x, screen_y);
-		glTexCoord2f(1, 1);	glVertex2i(screen_x + 136 * 2, screen_y);
-		glTexCoord2f(1, 0);	glVertex2i(screen_x + 136 * 2, screen_y + 8 * 2);
-		glTexCoord2f(0, 0);	glVertex2i(screen_x, screen_y + 8 * 2);
-		glEnd();
+		text.Draw(Data.GetID(IMG_FONT));
 	}
+	
 	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }

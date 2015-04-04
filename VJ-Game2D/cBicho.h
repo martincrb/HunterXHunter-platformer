@@ -67,7 +67,8 @@ public:
 	int  GetFrame();
 	bool in_water;
 	bool alive;
-	
+	bool dying;
+
 protected:
 	Animation *currentAnimation;
 	std::vector<Animation> animations;

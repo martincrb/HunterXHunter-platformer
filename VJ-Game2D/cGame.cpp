@@ -26,7 +26,9 @@ bool cGame::Init()
 	glEnable(GL_ALPHA_TEST);
 	return currentScreen->Init(this);
 }
-
+cScreen* cGame::getCurrentScreen() {
+	return currentScreen;
+}
 void cGame::startLevel(int lvl) {
 	Finalize();
 	actualLevel = lvl;
@@ -42,6 +44,9 @@ void cGame::startMapScreen(int lvl) {
 }
 int cGame::getLevel(){
 	return actualLevel;
+}
+void cGame::setScore(int s) {
+	score = s;
 }
 bool cGame::Loop()
 {
@@ -80,4 +85,8 @@ bool cGame::Process()
 void cGame::Render()
 {
 	currentScreen->Render();
+}
+
+int cGame::getScore() {
+	return score;
 }

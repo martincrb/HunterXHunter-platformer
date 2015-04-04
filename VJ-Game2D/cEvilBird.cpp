@@ -4,11 +4,12 @@
 cEvilBird::cEvilBird()
 {
 	cBicho::SetState(0);
+	frameDelay = 8;
 	actualDirection = LEFT; //random initial dir
 	Animation walk;
 	walk.addFrame(200, 2, 2, 42, 32, 64, 128,0,0);
 	walk.addFrame(200, 2, 46, 43, 29, 64, 128, 0, 0);
-	walk.addFrame(200, 33, 46, 39, 29, 64, 128, 0, 0);
+	walk.addFrame(200, 33, 46, 39, 29, 64, 128, 0,0);
 	walk.addFrame(200, 2, 91, 35, 29, 64, 128, 0, 0);
 	animations.push_back(walk);
 

@@ -19,7 +19,6 @@ bool LevelScreen::Init(cGame* cG) {
 	reaper = false;
 	int level = cG->getLevel();
 	Sound.init();
-	score = 0;
 	res = Data.LoadImage(IMG_PLAYER, Resources::SPRITESHEET_GON, GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_PLAYER2, Resources::SPRITESHEET_KILLUA, GL_RGBA);
@@ -39,6 +38,8 @@ bool LevelScreen::Init(cGame* cG) {
 	res = Data.LoadImage(IMG_HISOKA, Resources::SPRITESHEET_HISOKA, GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_HISO_CARD, Resources::SPRITESHEET_HISO_CARD, GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_FONT, Resources::FONT, GL_RGBA);
 	if (!res) return false;
 
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
@@ -210,23 +211,24 @@ bool LevelScreen::Process() {
 		Scene.addEntity("ghost", playerx, playery - 50);
 	}
 
-
+	int actualScore = gameController->getScore();
 	int itemID = pController.getCurrentPlayer()->CollidesItem(Scene.GetItemMap());
 	if (itemID != -1) {
 		if (itemID == 44) {
-			score += 40;
+			actualScore += 40;
 			Sound.Play(GET_COIN, EFFECTS_CHANNEL);
-			std::cout << "score: " << score << std::endl;
+			std::cout << "score: " << actualScore << std::endl;
 		}
 	}
 	itemID = Player2->CollidesItem(Scene.GetItemMap());
 	if (itemID != -1) {
 		if (itemID == 44) {
-			score += 40;
+			actualScore += 40;
 			Sound.Play(GET_COIN, EFFECTS_CHANNEL);
-			std::cout << "score: " << score << std::endl;
+			std::cout << "score: " << actualScore << std::endl;
 		}
 	}
+	gameController->setScore(actualScore);
 
 	//Process all entities in the map
 	cRect playerBox;
@@ -286,7 +288,7 @@ bool LevelScreen::Process() {
 			}
 
 
-			if ((*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
+			if ((*Entities)[i].killsPlayer && (*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 				//Kill player
 				std::cout << "dead" << std::endl;
 				//Finalize();
@@ -326,7 +328,7 @@ void LevelScreen::Render() {
 
 			glBegin(GL_QUADS);
 			glColor3f(1, 0, 0);
-			glVertex2i(xb, yb);;
+			glVertex2i(xb, yb);
 			glVertex2i(xb + wb, yb);
 			glVertex2i(xb + wb, yb + hb);
 			glVertex2i(xb, yb + hb);
@@ -360,5 +362,8 @@ void LevelScreen::Render() {
 			//Select texture using entity type
 		}
 	}
+	
+	gui.Draw(gameController);
+
 glutSwapBuffers();
 }

@@ -5,10 +5,10 @@ Gon::Gon()
 {
 	cBicho::SetState(0);
 	Animation idle;
-	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, 0);
-	idle.addFrame(200, 34, 2, 45, 31, 256, 256, 0, 0);
-	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, 0);
-	idle.addFrame(200, 67, 2, 43, 30, 256, 256, 0, 0);
+	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, -1);
+	idle.addFrame(200, 34, 2, 45, 31, 256, 256, 0, -1);
+	idle.addFrame(200, 2, 2, 44, 30, 256, 256, 0, -1);
+	idle.addFrame(200, 67, 2, 43, 30, 256, 256, 0, -1);
 	animations.push_back(idle);
 
 	Animation walk;
@@ -40,7 +40,11 @@ Gon::Gon()
 	animations.push_back(swim);
 
 	Animation swimPunch;
-	swimPunch.addFrame(200, 2, 92, 34, 52,256,256,0,0);
+	hitBox.bottom = -10;
+	hitBox.left = 50;
+	hitBox.top = -40;
+	hitBox.right = 50 + 30;
+	swimPunch.addFrame(200, 2, 92, 34, 52,256,256,-17,0, hitBox);
 	animations.push_back(swimPunch);
 
 	Animation duck;
@@ -159,6 +163,7 @@ void Gon::Draw(int tex_id){
 			if (hability) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
+				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (hability) {

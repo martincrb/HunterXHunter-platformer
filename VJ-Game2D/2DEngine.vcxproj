@@ -109,10 +109,12 @@
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="cScreen.cpp" />
     <ClCompile Include="cSound.cpp" />
+    <ClCompile Include="cText.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GLUTMain.cpp" />
     <ClCompile Include="Gon.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Hisoka.cpp" />
     <ClCompile Include="Killua.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
@@ -144,10 +146,12 @@
     <ClInclude Include="cScene.h" />
     <ClInclude Include="cScreen.h" />
     <ClInclude Include="cSound.h" />
+    <ClInclude Include="cText.h" />
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gon.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="Hisoka.h" />
     <ClInclude Include="Killua.h" />
     <ClInclude Include="LevelScreen.h" />

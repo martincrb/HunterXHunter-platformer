@@ -15,13 +15,16 @@ cJumpingFrog::cJumpingFrog()
 	jump.addFrame(200, 2, 2, 24, 16, 20, 47,0,0);
 	animations.push_back(jump);
 
-
+	Animation die;
+	die.addFrame(200, 2, 28, 16, 16, 20, 47, 0, 0);
+	die.addFrame(200, 2, 2, 24, 16, 20, 47, 0, 0);
+	animations.push_back(die);
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
 }
 
 void cJumpingFrog::Hurt() {
-	alive = false;
+	dying = true;
 }
 cJumpingFrog::~cJumpingFrog()
 {
@@ -31,15 +34,21 @@ void cJumpingFrog::setJumpFreq(int x) {
 	jump_freq = x;
 }
 void cJumpingFrog::Logic() {
-	jumpDelay++;
-	if (jumpDelay == jump_freq)
-	{
-		jumpDelay = 0;
-		if (!inAir()) {
-			Jump();
+	if (!dying) {
+		jumpDelay++;
+		if (jumpDelay == jump_freq)
+		{
+			jumpDelay = 0;
+			if (!inAir()) {
+				Jump();
+			}
 		}
 	}
-	
+	else {
+		if (GetFrame() == currentAnimation->frames.size() - 1) {
+			alive = false;
+		}
+	}
 	cBicho::Logic();
 }
 void cJumpingFrog::Draw(int tex_id) {
@@ -52,6 +61,9 @@ void cJumpingFrog::Draw(int tex_id) {
 
 	float xo, yo, xf, yf;
 
+	if (dying) {
+		currentAnimation = &animations[2];
+	}
 	switch (GetState())
 	{
 		//1

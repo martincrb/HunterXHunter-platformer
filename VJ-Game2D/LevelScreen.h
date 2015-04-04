@@ -6,6 +6,7 @@
 #include "Killua.h"
 #include "PlayerController.h"
 #include "Camera.h"
+#include "GUI.h"
 
 class LevelScreen :
 	public cScreen
@@ -26,13 +27,13 @@ public:
 	void Render();
 
 private:
+	GUI gui;
 	std::vector<Entity>* Entities;
 	cPlayer* Player;
 	cPlayer* Player2;
 	PlayerController pController;
 	Camera camera;
 	bool reaper;
-	int score;
 	cScene Scene;
 };
 

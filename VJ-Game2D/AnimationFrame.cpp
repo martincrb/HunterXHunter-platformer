@@ -31,7 +31,7 @@ void AnimationFrame::addHitBox(int x, int y, int w, int h) {
 	hitBox.top = -y - h;
 	hitBox.bottom = -y;
 
-	invhitBox.left = x - (tile_width + w) + px_disp + 5;
+	invhitBox.left = x - (tile_width + w);
 	invhitBox.right = invhitBox.left + w;
 	invhitBox.top = hitBox.top;
 	invhitBox.bottom = hitBox.bottom;

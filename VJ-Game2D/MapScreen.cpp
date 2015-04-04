@@ -27,7 +27,7 @@ bool MapScreen::Init(cGame* cG) {
 	if (!res) return false;
 
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
-
+	Sound.setVolume(MUSIC_CHANNEL, 0.3);
 	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
 
 	return res;

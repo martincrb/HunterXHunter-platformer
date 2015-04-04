@@ -21,7 +21,7 @@ bool StartScreen::Init(cGame* cG) {
 	bool res = true;
 	Sound.init();
 
-
+	
 
 	res = Data.LoadImage(IMG_START_SCREEN0, Resources::START_SCREEN0, GL_RGBA);
 	if (!res) return false;
@@ -39,9 +39,9 @@ bool StartScreen::Init(cGame* cG) {
 	if (!res) return false;
 
 	Sound.LoadSound(TITLE_MUSIC, "res/audio/title_music.wav", BG_MUSIC);
-
+	Sound.setVolume(MUSIC_CHANNEL, 0.5);
 	Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
-
+	
 	return res;
 
 

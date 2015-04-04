@@ -60,14 +60,18 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_HUNTER_LIC, Resources::HUNTER_LICENSE, GL_RGBA);
 	if (!res) return false;
+
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
 	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
 	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
-
+	Sound.LoadSound(BREAK_BLOCK, "res/audio/breakblock.wav", EFFECT);
+	Sound.LoadSound(KICK, "res/audio/kick.wav", EFFECT);
 	//Scene initialization
-	//Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+	//
+	Sound.setVolume(MUSIC_CHANNEL, 0.3);
+	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
 
 	std::string tileset_source = Scene.LoadLevel(Resources::getResourceLevel(level));
 	if (strcmp(tileset_source.c_str(), "") == 0) {
@@ -308,10 +312,11 @@ bool LevelScreen::Process() {
 						ParticleSystem pS;
 						pS.setLifespan(40);
 						pS.setRandomSpeed(-0.7, 0.7);
-						pS.setWidthHeight(20, 20);
-						pS.Init(3, hitBox.left, hitBox.bottom, 0, 0, 0, 0);
+						pS.setWidthHeight(16, 16);
+						pS.Init(4, hitBox.left, hitBox.bottom, 0, 0, 0, 0);
 						pS.type = "explosion";
 						particleSystem.push_back(pS);
+						Sound.Play(KICK, EFFECTS_CHANNEL);
 						(*Entities)[i].Hurt();
 					}
 				}
@@ -325,6 +330,7 @@ bool LevelScreen::Process() {
 					pS.Init(10, hitBox.left, hitBox.bottom, 0, -0.08, 0, 0);
 					pS.type = "rocks";
 					particleSystem.push_back(pS);
+					Sound.Play(BREAK_BLOCK, EFFECTS_CHANNEL);
 
 					if (destructedTile == 35) {
 						if (rand() % 100 < 30) {

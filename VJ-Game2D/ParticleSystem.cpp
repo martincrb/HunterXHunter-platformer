@@ -77,6 +77,7 @@ void ParticleSystem::Process() {
 			it->Process();
 			if (it->isDead()) {
 				it = particles.erase(it);
+				
 			}
 			else {
 				it++;

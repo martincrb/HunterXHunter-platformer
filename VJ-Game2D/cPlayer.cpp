@@ -15,7 +15,7 @@ cPlayer::cPlayer(int state) {
 }
 
 void cPlayer::Hability(){
-	hability = true;
+		hability = true;
 }
 void cPlayer::Draw(int tex_id)
 {	

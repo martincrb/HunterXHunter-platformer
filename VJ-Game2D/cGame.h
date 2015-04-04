@@ -27,6 +27,7 @@ public:
 	//Output
 	void Render();
 
+	void Reset();
 	void startMapScreen(int lvl);
 	void startLevel(int lvl);
 	int getLevel();

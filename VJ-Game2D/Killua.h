@@ -7,6 +7,6 @@ class Killua :
 public:
 	Killua();
 	~Killua();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 };
 

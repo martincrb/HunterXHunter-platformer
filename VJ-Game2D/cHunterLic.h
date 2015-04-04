@@ -7,7 +7,7 @@ public:
 	cHunterLic();
 	~cHunterLic();
 	void Logic();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 	virtual bool CollidesMapFloor();
 };
 

@@ -10,7 +10,7 @@ public:
 	cEvilFish();
 	~cEvilFish();
 	void Logic();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 	bool CollidesMapFloor();
 	bool CollidesMapWall();
 	void MoveRight();

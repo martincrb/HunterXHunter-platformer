@@ -52,7 +52,8 @@ Killua::~Killua()
 {
 }
 
-void Killua::Draw(int tex_id){
+void Killua::Draw(cData* data){
+	int tex_id = data->GetID(IMG_PLAYER2);
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
 	if (in_water) in_air = false;
 	float xo, yo, xf, yf;

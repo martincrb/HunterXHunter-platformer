@@ -45,6 +45,11 @@ void cGame::startLevel(int lvl) {
 	Init();
 }
 
+void cGame::Reset() {
+	Finalize();
+	currentScreen = &startScreen;
+	Init();
+}
 void cGame::startMapScreen(int lvl) {
 	Finalize();
 	actualLevel = lvl;

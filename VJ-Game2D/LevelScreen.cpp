@@ -461,25 +461,25 @@ void LevelScreen::Render() {
 	for (unsigned int i = 0; i < Entities->size(); i++) {
 		if (((*Entities)[i].type != "player_spawn") && (*Entities)[i].bicho->alive) {
 			if ((*Entities)[i].type == "jfrog") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_JUMPING_FROG));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "evilBird") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_BIRD));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "octopus") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_OCTO));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "ghost") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_GHOST));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "evilFish") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_EVIL_FISH));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "hisoka") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_HISOKA));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			else if ((*Entities)[i].type == "end_level") {
-				(*Entities)[i].bicho->Draw(Data.GetID(IMG_HUNTER_LIC));
+				(*Entities)[i].bicho->Draw(&Data);
 			}
 			//Select texture using entity type
 		}

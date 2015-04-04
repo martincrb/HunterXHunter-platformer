@@ -13,7 +13,7 @@ public:
 	~cOctopus();
 	bool Collides(cRect *rc);
 	void Logic();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 	void Hurt();
 private:
 	std::vector<float> ball_y;

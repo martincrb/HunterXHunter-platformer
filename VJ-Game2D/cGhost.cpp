@@ -62,8 +62,9 @@ void cGhost::Logic() {
 	}
 }
 
-void cGhost::Draw(int tex_id) {
+void cGhost::Draw(cData* data) {
 	float xo, yo, xf, yf;
+	int tex_id = data->GetID(IMG_GHOST);
 	if (state == STATE_LOOKLEFT) {
 		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(32);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(64);
 		xf = currentFrame.tile_px;

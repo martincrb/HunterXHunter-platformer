@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Animation.h"
 #include "cRect.h"
-
+#include "cData.h"
 
 
 #define STEP_LENGTH		2
@@ -46,7 +46,7 @@ public:
 
 	virtual void GetArea(cRect *rc);
 	virtual void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
-	virtual void Draw(int tex_id);
+	virtual void Draw(cData* data);
 
 	virtual void MoveRight();
 	virtual void MoveLeft();

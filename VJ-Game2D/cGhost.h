@@ -11,7 +11,7 @@ public:
 	cGhost();
 	~cGhost();
 	void Logic();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 
 	
 private:

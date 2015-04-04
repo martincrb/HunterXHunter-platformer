@@ -29,8 +29,9 @@ void cHunterLic::Logic() {
 	}
 	adjust();
 }
-void cHunterLic::Draw(int tex_id) {
+void cHunterLic::Draw(cData* data) {
 	float xo, yo, xf, yf;
+	int tex_id = data->GetID(IMG_HUNTER_LIC);
 	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(64);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(64);
 	xf = currentFrame.tile_px;
 	yf = yo - float(currentFrame.tile_heigth) / float(64);

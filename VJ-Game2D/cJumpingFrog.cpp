@@ -51,7 +51,8 @@ void cJumpingFrog::Logic() {
 	}
 	cBicho::Logic();
 }
-void cJumpingFrog::Draw(int tex_id) {
+void cJumpingFrog::Draw(cData* data) {
+	int tex_id = data->GetID(IMG_JUMPING_FROG);
 	if (inAir()) {
 		currentAnimation = &animations[1];
 	}

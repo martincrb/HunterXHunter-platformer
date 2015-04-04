@@ -114,7 +114,8 @@ void Gon::DrawRect(int tex_id, float xo, float yo, float xf, float yf) {
 
 	glDisable(GL_TEXTURE_2D);
 }
-void Gon::Draw(int tex_id){
+void Gon::Draw(cData* data){
+	int tex_id = data->GetID(IMG_PLAYER);
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
 	if (hability) {
 	hability = false;

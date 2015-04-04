@@ -78,10 +78,10 @@ void cOctopus::Logic() {
 		balls[i]->angle = angle;
 	}
 }
-void cOctopus::Draw(int tex_id) {
-
+void cOctopus::Draw(cData* data) {
+	int tex_id = data->GetID(IMG_OCTO);
 	for (int i = 0; i < balls.size(); ++i) {
-		balls[i]->Draw(15);
+		balls[i]->Draw(data);
 	}
 
 	float xo, yo, xf, yf;

@@ -9,7 +9,7 @@ public:
 	cJumpingFrog();
 	~cJumpingFrog();
 	void setJumpFreq(int x);
-	void Draw(int text_id);
+	void Draw(cData* data);
 	void Logic();
 	void Hurt();
 private:

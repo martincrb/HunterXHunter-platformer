@@ -131,10 +131,10 @@ bool cEvilFish::CollidesMapFloor() {
 	return true;
 }
 
-void cEvilFish::Draw(int tex_id) {
+void cEvilFish::Draw(cData* data) {
 
 	float xo, yo, xf, yf;
-
+	int tex_id = data->GetID(IMG_EVIL_FISH);
 	switch (GetState())
 	{
 		//1

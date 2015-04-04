@@ -14,9 +14,9 @@ bool cFireBall::Collides(cRect *rc) {
 	return cBicho::Collides(rc);
 }
 
-void cFireBall::Draw(int tex_id) {
+void cFireBall::Draw(cData* data) {
 	float xo, yo, xf, yf;
-
+	int tex_id = data->GetID(IMG_OCTO_BALL);
 	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(16);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(16);
 	xf = currentFrame.tile_px;
 	yf = yo - float(currentFrame.tile_heigth) / float(16);

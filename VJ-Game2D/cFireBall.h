@@ -7,7 +7,7 @@ public:
 	cFireBall(int dist, float angle);
 	~cFireBall();
 	bool Collides(cRect *rc);
-	void Draw(int tex_id);
+	void Draw(cData* data);
 
 	int dist;
 	int direc;

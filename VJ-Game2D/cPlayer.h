@@ -15,7 +15,7 @@ public:
 	~cPlayer();
 	cPlayer(int state);
 	virtual void Hability();
-	virtual void Draw(int tex_id);
+	virtual void Draw(cData* data);
 	virtual bool Collides(cRect *rc);
 	int HurtsDestructible(cRect hitBox);
 	virtual bool isUsingHability();

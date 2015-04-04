@@ -92,7 +92,8 @@ void Hisoka::Logic() {
 	}
 }
 
-void Hisoka::Draw(int tex_id) {
+void Hisoka::Draw(cData* data) {
+	int tex_id = data->GetID(IMG_HISOKA);
 	float xo, yo, xf, yf;
 	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(60);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(202);
 	xf = currentFrame.tile_px;
@@ -102,7 +103,7 @@ void Hisoka::Draw(int tex_id) {
 	DrawRect(tex_id, xo, yo, xf, yf);
 
 	for (unsigned int i = 0; i < cards.size(); ++i)
-		cards[i].Draw();
+		cards[i].Draw(data);
 }
 
 void Hisoka::Hurt() {
@@ -140,7 +141,8 @@ void Hisoka::Card::Logic() {
 	y = initial_y + move_y * SPEED * dist;
 }
 
-void Hisoka::Card::Draw() {
+void Hisoka::Card::Draw(cData* data) {
+	int tex_id = data->GetID(IMG_HISO_CARD);
 	float xo, yo, xf, yf;
 
 	xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(16);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(16);
@@ -149,5 +151,5 @@ void Hisoka::Card::Draw() {
 	currentFrame.py_disp = 0;
 	yf = yo - float(currentFrame.tile_heigth) / float(16);
 	//cBicho::SetWidthHeight(16, 16);
-	DrawRect(19, 0, 1, 1, 0);
+	DrawRect(tex_id, 0, 1, 1, 0);
 }

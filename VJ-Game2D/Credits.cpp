@@ -58,7 +58,7 @@ void Credits::ReadMouse(int button, int state, int x, int y) {
 //Process
 bool Credits::Process() {
 	Sound.UpdateSound();
-	if (keys[99] && endInitialAnim)		gameController->startMapScreen(1);
+	if (keys[99] && endInitialAnim)		gameController->Reset();
 	return true;
 }
 //Output

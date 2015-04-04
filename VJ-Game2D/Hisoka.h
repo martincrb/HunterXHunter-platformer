@@ -8,7 +8,7 @@ public:
 	Hisoka();
 	bool Collides(cRect *rc);
 	void Logic();
-	void Draw(int tex_id);
+	void Draw(cData* data);
 	void Hurt();
 
 private:
@@ -16,7 +16,7 @@ private:
 	public:
 		Card(int x, int y, int obj_x, int obj_y);
 		void Logic();
-		void Draw();
+		void Draw(cData* data);
 	private:
 		float move_x;
 		float move_y;

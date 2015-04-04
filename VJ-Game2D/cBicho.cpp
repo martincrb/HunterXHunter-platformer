@@ -436,6 +436,6 @@ void cBicho::SetState(int s)
 	state = s;
 }
 
-void cBicho::Draw(int tex_id){
+void cBicho::Draw(cData* data){
 
 }

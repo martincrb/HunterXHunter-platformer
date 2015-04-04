@@ -129,10 +129,10 @@ bool cEvilBird::CollidesMapFloor() {
 	//Evil Bird is always flying, so it is always " in the floor "
 }
 
-void cEvilBird::Draw(int tex_id) {
+void cEvilBird::Draw(cData* data) {
 
 	float xo, yo, xf, yf;
-
+	int tex_id = data->GetID(IMG_EVIL_BIRD);
 	switch (GetState())
 	{
 		//1

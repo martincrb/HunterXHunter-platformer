@@ -54,6 +54,8 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_GUI_KILLUA, Resources::GUI_USING_KILLUA, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_HUNTER_LIC, Resources::HUNTER_LICENSE, GL_RGBA);
+	if (!res) return false;
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
@@ -79,6 +81,9 @@ bool LevelScreen::Init(cGame* cG) {
 			(*Entities)[i].bicho->SetPosition((*Entities)[i].spawn_x, (*Entities)[i].spawn_y);
 			(*Entities)[i].bicho->SetWidthHeight(32, 32);
 			(*Entities)[i].bicho->SetMap(Scene.GetMap());
+			if ((*Entities)[i].type == "end_level") {
+				(*Entities)[i].killsPlayer = false;
+			}
 		}
 	}
 
@@ -313,6 +318,9 @@ bool LevelScreen::Process() {
 				//Finalize();
 				//Init();
 			}
+			if ((*Entities)[i].type == "end_level" && (*Entities)[i].bicho->Collides(&playerBox)) {
+				gameController->startMapScreen(gameController->getLevel()+1);
+			}
 		}
 	}
 	return res;
@@ -378,6 +386,9 @@ void LevelScreen::Render() {
 			}
 			else if ((*Entities)[i].type == "hisoka") {
 				(*Entities)[i].bicho->Draw(Data.GetID(IMG_HISOKA));
+			}
+			else if ((*Entities)[i].type == "end_level") {
+				(*Entities)[i].bicho->Draw(Data.GetID(IMG_HUNTER_LIC));
 			}
 			//Select texture using entity type
 		}

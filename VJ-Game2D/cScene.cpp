@@ -7,6 +7,7 @@
 #include "Hisoka.h"
 #include "cEvilFish.h"
 #include "cJumpingFrog.h"
+#include "cHunterLic.h"
 #include "cOctopus.h"
 #include "cGhost.h"
 #include <iostream>
@@ -260,6 +261,11 @@ std::string cScene::LoadLevel(const char* level)
 				else if (entity.type == "evilFish") {
 					std::cout << "blublublublubKILL" << std::endl;
 					entity.bicho = new cEvilFish();
+					entity.bicho->alive = true;
+				}
+				else if (entity.type == "end_level") {
+					std::cout << "Jantah laisensu" << std::endl;
+					entity.bicho = new cHunterLic();
 					entity.bicho->alive = true;
 				}
 				else if (entity.type == "player_spawn") {

@@ -102,6 +102,7 @@
     <ClCompile Include="cFireBall.cpp" />
     <ClCompile Include="cGame.cpp" />
     <ClCompile Include="cGhost.cpp" />
+    <ClCompile Include="cHunterLic.cpp" />
     <ClCompile Include="cJumpingFrog.cpp" />
     <ClCompile Include="cOctopus.cpp" />
     <ClCompile Include="cPlayer.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="cFireBall.h" />
     <ClInclude Include="cGame.h" />
     <ClInclude Include="cGhost.h" />
+    <ClInclude Include="cHunterLic.h" />
     <ClInclude Include="cJumpingFrog.h" />
     <ClInclude Include="cOctopus.h" />
     <ClInclude Include="cPlayer.h" />

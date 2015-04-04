@@ -13,6 +13,7 @@ public:
 	static const char* SPRITESHEET_EVIL_PTERO;
 	static const char* SPRITESHEET_EVIL_FISH;
 	static const char* LEVEL01;
+	static const char* LEVEL02;
 	static const char* SPRITESHEET_OCTO;
 	static const char* SPRITESHEET_OCTO_BALL;
 	static const char* SPRITESHEET_GHOST;
@@ -31,7 +32,7 @@ public:
 	static const char* FONT;
 	static const char* GUI_USING_GON;
 	static const char* GUI_USING_KILLUA;
-
+	static const char* HUNTER_LICENSE;
 
 };
 

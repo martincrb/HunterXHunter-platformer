@@ -14,6 +14,8 @@ MapScreen::~MapScreen()
 
 bool MapScreen::Init(cGame* cG) {
 	gameController = cG;
+	frameCounter = 0;
+	uncover_displace = 0;
 	bool res = true;
 	Sound.init();
 
@@ -60,7 +62,7 @@ bool MapScreen::Process() {
 	Sound.UpdateSound();
 	++frameCounter;
 	if (frameCounter >= MAP_SCREEN_DURATION) {
-		gameController->startLevel(1);
+		gameController->startLevel(gameController->getLevel());
 	}
 	//if (keys[99])		gameController->startLevel(1);
 	return true;

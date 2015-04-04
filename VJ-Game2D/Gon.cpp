@@ -54,6 +54,7 @@ Gon::Gon()
 	currentFrame = currentAnimation->frames[0];
 
 	punchDelay = 0;
+	cooldown = 0;
 	hability = false;
 }
 
@@ -115,12 +116,10 @@ void Gon::DrawRect(int tex_id, float xo, float yo, float xf, float yf) {
 }
 void Gon::Draw(int tex_id){
 	//Esto no deberia ir aqui, deberia ir en la logica del player (la hereda de cbicho?)
-	if (hability) punchDelay++;
-	if (punchDelay == PUNCH_DURATION)
-	{
-		punchDelay = 0;
-		hability = false;
-	}
+	if (hability) {
+	hability = false;
+	Stop();
+}
 
 	float xo, yo, xf, yf;
 	switch (GetState())
@@ -150,31 +149,26 @@ void Gon::Draw(int tex_id){
 	case STATE_LOOKLEFT:
 		if (inAir()) {
 			if (in_water) in_air = false;
-			if (hability) {
+			currentAnimation = &animations[2];
+			currentFrame = currentAnimation->frames[0];
+			if (punchDelay > 0) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				//currentFrame.invertHitBoxX();
-			}
-			else {
-				currentAnimation = &animations[2];
-				currentFrame = currentAnimation->frames[0];
+				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (in_water) {
-			
-			if (hability) {
+			currentAnimation = &animations[4];
+			if (punchDelay > 0) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
-				//currentFrame.invertHitBoxX();
-			}
-			else {
-				currentAnimation = &animations[4];
+				currentFrame.invertHitBoxX();
 			}
 		}
-		else if (hability) {
+		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			//currentFrame.invertHitBoxX();
+			currentFrame.invertHitBoxX();
 		}
 		else {
 			currentAnimation = &animations[0];
@@ -188,27 +182,22 @@ void Gon::Draw(int tex_id){
 	case STATE_LOOKRIGHT:
 		if (inAir()) {
 			if (in_water) in_air = false;
-			if (hability) {
+			currentAnimation = &animations[2];
+			currentFrame = currentAnimation->frames[0];
+			if (punchDelay > 0) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				//currentFrame.invertHitBoxX();
-			}
-			else {
-				currentAnimation = &animations[2];
-				currentFrame = currentAnimation->frames[0];
+				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (in_water) {
-			
-			if (hability) {
+			currentAnimation = &animations[4];
+			if (punchDelay > 0) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
-			else {
-				currentAnimation = &animations[4];
-			}
 		}
-		else if (hability) {
+		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 		}
@@ -230,15 +219,15 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (hability) {
+			if (punchDelay > 0) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
 		}
-		else if (hability) {
+		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			//currentFrame.invertHitBoxX();
+			currentFrame.invertHitBoxX();
 			
 		}
 		else {
@@ -258,12 +247,12 @@ void Gon::Draw(int tex_id){
 		}
 		else if (in_water) {
 			currentAnimation = &animations[4];
-			if (hability) {
+			if (punchDelay > 0) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
 			}
 		}
-		else if (hability) {
+		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
 		}
@@ -276,6 +265,11 @@ void Gon::Draw(int tex_id){
 		NextFrame(currentAnimation->frames.size());
 		break;
 	}
+
+	if (punchDelay > 0)
+		punchDelay--;
+	if (cooldown > 0)
+		cooldown--;
 	//std::cout << "FRAME: " << std::endl;
 	//std::cout << "Xo: " << xo << " Yo: " << yo << std::endl;
 	//std::cout << "Xf: " << xf << " Yf: " << yf << std::endl;
@@ -285,4 +279,12 @@ void Gon::Draw(int tex_id){
 	//cBicho::SetPosition(xd+currentFrame.px_disp, yd-currentFrame.py_disp);
 	DrawRect(tex_id, xo, yo, xf, yf);
 	
+}
+
+void Gon::Hability(){
+	if (cooldown == 0) {
+		hability = true;
+		punchDelay = PUNCH_DURATION;
+		cooldown = PUNCH_COOLDOWN;
+	}
 }

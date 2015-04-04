@@ -4,8 +4,9 @@
 
 #define PLAYER_START_CX		3
 #define PLAYER_START_CY		2
-#define PUNCH_DURATION		2
-#define CHARGE_SPEED	0.025
+#define PUNCH_DURATION		10
+#define PUNCH_COOLDOWN		60
+#define CHARGE_SPEED		0.025
 
 class cPlayer: public cBicho
 {
@@ -26,7 +27,6 @@ public:
 	void SuperJump();
 	bool isSuperJumping();
 protected:
-	int punchDelay;
 	bool hability;
 	cRect coll_box;
 	virtual void adjust();

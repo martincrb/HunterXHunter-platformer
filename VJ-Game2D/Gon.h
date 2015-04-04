@@ -9,5 +9,9 @@ public:
 	void Draw(int tex_id);
 	void DrawRect(int tex_id, float xo, float yo, float xf, float yf);
 	int HurtsDestructible(cRect hitBox);
+	virtual void Hability();
+protected:
+	int punchDelay;
+	int cooldown;
 };
 

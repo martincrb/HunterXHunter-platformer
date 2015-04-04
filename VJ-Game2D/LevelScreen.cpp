@@ -1,6 +1,7 @@
 #include "LevelScreen.h"
 #include "Resources.h"
 #include "cGame.h"
+#include "cHunterLic.h"
 
 LevelScreen::LevelScreen()
 {
@@ -102,17 +103,15 @@ bool LevelScreen::Init(cGame* cG) {
 
 	Player->SetWidthHeight(32, 32);
 	Player->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
-	//Player->SetPosition((Scene.SCENE_WIDTH - 5) * Scene.TILE_SIZE, (Scene.SCENE_HEIGHT - 5) * Scene.TILE_SIZE);
 	Player->SetWidthHeight(32, 32);
 	Player->SetState(STATE_LOOKRIGHT);
 	Player->SetMap(Scene.GetMap());
-	cRect r; r.bottom = 0; r.left = 0; r.right = 31; r.top = 41;
+	cRect r; r.bottom = 0; r.left = 0; r.right = 31; r.top = 31;
 	Player->setCollisionBox(r);
 
 	Player->inWater(Scene.getWaterZone());
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetPosition(Scene.player_spawn_x, Scene.player_spawn_y);
-	//Player2->SetPosition((Scene.SCENE_WIDTH - 5) * Scene.TILE_SIZE, (Scene.SCENE_HEIGHT - 5) * Scene.TILE_SIZE);
 	Player2->SetWidthHeight(32, 32);
 	Player2->SetState(STATE_LOOKRIGHT);
 	Player2->SetMap(Scene.GetMap());
@@ -306,6 +305,15 @@ bool LevelScreen::Process() {
 						pS.type = "explosion";
 						particleSystem.push_back(pS);
 						(*Entities)[i].Hurt();
+					}
+					if ((*Entities)[i].type == "hisoka" && !(*Entities)[i].bicho->alive) {
+						cHunterLic* license = new cHunterLic();
+						int x, y;
+						(*Entities)[i].bicho->GetPosition(&x, &y);
+						license->SetPosition(x - 300, y + 400);
+						license->SetMap(Scene.GetMap());
+						(*Entities)[i].bicho = license;
+						(*Entities)[i].type = "end_level";
 					}
 				}
 				int destructedTile = Player->HurtsDestructible(hitBox);

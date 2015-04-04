@@ -4,6 +4,7 @@
 #include "StartScreen.h"
 #include "LevelScreen.h"
 #include "MapScreen.h"
+#include "Credits.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -38,6 +39,7 @@ private:
 	StartScreen startScreen;
 	LevelScreen levelScreen;
 	MapScreen mapScreen;
+	Credits credits;
 	cScreen* currentScreen;
 	int actualLevel;
 	int score;

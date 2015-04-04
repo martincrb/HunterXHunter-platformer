@@ -107,6 +107,7 @@
     <ClCompile Include="cOctopus.cpp" />
     <ClCompile Include="cPlayer.cpp" />
     <ClCompile Include="cRect.cpp" />
+    <ClCompile Include="Credits.cpp" />
     <ClCompile Include="cScene.cpp" />
     <ClCompile Include="cScreen.cpp" />
     <ClCompile Include="cSound.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="cOctopus.h" />
     <ClInclude Include="cPlayer.h" />
     <ClInclude Include="cRect.h" />
+    <ClInclude Include="Credits.h" />
     <ClInclude Include="cScene.h" />
     <ClInclude Include="cScreen.h" />
     <ClInclude Include="cSound.h" />

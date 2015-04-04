@@ -31,6 +31,7 @@ bool cGame::Init()
 
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
+
 	return currentScreen->Init(this);
 }
 cScreen* cGame::getCurrentScreen() {

@@ -6,15 +6,6 @@ PlayerController::PlayerController()
 	for (int i = 0; i < PLAYERS_DELAY; ++i)
 		command_queue.push(actions::STOP);
 }
-PlayerController::PlayerController(cPlayer* playerOne, cPlayer* playerTwo, cScene* scene)
-{
-	Gon = playerOne;
-	Killua = playerTwo;
-	this->scene = scene;
-	currentPlayer = Gon;
-	for (int i = 0; i < PLAYERS_DELAY; ++i)
-		command_queue.push(actions::STOP);
-}
 
 cPlayer* PlayerController::getCurrentPlayer() {
 	return currentPlayer;
@@ -29,6 +20,9 @@ void PlayerController::setPlayers(cPlayer* playerOne, cPlayer* playerTwo)
 	Gon = playerOne;
 	Killua = playerTwo;
 	currentPlayer = Gon;
+	command_queue = std::queue<actions>();
+	for (int i = 0; i < PLAYERS_DELAY; ++i)
+		command_queue.push(actions::STOP);
 }
 
 void PlayerController::action(PlayerController::actions a) {
@@ -133,8 +127,14 @@ void PlayerController::changeCurrentPlayer(){
 
 void PlayerController::Draw(cData* Data) {
 	if (currentPlayer == Killua) {
-		if (Killua->isSuperJumping())
+		if (Killua->isSuperJumping()) {
 			Killua->Draw(Data->GetID(IMG_PLAYER2));
+			cont = PLAYERS_DELAY / 2;
+		}
+		else if (cont > 0) {
+			Killua->Draw(Data->GetID(IMG_PLAYER2));
+			cont--;
+		}
 		else {
 			Gon->Draw(Data->GetID(IMG_PLAYER));
 			Killua->Draw(Data->GetID(IMG_PLAYER2));

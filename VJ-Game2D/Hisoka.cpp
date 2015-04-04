@@ -41,7 +41,7 @@ bool Hisoka::Collides(cRect *rc) {
 
 void Hisoka::Logic() {
 
-	if (!invulnerable && (x - obj_x) <= MIN_DIST) {
+	if (!invulnerable && max(abs(x - obj_x), abs(y - obj_y)) <= MIN_DIST) {
 		if (!attacking) {
 			attacking = true;
 			currentAnimation = &animations[1];
@@ -112,7 +112,6 @@ void Hisoka::Hurt() {
 		invulnerable = true;
 		attacking = false;
 		inv_time = INV_TIME;
-		std::cout << "asdfadsfasdfasdfasd" << std::endl;
 	}
 }
 

@@ -10,7 +10,6 @@ LevelScreen::LevelScreen()
 
 LevelScreen::~LevelScreen()
 {
-
 }
 
 bool LevelScreen::currentIsGon() {

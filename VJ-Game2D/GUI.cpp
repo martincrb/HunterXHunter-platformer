@@ -18,7 +18,7 @@ void GUI::Draw(cGame* data){
 	//itoa(score, buff, 10);
 	std::string sc = std::to_string(score);
 	text.setText("SCORE:"+sc);
-	text.setPosition(350, 550);
+	text.setPosition(100, GAME_HEIGHT - 30);
 
 	glPushMatrix();
 	glMatrixMode(GL_PROJECTION);
@@ -29,9 +29,9 @@ void GUI::Draw(cGame* data){
 	glColor3f(0, 0, 0);
 	glBegin(GL_QUADS);
 	glVertex2i(0, GAME_HEIGHT);
-	glVertex2i(GAME_WIDTH, GAME_HEIGHT);
-	glVertex2i(GAME_WIDTH, GAME_HEIGHT-50);
-	glVertex2i(0, GAME_HEIGHT-50);
+	glVertex2i(320, GAME_HEIGHT);
+	glVertex2i(220, GAME_HEIGHT-60);
+	glVertex2i(0, GAME_HEIGHT-60);
 	glColor3f(1, 1, 1);
 	glEnd();
 	text.Draw(data->getCurrentScreen()->getTexID(IMG_FONT));

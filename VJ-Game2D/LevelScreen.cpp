@@ -1,6 +1,7 @@
 #include "LevelScreen.h"
 #include "Resources.h"
 #include "cGame.h"
+#include "cHunterLic.h"
 
 LevelScreen::LevelScreen()
 {
@@ -10,7 +11,6 @@ LevelScreen::LevelScreen()
 
 LevelScreen::~LevelScreen()
 {
-
 }
 
 bool LevelScreen::currentIsGon() {
@@ -264,14 +264,6 @@ bool LevelScreen::Process() {
 			std::cout << "score: " << actualScore << std::endl;
 		}
 	}
-	itemID = Player2->CollidesItem(Scene.GetItemMap());
-	if (itemID != -1) {
-		if (itemID == 44) {
-			actualScore += 40;
-			Sound.Play(GET_COIN, EFFECTS_CHANNEL);
-			std::cout << "score: " << actualScore << std::endl;
-		}
-	}
 	gameController->setScore(actualScore);
 
 	//Process all entities in the map
@@ -318,6 +310,15 @@ bool LevelScreen::Process() {
 						particleSystem.push_back(pS);
 						Sound.Play(KICK, EFFECTS_CHANNEL);
 						(*Entities)[i].Hurt();
+					}
+					if ((*Entities)[i].type == "hisoka" && !(*Entities)[i].bicho->alive) {
+						cHunterLic* license = new cHunterLic();
+						int x, y;
+						(*Entities)[i].bicho->GetPosition(&x, &y);
+						license->SetPosition(x - 300, y + 400);
+						license->SetMap(Scene.GetMap());
+						(*Entities)[i].bicho = license;
+						(*Entities)[i].type = "end_level";
 					}
 				}
 				int destructedTile = Player->HurtsDestructible(hitBox);

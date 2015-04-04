@@ -138,7 +138,7 @@ void cPlayer::adjust() {
 		int tile_fin = (x + coll_box.right) / cScene::TILE_SIZE;
 		if ((x + coll_box.right) % cScene::TILE_SIZE == 0) tile_fin--;
 		for (int i = tile_ini; i <= tile_fin; i++) {
-			cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
+			//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
 			int tileID = map[i + tile_y * cScene::SCENE_WIDTH];
 			if (tileID != 0 && cScene::tiles[tileID - 1].isSolid()) {
 				y = (cScene::SCENE_HEIGHT - tile_y - 1) * cScene::TILE_SIZE - coll_box.top;

@@ -131,7 +131,7 @@ bool cBicho::CollidesMapFloor()
 	int tile_ini = tile_x;
 	int tile_fin = (x + w) / cScene::TILE_SIZE;
 	for (int i = tile_ini; i <= tile_fin; i++) {
-		cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
+		//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
 		int tileID = map[i + tile_y * cScene::SCENE_WIDTH];
 		if (tileID != 0 && cScene::tiles[tileID - 1].isSolid()) {
 			in_air = false;
@@ -143,20 +143,24 @@ bool cBicho::CollidesMapFloor()
 
 }
 int cBicho::CollidesItem(int *itemMap) {
-	int tile_x = x / cScene::TILE_SIZE;
-	int tile_y = cScene::SCENE_HEIGHT - 1 - y / cScene::TILE_SIZE;
-	//if (y % cScene::TILE_SIZE == 0) tile_y++;
+	int tile_ini_x = x / cScene::TILE_SIZE;
+	int tile_ini_y = cScene::SCENE_HEIGHT - 1 - (y + h) / cScene::TILE_SIZE;
+	if (x % cScene::TILE_SIZE > 26) tile_ini_x++;
+	if ((y + h) % cScene::TILE_SIZE < 8) tile_ini_y++;
 
-	int tile_ini = tile_x;
-	int tile_fin = (x + w) / cScene::TILE_SIZE;
-	for (int i = tile_ini; i <= tile_fin; i++) {
-		//cScene::debugmap[i + tile_y * cScene::SCENE_WIDTH] = 1;
-		int tileID = itemMap[i + tile_y * cScene::SCENE_WIDTH];
-		int coverTileID = map[i + tile_y * cScene::SCENE_WIDTH];
-		if (tileID != 0 && coverTileID == 0) {
-			itemMap[i + tile_y * cScene::SCENE_WIDTH] = 0;
-			return tileID;
-			
+	int tile_fin_x = (x + w) / cScene::TILE_SIZE;;
+	int tile_fin_y = cScene::SCENE_HEIGHT - 1 - y / cScene::TILE_SIZE;
+	if ((x + w) % cScene::TILE_SIZE < 8) tile_fin_x--;
+	if (y % cScene::TILE_SIZE > 26) tile_fin_y--;
+	for (int x = tile_ini_x; x <= tile_fin_x; x++) {
+		for (int y = tile_ini_y; y <= tile_fin_y; y++) {
+			//cScene::debugmap[x + y * cScene::SCENE_WIDTH] = 1;
+			int tileID = itemMap[x + y * cScene::SCENE_WIDTH];
+			int coverTileID = map[x + y * cScene::SCENE_WIDTH];
+			if (tileID != 0 && coverTileID == 0) {
+				itemMap[x + y * cScene::SCENE_WIDTH] = 0;
+				return tileID;
+			}
 		}
 	}
 	return -1;

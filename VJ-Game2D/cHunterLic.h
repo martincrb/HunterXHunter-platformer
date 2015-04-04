@@ -8,5 +8,6 @@ public:
 	~cHunterLic();
 	void Logic();
 	void Draw(int tex_id);
+	virtual bool CollidesMapFloor();
 };
 

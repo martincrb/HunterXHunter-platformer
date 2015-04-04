@@ -43,7 +43,6 @@ Killua::Killua()
 	currentAnimation = &animations[0];
 	currentFrame = currentAnimation->frames[0];
 
-	punchDelay = 0;
 	hability = false;
 
 }

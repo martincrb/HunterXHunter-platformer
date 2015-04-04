@@ -154,7 +154,6 @@ void Gon::Draw(int tex_id){
 			if (punchDelay > 0) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (in_water) {
@@ -162,13 +161,11 @@ void Gon::Draw(int tex_id){
 			if (punchDelay > 0) {
 				currentAnimation = &animations[5];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			currentFrame.invertHitBoxX();
 		}
 		else {
 			currentAnimation = &animations[0];
@@ -187,7 +184,6 @@ void Gon::Draw(int tex_id){
 			if (punchDelay > 0) {
 				currentAnimation = &animations[3];
 				currentFrame = currentAnimation->frames[0];
-				currentFrame.invertHitBoxX();
 			}
 		}
 		else if (in_water) {
@@ -227,7 +223,6 @@ void Gon::Draw(int tex_id){
 		else if (punchDelay > 0) {
 			currentAnimation = &animations[3];
 			currentFrame = currentAnimation->frames[0];
-			currentFrame.invertHitBoxX();
 			
 		}
 		else {

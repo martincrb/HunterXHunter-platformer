@@ -80,17 +80,17 @@ void Credits::Render() {
 	glEnable(GL_TEXTURE_2D);
 	cText text1;
 	text1.setText("CREDITS");
-	text1.setPosition(340, text_pos - 200);
+	text1.setPosition(360, text_pos - 200);
 	text1.Draw(Data.GetID(IMG_FONT));
 
 	cText text2;
 	text2.setText("MARTIN CRISTOBAL BALASCH");
-	text2.setPosition(200, text_pos - 300);
+	text2.setPosition(210, text_pos - 300);
 	text2.Draw(Data.GetID(IMG_FONT));
 
 	cText text3;
 	text3.setText("DAVID BOSCH SERRA");
-	text3.setPosition(250, text_pos - 350);
+	text3.setPosition(266, text_pos - 350);
 	text3.Draw(Data.GetID(IMG_FONT));
 	
 	if (text_pos < GAME_HEIGHT) {

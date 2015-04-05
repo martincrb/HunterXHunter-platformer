@@ -30,6 +30,7 @@ const char* Resources::PARTICLE_EXPLOSION = "res/sprites/particle/explosion.png"
 const char* Resources::PARTICLE_GON_GHOST = "res/sprites/particle/gon_ghost.png";
 const char* Resources::PARTICLE_KILLUA_GHOST = "res/sprites/particle/killua_ghost.png";
 const char* Resources::HELP_KEYS = "res/sprites/help/keys.png";
+const char* Resources::PARTICLE_SPEED = "res/sprites/particle/speed.png";
 
 Resources::Resources()
 {

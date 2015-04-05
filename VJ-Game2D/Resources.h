@@ -37,6 +37,7 @@ public:
 	static const char* PARTICLE_EXPLOSION;
 	static const char* PARTICLE_GON_GHOST;
 	static const char* PARTICLE_KILLUA_GHOST;
+	static const char* PARTICLE_SPEED;
 	static const char* HELP_KEYS;
 };
 

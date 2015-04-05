@@ -13,12 +13,20 @@ ParticleSystem::ParticleSystem()
 ParticleSystem::~ParticleSystem()
 {
 }
+
+void ParticleSystem::setInfinite(bool inf) {
+	this->inf = inf;
+}
+
 void ParticleSystem::setLifespan(int lfspan) {
 	particles_lifetime = lfspan;
 	if (!particles.empty()) {
 		for (std::list<Particle>::iterator it = particles.begin(); it != particles.end(); it++)
 			it->setLifespan(particles_lifetime);
 	}
+}
+void ParticleSystem::Reset() {
+	Init(max_particles_to_spawn, emitter_x, emitter_y, acc_x, acc_y, vel_x, vel_y);
 }
 void ParticleSystem::Init(int max, float emit_x, float emit_y, float a_x, float a_y, float v_x, float v_y) {
 	

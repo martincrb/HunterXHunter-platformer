@@ -26,8 +26,11 @@ bool LevelScreen::currentIsKillua() {
 bool LevelScreen::Init(cGame* cG) {
 	gameController = cG;
 	pController.clear();
+	original_score = cG->getScore();
+	actual_score = original_score;
 	hurtDelay = 0;
 	showHelp = false;
+	killua_drive = false;
 	helpScreen.Init(cG);
 	particleSystem.clear();
 	reset_delay = RESET_LEVEL_DELAY;
@@ -72,6 +75,8 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_PARTICLE_KILLUA_GHOST, Resources::PARTICLE_KILLUA_GHOST, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_PARTICLE_SPEED, Resources::PARTICLE_SPEED, GL_RGBA);
+	if (!res) return false;
 
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
@@ -80,6 +85,7 @@ bool LevelScreen::Init(cGame* cG) {
 	Sound.LoadSound(GET_COIN, "res/audio/coin.wav", EFFECT);
 	Sound.LoadSound(BREAK_BLOCK, "res/audio/breakblock.wav", EFFECT);
 	Sound.LoadSound(KICK, "res/audio/kick.wav", EFFECT);
+	Sound.LoadSound(DIE, "res/audio/die.wav", EFFECT);
 	//Scene initialization
 	//
 	Sound.setVolume(MUSIC_CHANNEL, 0.3);
@@ -112,6 +118,8 @@ bool LevelScreen::Init(cGame* cG) {
 	//particleSystem.Init(50, Data.GetID(IMG_OCTO_BALL), Scene.player_spawn_x, Scene.player_spawn_y, 0, -0.07, 0, 0);
 
 	//Player initialization
+
+
 
 
 	Player = new Gon();
@@ -153,7 +161,7 @@ bool LevelScreen::Loop() {
 
 }
 void LevelScreen::Finalize() {
-	Sound.FreeAll();
+	//Sound.FreeAll();
 	Scene.FreeAll();
 }
 
@@ -247,11 +255,32 @@ bool LevelScreen::Process() {
 		//...
 
 		//Process Particles
-
+		if (!pController.getCurrentPlayer()->isSuperJumping()) {
+			killua_drive = false;
+		}
+		if (pController.getCurrentPlayer()->isSuperJumping() && !killua_drive) {
+			killua_drive = true;
+			ParticleSystem pS;
+			pS.setLifespan(10);
+			pS.setWidthHeight(29, 17);
+			pS.Init(1, x, y-5, 0, 0, -0.4, -0.2);
+			pS.type = "killua_drive";
+			particleSystem.push_back(pS);
+		}
 		for (int p = particleSystem.size() - 1; p >= 0; --p) {
 			particleSystem[p].Process();
 			if (particleSystem[p].isFinished()) {
-				particleSystem.erase(particleSystem.begin() + p);
+				if (particleSystem[p].type == "killua_drive") {
+					if (pController.getCurrentPlayer()->isSuperJumping()) {
+						particleSystem[p].Reset();
+					}
+					else {
+						particleSystem.erase(particleSystem.begin() + p);
+					}
+				}
+				else {
+					particleSystem.erase(particleSystem.begin() + p);
+				}
 			}
 		}
 		int playerx, playery;
@@ -282,16 +311,14 @@ bool LevelScreen::Process() {
 			Scene.addEntity("ghost", playerx, playery - 50);
 		}
 
-		int actualScore = gameController->getScore();
 		int itemID = pController.getCurrentPlayer()->CollidesItem(Scene.GetItemMap());
 		if (itemID != -1) {
 			if (itemID == 44) {
-				actualScore += 40;
+				actual_score += 40;
 				Sound.Play(GET_COIN, EFFECTS_CHANNEL);
-				std::cout << "score: " << actualScore << std::endl;
+				std::cout << "score: " << actual_score << std::endl;
 			}
 		}
-		gameController->setScore(actualScore);
 
 		//Process all entities in the map
 		cRect playerBox;
@@ -385,6 +412,8 @@ bool LevelScreen::Process() {
 				if (!you_died && (*Entities)[i].killsPlayer && (*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 					//Kill player
 					std::cout << "dead" << std::endl;
+					Sound.Stop(LEVEL_BG);
+					Sound.Play(DIE, EFFECTS_CHANNEL);
 					you_died = true;
 					ParticleSystem pS;
 					pS.setLifespan(200);
@@ -400,6 +429,7 @@ bool LevelScreen::Process() {
 					particleSystem.push_back(pS);
 				}
 				if ((*Entities)[i].type == "end_level" && (*Entities)[i].bicho->Collides(&playerBox)) {
+					gameController->setScore(actual_score);
 					gameController->startMapScreen(gameController->getLevel() + 1);
 				}
 			}
@@ -440,6 +470,9 @@ void LevelScreen::Render() {
 			}
 			else if (particleSystem[p].type == "explosion") {
 				particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_EXPLOSION));
+			}
+			else if (particleSystem[p].type == "killua_drive") {
+				particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_SPEED));
 			}
 			else if (particleSystem[p].type == "gon_ghost") {
 				particleSystem[p].Draw(Data.GetID(IMG_PARTICLE_GON_GHOST));
@@ -505,7 +538,9 @@ void LevelScreen::Render() {
 			}
 		}
 
+		gameController->setScore(actual_score);
 		gui.Draw(gameController);
+		gameController->setScore(original_score);
 
 		glutSwapBuffers();
 	}

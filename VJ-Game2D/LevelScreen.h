@@ -33,8 +33,11 @@ public:
 	bool currentIsKillua();
 private:
 	int hurtDelay;
+	int original_score;
+	int actual_score;
 	bool you_died;
 	bool showHelp;
+	bool killua_drive;
 	Help helpScreen;
 	int reset_delay;
 	int changePlayerDelay;

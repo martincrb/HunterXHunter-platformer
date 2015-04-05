@@ -14,8 +14,10 @@ public:
 				float vel_x, float vel_y);
 	void setRandomSpeed(float min, float max);
 	void setWidthHeight(int w, int h);
+	void setInfinite(bool inf);
 	void setRandomAcc(float min, float max);
 	void setLifespan(int lfspan);
+	void Reset();
 	void Process();
 	void Draw(int tex_id);
 	bool isFinished();
@@ -24,6 +26,7 @@ protected:
 	std::list<Particle> particles;
 	bool randomSpeed;
 	bool randomAcc;
+	bool inf;
 
 	float min_acc;
 	float max_acc;

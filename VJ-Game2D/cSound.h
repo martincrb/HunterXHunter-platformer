@@ -10,7 +10,7 @@
 #define BG_MUSIC 0
 #define EFFECT 1
 
-#define N_SND 10 //number of sounds
+#define N_SND 11 //number of sounds
 
 #define TITLE_MUSIC 0
 #define LEVEL_BG 1
@@ -22,6 +22,7 @@
 #define BREAK_BLOCK 7
 #define KICK 8
 #define CREDITS 9
+#define DIE 10
 class cSound
 {
 public:

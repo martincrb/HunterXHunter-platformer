@@ -44,5 +44,6 @@ private:
 	FMOD::ChannelGroup *channelEffects;
 	FMOD::ChannelGroup *channelMusic;
 	FMOD::Sound* sounds[N_SND];
+	bool already_released[N_SND];
 };
 

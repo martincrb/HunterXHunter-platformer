@@ -21,9 +21,13 @@ void cSound::init() {
 	system->createChannelGroup(NULL, &channelEffects);
 	effectsVolume = 1.0;
 	musicVolume = 1.0;
+	for (int i = 0; i < N_SND; ++i) {
+		already_released[i] = false;
+	}
 }
 void cSound::LoadSound(int id, std::string file, int type) {
 	//sounds.push_back(sound1);
+	already_released[id] = false;
 	switch (type) {
 	case (BG_MUSIC) :
 		system->createStream(file.c_str(), FMOD_2D | FMOD_LOOP_NORMAL, 0, &sounds[id]);
@@ -59,6 +63,7 @@ void cSound::Play(int id, int channel) {
 }
 void cSound::Stop(int id) {
 	sounds[id]->release();
+	already_released[id] = true;
 }
 
 void cSound::PauseChannel(int channel) {
@@ -86,7 +91,8 @@ void cSound::UpdateSound() {
 
 void cSound::FreeAll() {
 	for (int i = 0; i < N_SND; ++i) {
-		sounds[i]->release();
+		if (!already_released[i])
+			sounds[i]->release();
 	}
 	system->close();
 	system->release();

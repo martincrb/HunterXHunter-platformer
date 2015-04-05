@@ -161,7 +161,7 @@ bool LevelScreen::Loop() {
 
 }
 void LevelScreen::Finalize() {
-	//Sound.FreeAll();
+	Sound.FreeAll();
 	Scene.FreeAll();
 }
 

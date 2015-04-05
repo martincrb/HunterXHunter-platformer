@@ -382,9 +382,10 @@ bool LevelScreen::Process() {
 							cHunterLic* license = new cHunterLic();
 							int x, y;
 							(*Entities)[i].bicho->GetPosition(&x, &y);
-							license->SetPosition(x - 300, y + 400);
+							license->SetPosition(x - 400, y + 250);
 							license->SetMap(Scene.GetMap());
 							(*Entities)[i].bicho = license;
+							(*Entities)[i].bicho->alive = true;
 							(*Entities)[i].type = "end_level";
 						}
 					}

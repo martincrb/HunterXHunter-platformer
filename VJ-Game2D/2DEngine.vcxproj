@@ -79,6 +79,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\Users\Martin\Source\Repos\martincbr\VJ-Game2D;C:\Users\Martin\Source\Repos\martincbr\VJ-Game2D\rapidxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)2DEngine.exe</OutputFile>

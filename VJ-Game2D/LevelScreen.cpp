@@ -25,9 +25,14 @@ bool LevelScreen::currentIsKillua() {
 
 bool LevelScreen::Init(cGame* cG) {
 	gameController = cG;
+	for (int key = 0; key < 256; key++)
+		keys[key] = false;
+	changePlayerDelay = 0;
+	reset_delay = RESET_LEVEL_DELAY;
 	pController.clear();
 	original_score = cG->getScore();
 	actual_score = original_score;
+	cG->setTemporalScore(actual_score);
 	hurtDelay = 0;
 	showHelp = false;
 	killua_drive = false;
@@ -79,6 +84,7 @@ bool LevelScreen::Init(cGame* cG) {
 	if (!res) return false;
 
 	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
+	Sound.LoadSound(LEVEL2_BG, "res/audio/level_2.wav", BG_MUSIC);
 	Sound.LoadSound(BOO_HI, "res/audio/ghost_laugh.wav", EFFECT);
 	Sound.LoadSound(GON_JUMP, "res/audio/gon_jump.wav", EFFECT);
 	Sound.LoadSound(KILLUA_JUMP, "res/audio/killua_jump.wav", EFFECT);
@@ -86,10 +92,19 @@ bool LevelScreen::Init(cGame* cG) {
 	Sound.LoadSound(BREAK_BLOCK, "res/audio/breakblock.wav", EFFECT);
 	Sound.LoadSound(KICK, "res/audio/kick.wav", EFFECT);
 	Sound.LoadSound(DIE, "res/audio/die.wav", EFFECT);
+	Sound.LoadSound(SUPER_JUMP, "res/audio/super_jump.wav", EFFECT);
+	Sound.LoadSound(HISOKA_THEME, "res/audio/hisoka_theme.wav", BG_MUSIC);
 	//Scene initialization
 	//
+	int actual_level = gameController->getLevel();
 	Sound.setVolume(MUSIC_CHANNEL, 0.3);
-	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+
+	if (level == 1)
+		Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+	else if (level == 2)
+		Sound.Play(LEVEL2_BG, MUSIC_CHANNEL);
+	else if (level == 3)
+		Sound.Play(HISOKA_THEME, MUSIC_CHANNEL);
 
 	std::string tileset_source = Scene.LoadLevel(Resources::getResourceLevel(level));
 	if (strcmp(tileset_source.c_str(), "") == 0) {
@@ -184,13 +199,6 @@ bool LevelScreen::Process() {
 		if (hurtDelay > 0) {
 			--hurtDelay;
 		}
-		if (you_died) {
-			--reset_delay;
-			if (reset_delay == 0) {
-				Finalize();
-				Init(gameController);
-			}
-		}
 
 		for (int k = 0; k < cScene::debugmap.size(); ++k) {
 			cScene::debugmap[k] = 0;
@@ -210,7 +218,7 @@ bool LevelScreen::Process() {
 				changePlayerDelay = 20;
 			}
 			if (keys[1])	showHelp = true; //HELP
-			if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
+			//if (keys[98])	cScene::DEBUG_ON = !cScene::DEBUG_ON; //B for debug (draw cllisions)
 
 			if (keys[97] && keys[GLUT_KEY_UP] && keys[GLUT_KEY_LEFT] && !keys[GLUT_KEY_RIGHT])
 				pController.action(PlayerController::actions::HAB_JUMP_LEFT);
@@ -266,6 +274,7 @@ bool LevelScreen::Process() {
 			pS.Init(1, x, y-5, 0, 0, -0.4, -0.2);
 			pS.type = "killua_drive";
 			particleSystem.push_back(pS);
+			Sound.Play(SUPER_JUMP, EFFECTS_CHANNEL);
 		}
 		for (int p = particleSystem.size() - 1; p >= 0; --p) {
 			particleSystem[p].Process();
@@ -412,9 +421,10 @@ bool LevelScreen::Process() {
 				if (!you_died && (*Entities)[i].killsPlayer && (*Entities)[i].bicho->Collides(&playerBox)) { //if entity collides with player
 					//Kill player
 					std::cout << "dead" << std::endl;
-					Sound.Stop(LEVEL_BG);
+					Sound.PauseChannel(MUSIC_CHANNEL);
 					Sound.Play(DIE, EFFECTS_CHANNEL);
 					you_died = true;
+					gameController->setLives(gameController->getLives()-1);
 					ParticleSystem pS;
 					pS.setLifespan(200);
 					if (currentIsGon()) {
@@ -431,6 +441,18 @@ bool LevelScreen::Process() {
 				if ((*Entities)[i].type == "end_level" && (*Entities)[i].bicho->Collides(&playerBox)) {
 					gameController->setScore(actual_score);
 					gameController->startMapScreen(gameController->getLevel() + 1);
+				}
+			}
+		}
+		if (you_died) {
+			--reset_delay;
+			if (reset_delay == 0) {
+				if (gameController->getLives() == 0) {
+					gameController->startMapScreen(-1);
+				}
+				else {
+					Finalize();
+					Init(gameController);
 				}
 			}
 		}
@@ -539,6 +561,7 @@ void LevelScreen::Render() {
 		}
 
 		gameController->setScore(actual_score);
+		gameController->setTemporalScore(actual_score);
 		gui.Draw(gameController);
 		gameController->setScore(original_score);
 

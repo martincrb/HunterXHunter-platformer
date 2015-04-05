@@ -114,6 +114,7 @@
     <ClCompile Include="cText.cpp" />
     <ClCompile Include="cTexture.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GLUTMain.cpp" />
     <ClCompile Include="Gon.cpp" />
     <ClCompile Include="GUI.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="cText.h" />
     <ClInclude Include="cTexture.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gon.h" />
     <ClInclude Include="GUI.h" />

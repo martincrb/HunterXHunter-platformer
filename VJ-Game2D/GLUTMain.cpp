@@ -3,7 +3,7 @@
 #include "cGame.h"
 
 //Delete console
-//#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
+#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 cGame Game;
 int startTime;
@@ -40,6 +40,13 @@ void AppIdle()
 	//}
 }
 
+void reshape(int w, int h)
+{
+	int ww = w;
+	int hh = h;
+	glViewport(0, 0, w, h);
+}
+
 void main(int argc, char** argv)
 {
 	int res_x,res_y,pos_x,pos_y;
@@ -58,13 +65,13 @@ void main(int argc, char** argv)
 	
 	glutInitWindowPosition(pos_x,pos_y);
 	glutInitWindowSize(GAME_WIDTH,GAME_HEIGHT);
-	glutCreateWindow("TMXTileEngine");
+	glutCreateWindow("VJ 2015");
 
 	/*glutGameModeString("800x600:32");
 	glutEnterGameMode();*/
 
 	//Make the default cursor disappear
-	//glutSetCursor(GLUT_CURSOR_NONE);
+	glutSetCursor(GLUT_CURSOR_NONE);
 
 	//Register callback functions
 	glutDisplayFunc(AppRender);			
@@ -74,6 +81,7 @@ void main(int argc, char** argv)
 	glutSpecialUpFunc(AppSpecialKeysUp);
 	glutMouseFunc(AppMouse);
 	glutIdleFunc(AppIdle);
+	glutReshapeFunc(reshape);
 
 
 	//Game initializations

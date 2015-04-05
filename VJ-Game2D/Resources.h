@@ -14,6 +14,7 @@ public:
 	static const char* SPRITESHEET_EVIL_FISH;
 	static const char* LEVEL01;
 	static const char* LEVEL02;
+	static const char* LEVEL03;
 	static const char* SPRITESHEET_OCTO;
 	static const char* SPRITESHEET_OCTO_BALL;
 	static const char* SPRITESHEET_GHOST;

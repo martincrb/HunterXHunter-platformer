@@ -4,6 +4,7 @@ const char* Resources::SPRITESHEET_GON = "res/sprites/char/gon.png";
 const char* Resources::SPRITESHEET_KILLUA = "res/sprites/char/killua.png";
 const char* Resources::LEVEL01 = "res/levels/AK.tmx";
 const char* Resources::LEVEL02 = "res/levels/AK2.tmx";
+const char* Resources::LEVEL03 = "res/levels/chamber.tmx";
 const char* Resources::SPRITESHEET_JUMPING_FROG = "res/sprites/entities/enemy_frog.png";
 const char* Resources::SPRITESHEET_EVIL_PTERO = "res/sprites/entities/enemy_bird.png";
 const char* Resources::SPRITESHEET_EVIL_FISH = "res/sprites/entities/evilFish.png";
@@ -47,6 +48,9 @@ const char* Resources::getResourceLevel(int level) {
 		break;
 	case 2:
 		return LEVEL02;
+		break;
+	case 3:
+		return LEVEL03;
 		break;
 
 	}

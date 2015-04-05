@@ -1,5 +1,5 @@
 #include "cSound.h"
-
+#include "Globals.h"
 
 cSound::cSound()
 {
@@ -22,7 +22,7 @@ void cSound::init() {
 	effectsVolume = 1.0;
 	musicVolume = 1.0;
 	for (int i = 0; i < N_SND; ++i) {
-		already_released[i] = false;
+		already_released[i] = true;
 	}
 }
 void cSound::LoadSound(int id, std::string file, int type) {
@@ -62,8 +62,13 @@ void cSound::Play(int id, int channel) {
 	}
 }
 void cSound::Stop(int id) {
-	sounds[id]->release();
-	already_released[id] = true;
+	//channelMusic->release();
+	//channelEffects->release();
+	if (!already_released[id]) {
+		sounds[id]->release();
+		already_released[id] = true;
+	}
+	
 }
 
 void cSound::PauseChannel(int channel) {
@@ -91,7 +96,7 @@ void cSound::UpdateSound() {
 
 void cSound::FreeAll() {
 	for (int i = 0; i < N_SND; ++i) {
-		if (!already_released[i])
+		if (!already_released[i] && sounds[i] != NULL)
 			sounds[i]->release();
 	}
 	system->close();

@@ -70,13 +70,13 @@ std::string cScene::LoadLevel(const char* level)
 	TMX::Parser tmx;
 	
 	tmx.load(level);
-	std::cout << "Map Version: " << tmx.mapInfo.version << std::endl;
-	std::cout << "Map Orientation: " << tmx.mapInfo.orientation << std::endl;
-	std::cout << "Map Width: " << tmx.mapInfo.width << std::endl;
-	std::cout << "Map Height: " << tmx.mapInfo.height << std::endl;
-	std::cout << "Tile Width: " << tmx.mapInfo.tileWidth << std::endl;
-	std::cout << "Tile Height: " << tmx.mapInfo.tileHeight << std::endl;
-	std::cout << "Background Color: " << tmx.mapInfo.backgroundColor << std::endl;
+	//std::cout << "Map Version: " << tmx.mapInfo.version << std::endl;
+	//std::cout << "Map Orientation: " << tmx.mapInfo.orientation << std::endl;
+	//std::cout << "Map Width: " << tmx.mapInfo.width << std::endl;
+	//std::cout << "Map Height: " << tmx.mapInfo.height << std::endl;
+	//std::cout << "Tile Width: " << tmx.mapInfo.tileWidth << std::endl;
+	//std::cout << "Tile Height: " << tmx.mapInfo.tileHeight << std::endl;
+	//std::cout << "Background Color: " << tmx.mapInfo.backgroundColor << std::endl;
 	SCENE_HEIGHT = tmx.mapInfo.height;
 	SCENE_WIDTH = tmx.mapInfo.width;
 	std::string source = tmx.tilesetList[0].source;
@@ -87,7 +87,7 @@ std::string cScene::LoadLevel(const char* level)
 	std::vector<std::map<std::string, std::string> > tileVector = tmx.tilesetList[0].property;
 	for (unsigned int tileID = 0; tileID < tileVector.size(); ++tileID) {
 		Tile tile(tmx.tilesetList[0].property[tileID]["solid"] == "true", tmx.tilesetList[0].property[tileID]["destructable"] == "true", tmx.tilesetList[0].property[tileID]["type"]);
-		std::cout << "TILEID: " << tileID << std::endl;
+		//std::cout << "TILEID: " << tileID << std::endl;
 		tile.printinfo();
 		tiles.push_back(tile);
 	}
@@ -108,19 +108,19 @@ std::string cScene::LoadLevel(const char* level)
 		
 		//Print every layer from the TMX
 		for (std::map<std::string, TMX::Parser::TileLayer>::iterator it = tmx.tileLayer.begin(); it != tmx.tileLayer.end(); ++it) {
-			std::cout << std::endl;
-			std::cout << "Tile Layer Name: " << it->first << std::endl;
-			std::cout << "Tile Layer Visibility: " << tmx.tileLayer[it->first].visible << std::endl;
-			std::cout << "Tile Layer Opacity: " << tmx.tileLayer[it->first].opacity << std::endl;
-			std::cout << "Tile Layer Properties:" << std::endl;
+			///std::cout << std::endl;
+			//std::cout << "Tile Layer Name: " << it->first << std::endl;
+			///std::cout << "Tile Layer Visibility: " << tmx.tileLayer[it->first].visible << std::endl;
+			//std::cout << "Tile Layer Opacity: " << tmx.tileLayer[it->first].opacity << std::endl;
+			//std::cout << "Tile Layer Properties:" << std::endl;
 			if (tmx.tileLayer[it->first].property.size() > 0) {
 				for (std::map<std::string, std::string>::iterator it2 = tmx.tileLayer[it->first].property.begin(); it2 != tmx.tileLayer[it->first].property.end(); ++it2) {
-					std::cout << "-> " << it2->first << " : " << it2->second << std::endl;
+					//std::cout << "-> " << it2->first << " : " << it2->second << std::endl;
 				}
 			}
-			std::cout << "Tile Layer Data Encoding: " << tmx.tileLayer[it->first].data.encoding << std::endl;
+			//std::cout << "Tile Layer Data Encoding: " << tmx.tileLayer[it->first].data.encoding << std::endl;
 			if (tmx.tileLayer[it->first].data.compression != "none") {
-				std::cout << "Tile Layer Data Compression: " << tmx.tileLayer[it->first].data.compression << std::endl;
+				//std::cout << "Tile Layer Data Compression: " << tmx.tileLayer[it->first].data.compression << std::endl;
 			}
 		//	std::cout << "Tile Layer Data Contents: " << tmx.tileLayer[it->first].data.contents << std::endl;
 			std::vector<std::string> layer;
@@ -170,8 +170,8 @@ std::string cScene::LoadLevel(const char* level)
 
 	//Fill ENTITIES DATA from TMX:
 	for (std::map<std::string, TMX::Parser::ObjectGroup>::iterator it = tmx.objectGroup.begin(); it != tmx.objectGroup.end(); ++it) {
-		std::cout << std::endl;
-		std::cout << "Object Group Name: " << it->first << std::endl;
+		//std::cout << std::endl;
+		//std::cout << "Object Group Name: " << it->first << std::endl;
 		//std::cout << "Object Group Color: " << tmx.objectGroup[it->first].color << std::endl;
 		//std::cout << "Object Group Visibility: " << tmx.objectGroup[it->first].visible << std::endl;
 		//std::cout << "Object Group Opacity: " << tmx.objectGroup[it->first].opacity << std::endl;
@@ -186,13 +186,13 @@ std::string cScene::LoadLevel(const char* level)
 		if (strcmp(name.c_str(), "Camera_limits") == 0) {
 			//Read Camera Boundaries
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
-				std::cout << std::endl;
+				//std::cout << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
 				//if (it2->second.type != "") { std::cout << "Object Type: " << tmx.objectGroup[it->first].object[it2->first].type << std::endl; }
-				std::cout << "Object Position X: " << it2->x << std::endl;
-				std::cout << "Object Position Y: " << it2->y << std::endl;
-				std::cout << "Object Width: " << it2->width << std::endl;
-				std::cout << "Object Height: " << it2->height << std::endl;
+			//	std::cout << "Object Position X: " << it2->x << std::endl;
+			//	std::cout << "Object Position Y: " << it2->y << std::endl;
+			//	std::cout << "Object Width: " << it2->width << std::endl;
+			//	std::cout << "Object Height: " << it2->height << std::endl;
 				
 				//if (it2->second.gid != 0) { std::cout << "Object Tile GID: " << tmx.objectGroup[it->first].object[it2->first].gid << std::endl; }
 				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
@@ -201,21 +201,21 @@ std::string cScene::LoadLevel(const char* level)
 				boundary.right = boundary.left + it2->width;
 				boundary.bottom = it2->y;
 				boundary.top = boundary.bottom + it2->height;
-				std::cout << boundary.bottom << "|" << boundary.top << std::endl;
+				//std::cout << boundary.bottom << "|" << boundary.top << std::endl;
 				camera_limits.addBoundary(boundary);
 			}
 		}
 		if (strcmp(name.c_str(), "Water") == 0) {
 			//Read Camera Boundaries
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
-				std::cout << std::endl;
-				std::cout << "WATER"<< std::endl;
+			//	std::cout << std::endl;
+			//	std::cout << "WATER"<< std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
 				//if (it2->second.type != "") { std::cout << "Object Type: " << tmx.objectGroup[it->first].object[it2->first].type << std::endl; }
-				std::cout << "Object Position X: " << it2->x << std::endl;
-				std::cout << "Object Position Y: " << it2->y << std::endl;
-				std::cout << "Object Width: " << it2->width << std::endl;
-				std::cout << "Object Height: " << it2->height << std::endl;
+			//	std::cout << "Object Position X: " << it2->x << std::endl;
+			//	std::cout << "Object Position Y: " << it2->y << std::endl;
+			//	std::cout << "Object Width: " << it2->width << std::endl;
+			//	std::cout << "Object Height: " << it2->height << std::endl;
 
 				//if (it2->second.gid != 0) { std::cout << "Object Tile GID: " << tmx.objectGroup[it->first].object[it2->first].gid << std::endl; }
 				//std::cout << "Object Visible: " << tmx.objectGroup[it->first].object[it2->first].visible << std::endl;
@@ -229,11 +229,11 @@ std::string cScene::LoadLevel(const char* level)
 		if (strcmp(name.c_str(), "Entities") == 0) {
 			//Read Entity data
 			for (std::vector<TMX::Parser::Object>::iterator it2 = tmx.objectGroup[it->first].object.begin(); it2 != tmx.objectGroup[it->first].object.end(); ++it2) {
-				std::cout << std::endl;
+			//	std::cout << std::endl;
 				//if (it2->second.name != "") { std::cout << "Object Name: " << it2->first << std::endl; }
-				if (it2->type != "") { std::cout << "Object Type: " << it2->type << std::endl; }
-				std::cout << "Object Position X: " << it2->x << std::endl;
-				std::cout << "Object Position Y: " << it2->y << std::endl;
+				//if (it2->type != "") { std::cout << "Object Type: " << it2->type << std::endl; }
+			//	std::cout << "Object Position X: " << it2->x << std::endl;
+			//	std::cout << "Object Position Y: " << it2->y << std::endl;
 				//std::cout << "Object Width: " << it2->width << std::endl;
 				//std::cout << "Object Height: " << it2->height << std::endl;
 				//SAVE ENTITIES INFORMATION TO THE VECTOR OF ENTITIES
@@ -243,28 +243,37 @@ std::string cScene::LoadLevel(const char* level)
 				entity.spawn_x = it2->x;
 				entity.spawn_y = (cScene::SCENE_HEIGHT - 1)*cScene::TILE_SIZE - it2->y;
 				entity.type = it2->type;
-				if (entity.type == "jfrog") {
-					std::cout << "Loading a hell of a frog" << std::endl;
+				if (entity.type == "jfrogleft") {
+			//		std::cout << "Loading a hell of a frog" << std::endl;
 					entity.bicho = new cJumpingFrog();
+					entity.bicho->SetState(STATE_LOOKLEFT);
+					entity.type = "jfrog";
+					entity.bicho->alive = true;
+				}
+				else if (entity.type == "jfrogright") {
+			//		std::cout << "Loading a hell of a frog" << std::endl;
+					entity.bicho = new cJumpingFrog();
+					entity.bicho->SetState(STATE_LOOKRIGHT);
+					entity.type = "jfrog";
 					entity.bicho->alive = true;
 				}
 				else if (entity.type == "evilBird") {
-					std::cout << "An awesome pterodactyle comes to play" << std::endl;
+			//		std::cout << "An awesome pterodactyle comes to play" << std::endl;
 					entity.bicho = new cEvilBird();
 					entity.bicho->alive = true;
 				}
 				else if (entity.type == "octopus") {
-					std::cout << "KillerKraken! D:" << std::endl;
+			//		std::cout << "KillerKraken! D:" << std::endl;
 					entity.bicho = new cOctopus();
 					entity.bicho->alive = true;
 				}
 				else if (entity.type == "evilFish") {
-					std::cout << "blublublublubKILL" << std::endl;
+			//		std::cout << "blublublublubKILL" << std::endl;
 					entity.bicho = new cEvilFish();
 					entity.bicho->alive = true;
 				}
 				else if (entity.type == "end_level") {
-					std::cout << "Jantah laisensu" << std::endl;
+			//		std::cout << "Jantah laisensu" << std::endl;
 					entity.bicho = new cHunterLic();
 					entity.bicho->alive = true;
 				}

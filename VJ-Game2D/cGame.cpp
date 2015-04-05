@@ -8,6 +8,7 @@ cGame::cGame(void)
 	currentScreen = &startScreen;
 	//currentScreen = &helpScreen;
 	showHelp = false;
+	lives = 3;
 }
 
 cGame::~cGame(void)
@@ -15,6 +16,12 @@ cGame::~cGame(void)
 
 }
 
+void cGame::setTemporalScore(int s) {
+	temporalScore = s;
+}
+int cGame::getTemporalScore() {
+	return temporalScore;
+}
 
 bool cGame::currentIsGon() {
 	return currentScreen->currentIsGon();
@@ -35,6 +42,7 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
+	
 	return currentScreen->Init(this);
 }
 cScreen* cGame::getCurrentScreen() {
@@ -55,10 +63,26 @@ void cGame::Reset() {
 void cGame::startMapScreen(int lvl) {
 	Finalize();
 	actualLevel = lvl;
-	if (lvl == 3)
+	if (lvl == -1) {
+		currentScreen = &gameOverScreen;
+	}
+	else if (lvl == -2) {
+		currentScreen = &startScreen;
+		lives = 3;
+	}
+	else if (lvl == 4) {
 		currentScreen = &credits;
-	else
+	}
+	else {
 		currentScreen = &mapScreen;
+	}
+	Init();
+}
+
+void cGame::startGameOverScreen() {
+	Finalize();
+	actualLevel = 1;
+	currentScreen = &startScreen;
 	Init();
 }
 int cGame::getLevel(){
@@ -66,6 +90,12 @@ int cGame::getLevel(){
 }
 void cGame::setScore(int s) {
 	score = s;
+}
+int cGame::getLives() {
+	return lives;
+}
+void cGame::setLives(int l) {
+	lives = l;
 }
 bool cGame::Loop()
 {
@@ -96,7 +126,7 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 //Process
 bool cGame::Process()
 {
-	return currentScreen->Process();
+ 	return currentScreen->Process();
 }
 
 //Output

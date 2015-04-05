@@ -17,6 +17,8 @@ bool MapScreen::Init(cGame* cG) {
 	frameCounter = 0;
 	uncover_displace = 0;
 	bool res = true;
+	for (int key = 0; key < 256; key++)
+		keys[key] = false;
 	Sound.init();
 
 
@@ -25,10 +27,12 @@ bool MapScreen::Init(cGame* cG) {
 	if (!res) return false;
 	res = Data.LoadImage(IMG_MAP_UNCOVER, Resources::MAP_COVER, GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_FONT, Resources::FONT, GL_RGBA);
+	if (!res) return false;
 
-	Sound.LoadSound(LEVEL_BG, "res/audio/level_1.wav", BG_MUSIC);
-	Sound.setVolume(MUSIC_CHANNEL, 0.3);
-	Sound.Play(LEVEL_BG, MUSIC_CHANNEL);
+	Sound.LoadSound(MAP_MUSIC, "res/audio/map.wav", EFFECT);
+	Sound.setVolume(EFFECTS_CHANNEL, 0.3);
+	Sound.Play(MAP_MUSIC, EFFECTS_CHANNEL);
 
 	return res;
 
@@ -45,8 +49,8 @@ bool MapScreen::Loop() {
 
 }
 void MapScreen::Finalize() {
-	Sound.Stop(LEVEL_BG);
-	//Sound.FreeAll();
+	Sound.Stop(MAP_MUSIC);
+	Sound.FreeAll();
 }
 
 //Input
@@ -100,5 +104,17 @@ void MapScreen::Render() {
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
+	cText text;
+	if (gameController->getLevel() == 1) {
+		text.setText("MT ETERNAL");
+	}
+	else if (gameController->getLevel() == 2) {
+		text.setText("GREED ISLAND");
+	}
+	else if (gameController->getLevel() == 3) {
+		text.setText("HISOKA CHAMBER");
+	}
+	text.setPosition(300, 100);
+	text.Draw(Data.GetID(IMG_FONT));
 	glutSwapBuffers();
 }

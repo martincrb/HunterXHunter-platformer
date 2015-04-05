@@ -19,6 +19,11 @@ Credits::~Credits()
 bool Credits::Init(cGame* cG) {
 	gameController = cG;
 	bool res = true;
+	final_pos = 500;
+	text_pos = 0;
+	endInitialAnim = false;
+	for (int key = 0; key < 256; key++)
+		keys[key] = false;
 
 	res = Data.LoadImage(IMG_FONT, Resources::FONT, GL_RGBA);
 	if (!res) return false;
@@ -44,8 +49,7 @@ bool Credits::Loop() {
 
 }
 void Credits::Finalize() {
-	Sound.Stop(CREDITS);
-	//Sound.FreeAll();
+	Sound.FreeAll();
 }
 
 //Input

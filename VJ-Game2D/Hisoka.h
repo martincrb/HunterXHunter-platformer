@@ -37,7 +37,7 @@ private:
 	int lives;
 
 	static const int MIN_DIST = 400;
-	static const int T = 90;
+	static const int T = 120;
 	static const int INV_TIME = 120;
 };
 

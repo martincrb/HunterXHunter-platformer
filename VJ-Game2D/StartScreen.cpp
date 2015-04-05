@@ -17,6 +17,12 @@ StartScreen::~StartScreen()
 }
 
 bool StartScreen::Init(cGame* cG) {
+	frameCounter = 0;
+	initialAnimCounter = 0;
+	drawPressButton = false;
+	endInitialAnim = false;
+	for (int key = 0; key < 256; key++)
+		keys[key] = false;
 	gameController = cG;
 	bool res = true;
 	Sound.init();
@@ -58,7 +64,7 @@ bool StartScreen::Loop() {
 }
 void StartScreen::Finalize() {
 	Sound.Stop(TITLE_MUSIC);
-	//Sound.FreeAll();
+	Sound.FreeAll();
 }
 
 //Input

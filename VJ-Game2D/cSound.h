@@ -10,7 +10,7 @@
 #define BG_MUSIC 0
 #define EFFECT 1
 
-#define N_SND 11 //number of sounds
+#define N_SND 16 //number of sounds
 
 #define TITLE_MUSIC 0
 #define LEVEL_BG 1
@@ -23,6 +23,11 @@
 #define KICK 8
 #define CREDITS 9
 #define DIE 10
+#define GAME_OVER 11
+#define SUPER_JUMP 12
+#define HISOKA_THEME 13
+#define LEVEL2_BG 14
+#define MAP_MUSIC 15
 class cSound
 {
 public:

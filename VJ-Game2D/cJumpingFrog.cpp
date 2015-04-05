@@ -3,7 +3,6 @@
 
 cJumpingFrog::cJumpingFrog()
 {
-	cBicho::SetState(0);
 	jumpDelay = 0;
 	jump_freq = rand()%240+60; //default random
 
@@ -68,28 +67,28 @@ void cJumpingFrog::Draw(cData* data) {
 	switch (GetState())
 	{
 		//1
-	case STATE_LOOKLEFT:
+	case STATE_LOOKRIGHT:
 		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(20);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(47);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(47);
 		NextFrame(currentAnimation->frames.size());
 		break;
 		//4
-	case STATE_LOOKRIGHT:
+	case STATE_LOOKLEFT:
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(47);
 		xf = xo + float(currentFrame.tile_width) / float(20);
 		yf = yo - float(currentFrame.tile_heigth) / float(47);
 		NextFrame(currentAnimation->frames.size());
 		break;
 		//1..3
-	case STATE_WALKLEFT:
+	case STATE_WALKRIGHT:
 		xo = currentFrame.tile_px + float(currentFrame.tile_width) / float(20);	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(47);
 		xf = currentFrame.tile_px;
 		yf = yo - float(currentFrame.tile_heigth) / float(47);
 		NextFrame(currentAnimation->frames.size());
 		break;
 		//4..6
-	case STATE_WALKRIGHT:
+	case STATE_WALKLEFT:
 		xo = currentFrame.tile_px;	yo = currentFrame.tile_py + float(currentFrame.tile_heigth) / float(47);
 		xf = xo + float(currentFrame.tile_width) / float(20);
 		yf = yo - float(currentFrame.tile_heigth) / float(47);

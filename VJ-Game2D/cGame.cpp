@@ -6,13 +6,15 @@
 cGame::cGame(void)
 {
 	currentScreen = &startScreen;
-	//currentScreen = &credits;
+	//currentScreen = &helpScreen;
+	showHelp = false;
 }
 
 cGame::~cGame(void)
 {
 
 }
+
 
 bool cGame::currentIsGon() {
 	return currentScreen->currentIsGon();
@@ -94,14 +96,13 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 //Process
 bool cGame::Process()
 {
-	
 	return currentScreen->Process();
 }
 
 //Output
 void cGame::Render()
 {
-	currentScreen->Render();
+currentScreen->Render();
 }
 
 int cGame::getScore() {

@@ -16,6 +16,7 @@ public:
 	void action(actions a);
 	void changeCurrentPlayer();
 	void moveCompanion();
+	void clear();
 	void Draw(cData* Data);
 private:
 	cPlayer* currentPlayer;

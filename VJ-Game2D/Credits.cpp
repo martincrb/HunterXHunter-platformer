@@ -25,9 +25,9 @@ bool Credits::Init(cGame* cG) {
 
 	Sound.init();
 
-	Sound.LoadSound(TITLE_MUSIC, "res/audio/title_music.wav", BG_MUSIC);
+	Sound.LoadSound(CREDITS, "res/audio/credits.wav", BG_MUSIC);
 	Sound.setVolume(MUSIC_CHANNEL, 0.5);
-	Sound.Play(TITLE_MUSIC, MUSIC_CHANNEL);
+	Sound.Play(CREDITS, MUSIC_CHANNEL);
 
 	return res;
 
@@ -44,12 +44,13 @@ bool Credits::Loop() {
 
 }
 void Credits::Finalize() {
-	Sound.Stop(TITLE_MUSIC);
+	Sound.Stop(CREDITS);
 	//Sound.FreeAll();
 }
 
 //Input
 void Credits::ReadKeyboard(unsigned char key, int x, int y, bool press) {
+	//std::cout << int(key) << std::endl;
 	keys[key] = press;
 }
 void Credits::ReadMouse(int button, int state, int x, int y) {
@@ -58,7 +59,7 @@ void Credits::ReadMouse(int button, int state, int x, int y) {
 //Process
 bool Credits::Process() {
 	Sound.UpdateSound();
-	if (keys[99] && endInitialAnim)		gameController->Reset();
+	if (keys[13] && endInitialAnim)		gameController->Reset();
 	return true;
 }
 //Output

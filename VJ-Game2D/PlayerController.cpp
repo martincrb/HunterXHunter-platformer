@@ -14,7 +14,13 @@ cPlayer* PlayerController::getNotCurrentPlayer() {
 	if (currentPlayer == Gon) return Killua;
 	else return Gon;
 }
-
+void PlayerController::clear() {
+	while (!command_queue.empty()) {
+		command_queue.pop();
+	}
+	for (int i = 0; i < PLAYERS_DELAY; ++i)
+		command_queue.push(actions::STOP);
+}
 void PlayerController::setPlayers(cPlayer* playerOne, cPlayer* playerTwo)
 {
 	Gon = playerOne;

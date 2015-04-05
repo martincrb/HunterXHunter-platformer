@@ -117,6 +117,7 @@
     <ClCompile Include="GLUTMain.cpp" />
     <ClCompile Include="Gon.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="Help.cpp" />
     <ClCompile Include="Hisoka.cpp" />
     <ClCompile Include="Killua.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Gon.h" />
     <ClInclude Include="GUI.h" />
+    <ClInclude Include="Help.h" />
     <ClInclude Include="Hisoka.h" />
     <ClInclude Include="Killua.h" />
     <ClInclude Include="LevelScreen.h" />

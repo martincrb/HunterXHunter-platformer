@@ -71,7 +71,7 @@ void StartScreen::ReadMouse(int button, int state, int x, int y) {
 //Process
 bool StartScreen::Process() {
 	Sound.UpdateSound();
-	if (keys[99] && endInitialAnim)		gameController->startMapScreen(1);
+	if (keys[13] && endInitialAnim)		gameController->startMapScreen(1);
 	return true;
 }
 //Output

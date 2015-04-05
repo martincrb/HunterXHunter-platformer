@@ -5,6 +5,7 @@
 #include "LevelScreen.h"
 #include "MapScreen.h"
 #include "Credits.h"
+#include "Help.h"
 
 #define GAME_WIDTH	800
 #define GAME_HEIGHT 600
@@ -42,6 +43,7 @@ private:
 	MapScreen mapScreen;
 	Credits credits;
 	cScreen* currentScreen;
+	bool showHelp;
 	int actualLevel;
 	int score;
 };

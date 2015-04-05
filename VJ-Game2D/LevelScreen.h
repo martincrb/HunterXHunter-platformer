@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "ParticleSystem.h"
 #include "GUI.h"
+#include "Help.h"
 
 #define CHANGE_PLAYER_DELAY 30
 #define RESET_LEVEL_DELAY 100
@@ -31,7 +32,10 @@ public:
 	bool currentIsGon();
 	bool currentIsKillua();
 private:
+	int hurtDelay;
 	bool you_died;
+	bool showHelp;
+	Help helpScreen;
 	int reset_delay;
 	int changePlayerDelay;
 	GUI gui;
